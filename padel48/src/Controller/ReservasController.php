@@ -4,13 +4,13 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * Usuarios Controller
+ * Reservas Controller
  *
- * @property \App\Model\Table\UsuariosTable $Usuarios
+ * @property \App\Model\Table\ReservasTable $Reservas
  *
- * @method \App\Model\Entity\Usuario[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Reserva[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class UsuariosController extends AppController
+class ReservasController extends AppController
 {
     /**
      * Index method
@@ -19,25 +19,25 @@ class UsuariosController extends AppController
      */
     public function index()
     {
-        $usuarios = $this->paginate($this->Usuarios);
+        $reservas = $this->paginate($this->Reservas);
 
-        $this->set(compact('usuarios'));
+        $this->set(compact('reservas'));
     }
 
     /**
      * View method
      *
-     * @param string|null $id Usuario id.
+     * @param string|null $id Reserva id.
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $usuario = $this->Usuarios->get($id, [
+        $reserva = $this->Reservas->get($id, [
             'contain' => []
         ]);
 
-        $this->set('usuario', $usuario);
+        $this->set('reserva', $reserva);
     }
 
     /**
@@ -47,58 +47,58 @@ class UsuariosController extends AppController
      */
     public function add()
     {
-        $usuario = $this->Usuarios->newEntity();
+        $reserva = $this->Reservas->newEntity();
         if ($this->request->is('post')) {
-            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->getData());
-            if ($this->Usuarios->save($usuario)) {
-                $this->Flash->success(__('The usuario has been saved.'));
+            $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
+            if ($this->Reservas->save($reserva)) {
+                $this->Flash->success(__('The reserva has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
+            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
         }
-        $this->set(compact('usuario'));
+        $this->set(compact('reserva'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Usuario id.
+     * @param string|null $id Reserva id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $usuario = $this->Usuarios->get($id, [
+        $reserva = $this->Reservas->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->getData());
-            if ($this->Usuarios->save($usuario)) {
-                $this->Flash->success(__('The usuario has been saved.'));
+            $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
+            if ($this->Reservas->save($reserva)) {
+                $this->Flash->success(__('The reserva has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
+            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
         }
-        $this->set(compact('usuario'));
+        $this->set(compact('reserva'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Usuario id.
+     * @param string|null $id Reserva id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $usuario = $this->Usuarios->get($id);
-        if ($this->Usuarios->delete($usuario)) {
-            $this->Flash->success(__('The usuario has been deleted.'));
+        $reserva = $this->Reservas->get($id);
+        if ($this->Reservas->delete($reserva)) {
+            $this->Flash->success(__('The reserva has been deleted.'));
         } else {
-            $this->Flash->error(__('The usuario could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The reserva could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
