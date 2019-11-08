@@ -50,11 +50,18 @@ class PistasController extends AppController
         $pista = $this->Pistas->newEntity();
         if ($this->request->is('post')) {
             $pista = $this->Pistas->patchEntity($pista, $this->request->getData());
-            if ($this->Pistas->save($pista)) {
-                $this->Flash->success(__('The pista has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+            if($pista->tipo == 'PIEDRA' | $pista->tipo == 'MOQUETA'){
+                if($pista->lugar == 'EXTERIOR' | $pista->tipo == 'INTERIOR') {
+                    if ($this->Pistas->save($pista)) {
+                        $this->Flash->success(__('The pista has been saved.'));
+
+                        return $this->redirect(['action' => 'index']);
+                    }
+                }
             }
+
+
             $this->Flash->error(__('The pista could not be saved. Please, try again.'));
         }
         $this->set(compact('pista'));
