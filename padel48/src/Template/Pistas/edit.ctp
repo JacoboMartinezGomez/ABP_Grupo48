@@ -23,8 +23,8 @@
     <fieldset>
         <legend><?= __('Edit Pista') ?></legend>
         <?php
-            echo $this->Form->control('tipo');
-            echo $this->Form->control('lugar');
+        echo $this->Form->select('tipo', ['PIEDRA' => 'PIEDRA', 'MOQUETA' => 'MOQUETA']);
+        echo $this->Form->select('lugar', ['EXTERIOR' => 'EXTERIOR', 'INTERIOR' => 'INTERIOR']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
