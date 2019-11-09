@@ -52,7 +52,7 @@ class PistasController extends AppController
             $pista = $this->Pistas->patchEntity($pista, $this->request->getData());
 
             if($pista->tipo == 'PIEDRA' | $pista->tipo == 'MOQUETA'){
-                if($pista->lugar == 'EXTERIOR' | $pista->tipo == 'INTERIOR') {
+                if($pista->lugar == 'EXTERIOR' | $pista->lugar == 'INTERIOR') {
                     if ($this->Pistas->save($pista)) {
                         $this->Flash->success(__('The pista has been saved.'));
 
@@ -62,7 +62,7 @@ class PistasController extends AppController
             }
 
 
-            $this->Flash->error(__('The pista could not be saved. Please, try again.'));
+            $this->Flash->error(__('The pista could not be saved. Please, try again.'.$pista->tipo));
         }
         $this->set(compact('pista'));
     }
@@ -81,12 +81,16 @@ class PistasController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pista = $this->Pistas->patchEntity($pista, $this->request->getData());
-            if ($this->Pistas->save($pista)) {
-                $this->Flash->success(__('The pista has been saved.'));
+            if ($pista->tipo == 'PIEDRA' | $pista->tipo == 'MOQUETA') {
+                if ($pista->lugar == 'EXTERIOR' | $pista->lugar == 'INTERIOR') {
+                    if ($this->Pistas->save($pista)) {
+                        $this->Flash->success(__('The pista has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                        return $this->redirect(['action' => 'index']);
+                    }
+                    $this->Flash->error(__('The pista could not be saved. Please, try again.'));
+                }
             }
-            $this->Flash->error(__('The pista could not be saved. Please, try again.'));
         }
         $this->set(compact('pista'));
     }
