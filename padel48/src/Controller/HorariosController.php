@@ -48,7 +48,7 @@ class HorariosController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    /*public function add()
     {
         $horario = $this->Horarios->newEntity();
         if ($this->request->is('post')) {
@@ -62,7 +62,7 @@ class HorariosController extends AppController
         }
         $pistas = $this->Horarios->Pistas->find('list', ['limit' => 200]);
         $this->set(compact('horario', 'pistas'));
-    }
+    }*/
 
     /**
      * Edit method
@@ -78,11 +78,13 @@ class HorariosController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $horario = $this->Horarios->patchEntity($horario, $this->request->getData());
-            if ($this->Horarios->save($horario)) {
-                $this->Flash->success(__('The horario has been saved.'));
+
+            if($this->Horarios->editHorarios($this->request->getData()['hora_inicio'])){
+                $this->Flash->success(__('The horario has been saved. New begining hour: '.$this->request->getData()['hora_inicio']['hour'].":".$this->request->getData()['hora_inicio']['minute']));
 
                 return $this->redirect(['action' => 'index']);
             }
+
             $this->Flash->error(__('The horario could not be saved. Please, try again.'));
         }
         $pistas = $this->Horarios->Pistas->find('list', ['limit' => 200]);
@@ -96,7 +98,7 @@ class HorariosController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    /*public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $horario = $this->Horarios->get($id);
@@ -107,5 +109,5 @@ class HorariosController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
+    }*/
 }
