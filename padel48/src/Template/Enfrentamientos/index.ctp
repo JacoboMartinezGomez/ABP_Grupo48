@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Enfrentamiento[]|\Cake\Collection\CollectionInterface $enfrentamientos
+ * * @var \App\Model\Entity\FechasPropuesta[]|\Cake\Collection\CollectionInterface $fechaPropuesta
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
@@ -37,6 +38,7 @@
                 <td><?= $this->Number->format($enfrentamiento->fase) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $enfrentamiento->id_enfrentamiento]) ?>
+                    <?= $this->Html->link(__('Proponer Fecha'), ['controller' => 'FechasPropuestas', 'action' => 'index', $enfrentamiento->id_enfrentamiento]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $enfrentamiento->id_enfrentamiento]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $enfrentamiento->id_enfrentamiento], ['confirm' => __('Are you sure you want to delete # {0}?', $enfrentamiento->id_enfrentamiento)]) ?>
                 </td>
