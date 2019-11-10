@@ -41,7 +41,7 @@ class UsuariosFixture extends TestFixture
     {
         $this->records = [
             [
-                'dni' => '7d916ea4-25da-4cee-a656-f039d7fbcf40',
+                'dni' => 'c9542cea-f962-4397-bcf2-fa474f283d82',
                 'nombre' => 'Lorem ip',
                 'apellido' => 'Lorem ipsum dolor ',
                 'email' => 'Lorem ipsum dolor ',

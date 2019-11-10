@@ -14,6 +14,10 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Usuarios'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Noticia'), ['controller' => 'Noticias', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Partido'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="usuarios form large-9 medium-8 columns content">
