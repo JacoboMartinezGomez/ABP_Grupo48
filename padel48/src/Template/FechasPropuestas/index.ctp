@@ -38,7 +38,7 @@
                 <td class="actions">
 
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $fechasPropuesta->id]) ?>
-                    <?= $this->Html->link(__('Aceptar'), ['action' => 'aceptar', $fechasPropuesta->id]) ?>
+                    <?= $this->Html->link(__('Aceptar'), ['action' => 'acept', $fechasPropuesta->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $fechasPropuesta->id], ['confirm' => __('Are you sure you want to delete # {0}?', $fechasPropuesta->id)]) ?>
                 </td>
             </tr>
