@@ -47,11 +47,11 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
             // Added this line
-            'authorize'=> 'Controller',
+            //'authorize'=> 'Controller',
             'authenticate' => [
                 'Form' => [
                     'fields' => [
-                        'dni' => 'dni',
+                        'username' => 'dni',
                         'password' => 'password'
                     ]
                 ]

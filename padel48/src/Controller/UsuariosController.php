@@ -16,15 +16,19 @@ class UsuariosController extends AppController
     public function initialize()
     {
         parent::initialize();
+        $this->Auth->setConfig('authenticate', [
+            'Basic' => ['userModel' => 'Usuarios'],
+            'Form' => ['userModel' => 'Usuarios']
+        ]);
         $this->Auth->allow(['logout', 'add']);
     }
 
     public function login()
     {
         if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
+            $usuario = $this->Auth->identify();
+            if ($usuario) {
+                $this->Auth->setUser($usuario);
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error('El dni o la contraseña son incorrectos');
