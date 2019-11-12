@@ -25,6 +25,10 @@
             <td><?= h($usuario->dni) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Passwd') ?></th>
+            <td><?= h($usuario->passwd) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Nombre') ?></th>
             <td><?= h($usuario->nombre) ?></td>
         </tr>

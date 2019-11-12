@@ -12,6 +12,31 @@ use App\Controller\AppController;
  */
 class UsuariosController extends AppController
 {
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['logout', 'add']);
+    }
+
+    public function login()
+    {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('El dni o la contraseña son incorrectos');
+        }
+    }
+
+    public function logout()
+    {
+        $this->Flash->success('You are now logged out.');
+        return $this->redirect($this->Auth->logout());
+    }
+
     /**
      * Index method
      *
@@ -50,6 +75,7 @@ class UsuariosController extends AppController
         $usuario = $this->Usuarios->newEntity();
         if ($this->request->is('post')) {
             $usuario = $this->Usuarios->patchEntity($usuario, $this->request->getData());
+            $usuario->rol = 'DEPORTISTA';
             if ($this->Usuarios->save($usuario)) {
                 $this->Flash->success(__('The usuario has been saved.'));
 

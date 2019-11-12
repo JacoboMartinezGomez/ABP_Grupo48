@@ -16,6 +16,7 @@ class UsuariosFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'dni' => ['type' => 'string', 'length' => 9, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'passwd' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'nombre' => ['type' => 'string', 'length' => 10, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'apellido' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'email' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -41,7 +42,8 @@ class UsuariosFixture extends TestFixture
     {
         $this->records = [
             [
-                'dni' => 'c9542cea-f962-4397-bcf2-fa474f283d82',
+                'dni' => '86e7423c-e84f-41e2-8ee0-001fc5f42587',
+                'passwd' => 'Lorem ipsum dolor ',
                 'nombre' => 'Lorem ip',
                 'apellido' => 'Lorem ipsum dolor ',
                 'email' => 'Lorem ipsum dolor ',
