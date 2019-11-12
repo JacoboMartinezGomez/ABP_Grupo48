@@ -42,10 +42,10 @@ class ReservasFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_usuario' => 'd5ed33dc-2354-46c2-9a01-189978a7b35a',
+                'id_usuario' => '80fbcde8-9aa1-43de-9640-680623ba4337',
                 'id_pista' => 1,
                 'hora' => 1,
-                'fecha' => '2019-11-07'
+                'fecha' => '2019-11-10'
             ],
         ];
         parent::init();

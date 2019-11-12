@@ -34,7 +34,7 @@ class UsuariosController extends AppController
     public function view($id = null)
     {
         $usuario = $this->Usuarios->get($id, [
-            'contain' => []
+            'contain' => ['Noticias', 'Partidos']
         ]);
 
         $this->set('usuario', $usuario);

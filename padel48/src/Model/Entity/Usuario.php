@@ -14,6 +14,9 @@ use Cake\ORM\Entity;
  * @property int $telefono
  * @property string $rol
  * @property int $numero_pistas
+ *
+ * @property \App\Model\Entity\Noticia[] $noticias
+ * @property \App\Model\Entity\Partido[] $partidos
  */
 class Usuario extends Entity
 {
@@ -33,6 +36,8 @@ class Usuario extends Entity
         'sexo' => true,
         'telefono' => true,
         'rol' => true,
-        'numero_pistas' => true
+        'numero_pistas' => true,
+        'noticias' => true,
+        'partidos' => true
     ];
 }
