@@ -17,7 +17,7 @@
     <fieldset>
         <legend><?= __('Add Noticia') ?></legend>
         <?php
-            echo $this->Form->hidden('usuario_id', ['options' => $userId]);
+            echo $this->Form->hidden('usuario_id', ['value' => $userId]);
             echo $this->Form->control('titulo');
             echo $this->Form->control('contenido');
         ?>
