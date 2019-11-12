@@ -253,7 +253,7 @@ INSERT INTO `campeonatos` (`id_campeonato`, `fecha_inicio`, `fecha_fin`) VALUES
 DROP TABLE IF EXISTS `categorias`;
 CREATE TABLE IF NOT EXISTS `categorias` (
   `campeonato_id` int(4) NOT NULL,
-  `tipo` enum('MASC','FEM') NOT NULL,
+  `tipo` enum('MASC','FEM','MIX') NOT NULL,
   `nivel` int(2) NOT NULL,
   PRIMARY KEY (`campeonato_id`,`tipo`,`nivel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
