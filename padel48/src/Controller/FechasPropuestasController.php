@@ -73,7 +73,7 @@ class FechasPropuestasController extends AppController
             $fecha = $fechasPropuesta->fecha;
             $fechaLimite = Time::now()->modify('+7 days');
 
-            if ($fecha <= $fechaLimite){
+            if ($fecha <= $fechaLimite && $fecha >= Time::now()){
                 if ($this->FechasPropuestas->save($fechasPropuesta)) {
                     $this->Flash->success(__('La fecha propuesta ha sido guardada.'));
 
