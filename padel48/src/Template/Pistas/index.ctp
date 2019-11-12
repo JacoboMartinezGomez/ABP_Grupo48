@@ -32,7 +32,7 @@
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $pista->num_pista]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $pista->num_pista]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pista->num_pista], ['confirm' => __('Are you sure you want to delete # {0}?', $pista->num_pista)]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pista->num_pista], ['confirm' => __('Esta seguro de que desea borra la pista Nº{0}?', $pista->num_pista)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

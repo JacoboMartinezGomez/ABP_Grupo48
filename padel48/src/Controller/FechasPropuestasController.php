@@ -39,14 +39,14 @@ class FechasPropuestasController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
-        $fechasPropuesta = $this->FechasPropuestas->get($id, [
-            'contain' => ['Enfrentamientos']
-        ]);
-
-        $this->set('fechasPropuesta', $fechasPropuesta);
-    }
+//    public function view($id = null)
+//    {
+//        $fechasPropuesta = $this->FechasPropuestas->get($id, [
+//            'contain' => ['Enfrentamientos']
+//        ]);
+//
+//        $this->set('fechasPropuesta', $fechasPropuesta);
+//    }
 
     /**
      * Add method
@@ -71,11 +71,11 @@ class FechasPropuestasController extends AppController
             $fechasPropuesta->enfrentamiento_id = $enfrentamientoID;
 
             if ($this->FechasPropuestas->save($fechasPropuesta)) {
-                $this->Flash->success(__('The fechas propuesta has been saved.'));
+                $this->Flash->success(__('La fecha propuesta ha sido guardada.'));
 
                 return $this->redirect(['action' => 'index', $enfrentamientoID]);
             }
-            $this->Flash->error(__('The fechas propuesta could not be saved. Please, try again.'));
+            $this->Flash->error(__('La fecha propuesta no ha podido ser guardada. Intentelo de nuevo.'));
         }
         $enfrentamientos = $this->FechasPropuestas->Enfrentamientos->find('list', ['limit' => 200]);
         $this->set(compact('fechasPropuesta', 'enfrentamientos'));
@@ -96,11 +96,11 @@ class FechasPropuestasController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $fechasPropuesta = $this->FechasPropuestas->patchEntity($fechasPropuesta, $this->request->getData());
             if ($this->FechasPropuestas->save($fechasPropuesta)) {
-                $this->Flash->success(__('The fechas propuesta has been saved.'));
+                $this->Flash->success(__('La fechas propuesta ha sido guardada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The fechas propuesta could not be saved. Please, try again.'));
+            $this->Flash->error(__('La fecha propuesta no ha podido ser guardada. Intentelo de nuevo.'));
         }
         $enfrentamientos = $this->FechasPropuestas->Enfrentamientos->find('list', ['limit' => 200]);
         $this->set(compact('fechasPropuesta', 'enfrentamientos'));
@@ -117,16 +117,19 @@ class FechasPropuestasController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $fechasPropuesta = $this->FechasPropuestas->get($id);
+
+        $enfrenamtiento_id = $fechasPropuesta->enfrentamiento_id;
+
         if ($this->FechasPropuestas->delete($fechasPropuesta)) {
-            $this->Flash->success(__('The fechas propuesta has been deleted.'));
+            $this->Flash->success(__('La fecha propuesta ha sido eliminada.'));
         } else {
-            $this->Flash->error(__('The fechas propuesta could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La fechas propuesta no ha podido ser eliminada. Intentelo de nuevo.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index', $enfrenamtiento_id]);
     }
 
-    public function aceptar($id){
+    public function acept($id){
         $fechaPropuesta = $this->FechasPropuestas->get($id);
         $enfrentamiento_id = $fechaPropuesta->enfrentamiento_id;
 
@@ -160,7 +163,7 @@ class FechasPropuestasController extends AppController
 
             $this->Flash->success('Fecha aceptada. Se ha reservado una pista correctamente . Todas la fechas propuestas han sido borradas');
 
-            return $this->redirect(['controller' => 'Entrentamientos','action' => 'index', $enfrentamiento_id]);
+            return $this->redirect(['controller' => 'Enfrentamientos','action' => 'index', $enfrentamiento_id]);
         }else{
             $this->FechasPropuestas->delete($fechaPropuesta);
             $this->Flash->error('No hay pista disponible para esa hora y dia. Por favor, seleccione otra fecha u hora.');
