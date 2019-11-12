@@ -1613,7 +1613,7 @@ INSERT INTO `reservas` (`id_usuario`, `id_pista`, `hora`, `fecha`) VALUES
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `dni` varchar(9) NOT NULL,
-  `passwd` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
   `nombre` varchar(10) NOT NULL,
   `apellido` varchar(20) NOT NULL,
   `email` varchar(20) NOT NULL,
