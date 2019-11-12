@@ -17,23 +17,13 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id_horario') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('pista_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora_inicio') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($horarios as $horario): ?>
             <tr>
-                <td><?= $this->Number->format($horario->id_horario) ?></td>
-                <td><?= $horario->has('pista') ? $this->Html->link($horario->pista->num_pista, ['controller' => 'Pistas', 'action' => 'view', $horario->pista->num_pista]) : '' ?></td>
-                <td><?= h($horario->hora_inicio) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $horario->id_horario]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $horario->id_horario]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $horario->id_horario], ['confirm' => __('Are you sure you want to delete # {0}?', $horario->id_horario)]) ?>
-                </td>
+                <td><?= h(date('H:i', strtotime($horario->hora_inicio))) ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
