@@ -5,3 +5,23 @@ Acordar fecha hora:
 	-Controller:
 		- Reservar pista al aceptar la hora y fecha
 		- (Hecho - Controlado a nivel de servidor, pero se muestran todas las fechas) Restringir fecha a mostrar. Solo una semana desde hoy. 
+
+Login y register + control del rol --David
+
+Generar Liga Regular --Fer
+
+Hacer portada-- Iria
+
+CSS --Iria
+
+Reservas --Jacobo
+
+Playoff --Jacobo
+
+Ranking
+
+
+BASE DE DATOS:
+	--Cambiar en enfrentamiento las claves de parejas o hacer un id en parejas
+	--Tabla parejas_disputan_enfrentamiento?? QUe hacemos con ella, esta bien la relacion?
+	--Hace falta campo ganador(idPareja)
