@@ -3,7 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\FechasPropuesta $fechasPropuesta
  */
-?>
+
+use Cake\I18n\Time; ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -18,7 +19,7 @@
         <legend><?= __('Add Fechas Propuesta') ?></legend>
         <?php
             echo $this->Form->control('hora', ['options' => $hora_inicio]);
-            echo $this->Form->control('fecha');
+            echo $this->Form->control('fecha', ['minYear' => date('Y'), 'maxYear' => date('Y')]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -70,13 +70,22 @@ class FechasPropuestasController extends AppController
             $fechasPropuesta = $this->FechasPropuestas->patchEntity($fechasPropuesta, $this->request->getData());
             $fechasPropuesta->enfrentamiento_id = $enfrentamientoID;
 
-            if ($this->FechasPropuestas->save($fechasPropuesta)) {
-                $this->Flash->success(__('La fecha propuesta ha sido guardada.'));
+            $fecha = $fechasPropuesta->fecha;
+            $fechaLimite = Time::now()->modify('+7 days');
 
-                return $this->redirect(['action' => 'index', $enfrentamientoID]);
+            if ($fecha <= $fechaLimite){
+                if ($this->FechasPropuestas->save($fechasPropuesta)) {
+                    $this->Flash->success(__('La fecha propuesta ha sido guardada.'));
+
+                    return $this->redirect(['action' => 'index', $enfrentamientoID]);
+                }
+                $this->Flash->error(__('La fecha propuesta no ha podido ser guardada. Intentelo de nuevo.'));
+            }else{
+                $this->Flash->error(__('La fecha propuesta excede el limite de una semana.'));
             }
-            $this->Flash->error(__('La fecha propuesta no ha podido ser guardada. Intentelo de nuevo.'));
+
         }
+
         $enfrentamientos = $this->FechasPropuestas->Enfrentamientos->find('list', ['limit' => 200]);
         $this->set(compact('fechasPropuesta', 'enfrentamientos'));
     }
