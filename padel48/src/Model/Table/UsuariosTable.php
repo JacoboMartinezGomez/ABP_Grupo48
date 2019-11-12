@@ -56,7 +56,14 @@ class UsuariosTable extends Table
         $validator
             ->scalar('dni')
             ->maxLength('dni', 9)
+            ->requirePresence('dni', 'create')
             ->allowEmptyString('dni', null, 'create');
+
+        $validator
+            ->scalar('password')
+            ->maxLength('password', 20)
+            ->requirePresence('password', 'create')
+            ->notEmptyString('password');
 
         $validator
             ->scalar('nombre')

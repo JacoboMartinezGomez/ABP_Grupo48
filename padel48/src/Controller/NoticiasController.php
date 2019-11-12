@@ -52,7 +52,7 @@ class NoticiasController extends AppController
     {
         //Obtener el usuario actual
         $currentUser = null;
-        $this->set('userId', $currentUser->usuario_id);
+        $this->set('userId', $this->Auth->user('dni'));
         $noticia = $this->Noticias->newEntity();
         if ($this->request->is('post')) {
             $noticia = $this->Noticias->patchEntity($noticia, $this->request->getData());
