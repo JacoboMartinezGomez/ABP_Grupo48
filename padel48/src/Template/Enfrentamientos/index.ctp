@@ -33,7 +33,7 @@
                 <td><?= h($enfrentamiento->id_capitan1) ?></td>
                 <td><?= h($enfrentamiento->id_capitan2) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->id_grupo) ?></td>
-                <td><?= h($enfrentamiento->hora) ?></td>
+                <td><?= h(h(date('H:i', strtotime($enfrentamiento->hora)))) ?></td>
                 <td><?= h($enfrentamiento->fecha) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->fase) ?></td>
                 <td class="actions">
