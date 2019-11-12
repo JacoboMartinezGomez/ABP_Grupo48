@@ -28,13 +28,13 @@
             <?php foreach ($noticias as $noticia): ?>
             <tr>
                 <td><?= $this->Number->format($noticia->id_noticia) ?></td>
-                <td><?= $noticia->has('usuario') ? $this->Html->link($noticia->usuario->dni, ['controller' => 'Usuarios', 'action' => 'view', $noticia->usuario->dni]) : '' ?></td>
+                <td><?= $noticia->has('usuario') ? $this->Html->link($noticia->usuario->nombre, ['controller' => 'Usuarios', 'action' => 'view', $noticia->usuario->dni]) : '' ?></td>
                 <td><?= h($noticia->titulo) ?></td>
                 <td><?= h($noticia->contenido) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $noticia->id_noticia]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $noticia->id_noticia]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $noticia->id_noticia], ['confirm' => __('Are you sure you want to delete # {0}?', $noticia->id_noticia)]) ?>
+<!--                    --><?//= $this->Html->link(__('Edit'), ['action' => 'edit', $noticia->id_noticia]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $noticia->id_noticia], ['confirm' => __('Esta seguro que desea eliminar la noticia Nº{0}?', $noticia->id_noticia)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

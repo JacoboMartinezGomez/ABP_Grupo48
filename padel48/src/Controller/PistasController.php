@@ -54,7 +54,7 @@ class PistasController extends AppController
             if($pista->tipo == 'PIEDRA' | $pista->tipo == 'MOQUETA'){
                 if($pista->lugar == 'EXTERIOR' | $pista->lugar == 'INTERIOR') {
                     if ($this->Pistas->save($pista)) {
-                        $this->Flash->success(__('The pista has been saved.'));
+                        $this->Flash->success(__('La pista ha sido guardada.'));
 
                         return $this->redirect(['action' => 'index']);
                     }
@@ -62,7 +62,7 @@ class PistasController extends AppController
             }
 
 
-            $this->Flash->error(__('The pista could not be saved. Please, try again.'.$pista->tipo));
+            $this->Flash->error(__('No se ha podido guardar la pista. Intentelo de nuevo'));
         }
         $this->set(compact('pista'));
     }
@@ -84,11 +84,11 @@ class PistasController extends AppController
             if ($pista->tipo == 'PIEDRA' | $pista->tipo == 'MOQUETA') {
                 if ($pista->lugar == 'EXTERIOR' | $pista->lugar == 'INTERIOR') {
                     if ($this->Pistas->save($pista)) {
-                        $this->Flash->success(__('The pista has been saved.'));
+                        $this->Flash->success(__('La pista ha sido guardada.'));
 
                         return $this->redirect(['action' => 'index']);
                     }
-                    $this->Flash->error(__('The pista could not be saved. Please, try again.'));
+                    $this->Flash->error(__('No se ha podido guardar la pista. Intentelo de nuevo.'));
                 }
             }
         }
@@ -107,9 +107,9 @@ class PistasController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pista = $this->Pistas->get($id);
         if ($this->Pistas->delete($pista)) {
-            $this->Flash->success(__('The pista has been deleted.'));
+            $this->Flash->success(__('La pista ha sido borrada.'));
         } else {
-            $this->Flash->error(__('The pista could not be deleted. Please, try again.'));
+            $this->Flash->error(__('No se ha podido borrar la pista. Intentelo de nuevo.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -4,17 +4,18 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Partido Entity
+ * FechasPropuesta Entity
  *
- * @property string $usuario_id
- * @property string $usuario_id2
- * @property string $usuario_id3
- * @property string $usuario_id4
+ * @property int $id
+ * @property int $enfrentamiento_id
+ * @property string|null $capitan1_id
+ * @property string|null $capitan2_id
  * @property \Cake\I18n\FrozenTime $hora
+ * @property \Cake\I18n\FrozenDate $fecha
  *
- * @property \App\Model\Entity\Usuario $usuario
+ * @property \App\Model\Entity\Enfrentamiento $enfrentamiento
  */
-class Partido extends Entity
+class FechasPropuesta extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -26,7 +27,11 @@ class Partido extends Entity
      * @var array
      */
     protected $_accessible = [
+        'enfrentamiento_id' => true,
+        'capitan1_id' => true,
+        'capitan2_id' => true,
         'hora' => true,
-        'usuario' => true
+        'fecha' => true,
+        'enfrentamiento' => true
     ];
 }

@@ -19,12 +19,15 @@ class HorariosController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Pistas']
-        ];
-        $horarios = $this->paginate($this->Horarios);
+//        $this->paginate = [
+//            'contain' => ['Pistas']
+//        ];
+//        $horarios = $this->paginate($this->Horarios);
+//        $this->set(compact('horarios'));
 
-        $this->set(compact('horarios'));
+        $query = $this->Horarios->find('all')->select(['hora_inicio'])->distinct();
+        $this->set('horarios', $this->paginate($query));
+
     }
 
     /**
@@ -71,7 +74,7 @@ class HorariosController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function changeHours($id = null)
     {
         $horario = $this->Horarios->get($id, [
             'contain' => []
