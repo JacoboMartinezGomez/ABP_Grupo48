@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2019 a las 20:31:18
+-- Tiempo de generación: 09-11-2019 a las 21:02:58
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -30,6 +30,7 @@ USE `padel48`;
 -- Estructura de tabla para la tabla `campeonatos`
 --
 
+DROP TABLE IF EXISTS `campeonatos`;
 CREATE TABLE IF NOT EXISTS `campeonatos` (
   `id_campeonato` int(4) NOT NULL AUTO_INCREMENT,
   `fecha_inicio` date NOT NULL,
@@ -249,6 +250,7 @@ INSERT INTO `campeonatos` (`id_campeonato`, `fecha_inicio`, `fecha_fin`) VALUES
 -- Estructura de tabla para la tabla `categorias`
 --
 
+DROP TABLE IF EXISTS `categorias`;
 CREATE TABLE IF NOT EXISTS `categorias` (
   `campeonato_id` int(4) NOT NULL,
   `tipo` enum('MASC','FEM','MIX') NOT NULL,
@@ -468,6 +470,7 @@ INSERT INTO `categorias` (`campeonato_id`, `tipo`, `nivel`) VALUES
 -- Estructura de tabla para la tabla `enfrentamientos`
 --
 
+DROP TABLE IF EXISTS `enfrentamientos`;
 CREATE TABLE IF NOT EXISTS `enfrentamientos` (
   `id_enfrentamiento` int(6) NOT NULL AUTO_INCREMENT,
   `id_capitan1` varchar(9) NOT NULL,
@@ -691,9 +694,30 @@ INSERT INTO `enfrentamientos` (`id_enfrentamiento`, `id_capitan1`, `id_capitan2`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `fechas_propuestas`
+--
+
+DROP TABLE IF EXISTS `fechas_propuestas`;
+CREATE TABLE IF NOT EXISTS `fechas_propuestas` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `enfrentamiento_id` int(6) NOT NULL,
+  `capitan1_id` varchar(9) DEFAULT NULL,
+  `capitan2_id` varchar(9) DEFAULT NULL,
+  `hora` time NOT NULL,
+  `fecha` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `enfrentamiento_ibfk_1` (`enfrentamiento_id`),
+  KEY `enfrentamiento_ibfk_2` (`capitan1_id`),
+  KEY `enfrentamiento_ibfk_3` (`capitan2_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `grupos`
 --
 
+DROP TABLE IF EXISTS `grupos`;
 CREATE TABLE IF NOT EXISTS `grupos` (
   `id_grupo` int(4) NOT NULL AUTO_INCREMENT,
   `campeonato_id` int(4) NOT NULL,
@@ -915,6 +939,7 @@ INSERT INTO `grupos` (`id_grupo`, `campeonato_id`, `tipo`, `nivel`) VALUES
 -- Estructura de tabla para la tabla `horarios`
 --
 
+DROP TABLE IF EXISTS `horarios`;
 CREATE TABLE IF NOT EXISTS `horarios` (
   `id_horario` int(2) NOT NULL,
   `pista_id` int(2) NOT NULL,
@@ -928,240 +953,240 @@ CREATE TABLE IF NOT EXISTS `horarios` (
 --
 
 INSERT INTO `horarios` (`id_horario`, `pista_id`, `hora_inicio`) VALUES
-(1, 1, '009:00:00'),
-(2, 1, '010:30:00'),
-(3, 1, '012:00:00'),
-(4, 1, '013:30:00'),
-(5, 1, '015:00:00'),
-(6, 1, '016:30:00'),
-(7, 1, '018:00:00'),
-(8, 1, '019:30:00'),
-(9, 1, '021:00:00'),
-(10, 2, '009:00:00'),
-(11, 2, '010:30:00'),
-(12, 2, '012:00:00'),
-(13, 2, '013:30:00'),
-(14, 2, '015:00:00'),
-(15, 2, '016:30:00'),
-(16, 2, '018:00:00'),
-(17, 2, '019:30:00'),
-(18, 2, '021:00:00'),
-(19, 3, '009:00:00'),
-(20, 3, '010:30:00'),
-(21, 3, '012:00:00'),
-(22, 3, '013:30:00'),
-(23, 3, '015:00:00'),
-(24, 3, '016:30:00'),
-(25, 3, '018:00:00'),
-(26, 3, '019:30:00'),
-(27, 3, '021:00:00'),
-(28, 4, '009:00:00'),
-(29, 4, '010:30:00'),
-(30, 4, '012:00:00'),
-(31, 4, '013:30:00'),
-(32, 4, '015:00:00'),
-(33, 4, '016:30:00'),
-(34, 4, '018:00:00'),
-(35, 4, '019:30:00'),
-(36, 4, '021:00:00'),
-(37, 5, '009:00:00'),
-(38, 5, '010:30:00'),
-(39, 5, '012:00:00'),
-(40, 5, '013:30:00'),
-(41, 5, '015:00:00'),
-(42, 5, '016:30:00'),
-(43, 5, '018:00:00'),
-(44, 5, '019:30:00'),
-(45, 5, '021:00:00'),
-(46, 6, '009:00:00'),
-(47, 6, '010:30:00'),
-(48, 6, '012:00:00'),
-(49, 6, '013:30:00'),
-(50, 6, '015:00:00'),
-(51, 6, '016:30:00'),
-(52, 6, '018:00:00'),
-(53, 6, '019:30:00'),
-(54, 6, '021:00:00'),
-(55, 7, '009:00:00'),
-(56, 7, '010:30:00'),
-(57, 7, '012:00:00'),
-(58, 7, '013:30:00'),
-(59, 7, '015:00:00'),
-(60, 7, '016:30:00'),
-(61, 7, '018:00:00'),
-(62, 7, '019:30:00'),
-(63, 7, '021:00:00'),
-(64, 8, '009:00:00'),
-(65, 8, '010:30:00'),
-(66, 8, '012:00:00'),
-(67, 8, '013:30:00'),
-(68, 8, '015:00:00'),
-(69, 8, '016:30:00'),
-(70, 8, '018:00:00'),
-(71, 8, '019:30:00'),
-(72, 8, '021:00:00'),
-(73, 9, '009:00:00'),
-(74, 9, '010:30:00'),
-(75, 9, '012:00:00'),
-(76, 9, '013:30:00'),
-(77, 9, '015:00:00'),
-(78, 9, '016:30:00'),
-(79, 9, '018:00:00'),
-(80, 9, '019:30:00'),
-(81, 9, '021:00:00'),
-(82, 10, '009:00:00'),
-(83, 10, '010:30:00'),
-(84, 10, '012:00:00'),
-(85, 10, '013:30:00'),
-(86, 10, '015:00:00'),
-(87, 10, '016:30:00'),
-(88, 10, '018:00:00'),
-(89, 10, '019:30:00'),
-(90, 10, '021:00:00'),
-(91, 11, '009:00:00'),
-(92, 11, '010:30:00'),
-(93, 11, '012:00:00'),
-(94, 11, '013:30:00'),
-(95, 11, '015:00:00'),
-(96, 11, '016:30:00'),
-(97, 11, '018:00:00'),
-(98, 11, '019:30:00'),
-(99, 11, '021:00:00'),
-(100, 12, '009:00:00'),
-(101, 12, '010:30:00'),
-(102, 12, '012:00:00'),
-(103, 12, '013:30:00'),
-(104, 12, '015:00:00'),
-(105, 12, '016:30:00'),
-(106, 12, '018:00:00'),
-(107, 12, '019:30:00'),
-(108, 12, '021:00:00'),
-(109, 13, '009:00:00'),
-(110, 13, '010:30:00'),
-(111, 13, '012:00:00'),
-(112, 13, '013:30:00'),
-(113, 13, '015:00:00'),
-(114, 13, '016:30:00'),
-(115, 13, '018:00:00'),
-(116, 13, '019:30:00'),
-(117, 13, '021:00:00'),
-(118, 14, '009:00:00'),
-(119, 14, '010:30:00'),
-(120, 14, '012:00:00'),
-(121, 14, '013:30:00'),
-(122, 14, '015:00:00'),
-(123, 14, '016:30:00'),
-(124, 14, '018:00:00'),
-(125, 14, '019:30:00'),
-(126, 14, '021:00:00'),
-(127, 15, '009:00:00'),
-(128, 15, '010:30:00'),
-(129, 15, '012:00:00'),
-(130, 15, '013:30:00'),
-(131, 15, '015:00:00'),
-(132, 15, '016:30:00'),
-(133, 15, '018:00:00'),
-(134, 15, '019:30:00'),
-(135, 15, '021:00:00'),
-(136, 16, '009:00:00'),
-(137, 16, '010:30:00'),
-(138, 16, '012:00:00'),
-(139, 16, '013:30:00'),
-(140, 16, '015:00:00'),
-(141, 16, '016:30:00'),
-(142, 16, '018:00:00'),
-(143, 16, '019:30:00'),
-(144, 16, '021:00:00'),
-(145, 17, '009:00:00'),
-(146, 17, '010:30:00'),
-(147, 17, '012:00:00'),
-(148, 17, '013:30:00'),
-(149, 17, '015:00:00'),
-(150, 17, '016:30:00'),
-(151, 17, '018:00:00'),
-(152, 17, '019:30:00'),
-(153, 17, '021:00:00'),
-(154, 18, '009:00:00'),
-(155, 18, '010:30:00'),
-(156, 18, '012:00:00'),
-(157, 18, '013:30:00'),
-(158, 18, '015:00:00'),
-(159, 18, '016:30:00'),
-(160, 18, '018:00:00'),
-(161, 18, '019:30:00'),
-(162, 18, '021:00:00'),
-(163, 19, '009:00:00'),
-(164, 19, '010:30:00'),
-(165, 19, '012:00:00'),
-(166, 19, '013:30:00'),
-(167, 19, '015:00:00'),
-(168, 19, '016:30:00'),
-(169, 19, '018:00:00'),
-(170, 19, '019:30:00'),
-(171, 19, '021:00:00'),
-(172, 20, '009:00:00'),
-(173, 20, '010:30:00'),
-(174, 20, '012:00:00'),
-(175, 20, '013:30:00'),
-(176, 20, '015:00:00'),
-(177, 20, '016:30:00'),
-(178, 20, '018:00:00'),
-(179, 20, '019:30:00'),
-(180, 20, '021:00:00'),
-(181, 21, '009:00:00'),
-(182, 21, '010:30:00'),
-(183, 21, '012:00:00'),
-(184, 21, '013:30:00'),
-(185, 21, '015:00:00'),
-(186, 21, '016:30:00'),
-(187, 21, '018:00:00'),
-(188, 21, '019:30:00'),
-(189, 21, '021:00:00'),
-(190, 22, '009:00:00'),
-(191, 22, '010:30:00'),
-(192, 22, '012:00:00'),
-(193, 22, '013:30:00'),
-(194, 22, '015:00:00'),
-(195, 22, '016:30:00'),
-(196, 22, '018:00:00'),
-(197, 22, '019:30:00'),
-(198, 22, '021:00:00'),
-(199, 23, '009:00:00'),
-(200, 23, '010:30:00'),
-(201, 23, '012:00:00'),
-(202, 23, '013:30:00'),
-(203, 23, '015:00:00'),
-(204, 23, '016:30:00'),
-(205, 23, '018:00:00'),
-(206, 23, '019:30:00'),
-(207, 23, '021:00:00'),
-(208, 24, '009:00:00'),
-(209, 24, '010:30:00'),
-(210, 24, '012:00:00'),
-(211, 24, '013:30:00'),
-(212, 24, '015:00:00'),
-(213, 24, '016:30:00'),
-(214, 24, '018:00:00'),
-(215, 24, '019:30:00'),
-(216, 24, '021:00:00'),
-(217, 25, '009:00:00'),
-(218, 25, '010:30:00'),
-(219, 25, '012:00:00'),
-(220, 25, '013:30:00'),
-(221, 25, '015:00:00'),
-(222, 25, '016:30:00'),
-(223, 25, '018:00:00'),
-(224, 25, '019:30:00'),
-(225, 25, '021:00:00'),
-(226, 26, '009:00:00'),
-(227, 26, '010:30:00'),
-(228, 26, '012:00:00'),
-(229, 26, '013:30:00'),
-(230, 26, '015:00:00'),
-(231, 26, '016:30:00'),
-(232, 26, '018:00:00'),
-(233, 26, '019:30:00'),
-(234, 26, '021:00:00');
+(1, 1, '09:00:00'),
+(2, 1, '10:30:00'),
+(3, 1, '12:00:00'),
+(4, 1, '13:30:00'),
+(5, 1, '15:00:00'),
+(6, 1, '16:30:00'),
+(7, 1, '18:00:00'),
+(8, 1, '19:30:00'),
+(9, 1, '21:00:00'),
+(10, 2, '09:00:00'),
+(11, 2, '10:30:00'),
+(12, 2, '12:00:00'),
+(13, 2, '13:30:00'),
+(14, 2, '15:00:00'),
+(15, 2, '16:30:00'),
+(16, 2, '18:00:00'),
+(17, 2, '19:30:00'),
+(18, 2, '21:00:00'),
+(19, 3, '09:00:00'),
+(20, 3, '10:30:00'),
+(21, 3, '12:00:00'),
+(22, 3, '13:30:00'),
+(23, 3, '15:00:00'),
+(24, 3, '16:30:00'),
+(25, 3, '18:00:00'),
+(26, 3, '19:30:00'),
+(27, 3, '21:00:00'),
+(28, 4, '09:00:00'),
+(29, 4, '10:30:00'),
+(30, 4, '12:00:00'),
+(31, 4, '13:30:00'),
+(32, 4, '15:00:00'),
+(33, 4, '16:30:00'),
+(34, 4, '18:00:00'),
+(35, 4, '19:30:00'),
+(36, 4, '21:00:00'),
+(37, 5, '09:00:00'),
+(38, 5, '10:30:00'),
+(39, 5, '12:00:00'),
+(40, 5, '13:30:00'),
+(41, 5, '15:00:00'),
+(42, 5, '16:30:00'),
+(43, 5, '18:00:00'),
+(44, 5, '19:30:00'),
+(45, 5, '21:00:00'),
+(46, 6, '09:00:00'),
+(47, 6, '10:30:00'),
+(48, 6, '12:00:00'),
+(49, 6, '13:30:00'),
+(50, 6, '15:00:00'),
+(51, 6, '16:30:00'),
+(52, 6, '18:00:00'),
+(53, 6, '19:30:00'),
+(54, 6, '21:00:00'),
+(55, 7, '09:00:00'),
+(56, 7, '10:30:00'),
+(57, 7, '12:00:00'),
+(58, 7, '13:30:00'),
+(59, 7, '15:00:00'),
+(60, 7, '16:30:00'),
+(61, 7, '18:00:00'),
+(62, 7, '19:30:00'),
+(63, 7, '21:00:00'),
+(64, 8, '09:00:00'),
+(65, 8, '10:30:00'),
+(66, 8, '12:00:00'),
+(67, 8, '13:30:00'),
+(68, 8, '15:00:00'),
+(69, 8, '16:30:00'),
+(70, 8, '18:00:00'),
+(71, 8, '19:30:00'),
+(72, 8, '21:00:00'),
+(73, 9, '09:00:00'),
+(74, 9, '10:30:00'),
+(75, 9, '12:00:00'),
+(76, 9, '13:30:00'),
+(77, 9, '15:00:00'),
+(78, 9, '16:30:00'),
+(79, 9, '18:00:00'),
+(80, 9, '19:30:00'),
+(81, 9, '21:00:00'),
+(82, 10, '09:00:00'),
+(83, 10, '10:30:00'),
+(84, 10, '12:00:00'),
+(85, 10, '13:30:00'),
+(86, 10, '15:00:00'),
+(87, 10, '16:30:00'),
+(88, 10, '18:00:00'),
+(89, 10, '19:30:00'),
+(90, 10, '21:00:00'),
+(91, 11, '09:00:00'),
+(92, 11, '10:30:00'),
+(93, 11, '12:00:00'),
+(94, 11, '13:30:00'),
+(95, 11, '15:00:00'),
+(96, 11, '16:30:00'),
+(97, 11, '18:00:00'),
+(98, 11, '19:30:00'),
+(99, 11, '21:00:00'),
+(100, 12, '09:00:00'),
+(101, 12, '10:30:00'),
+(102, 12, '12:00:00'),
+(103, 12, '13:30:00'),
+(104, 12, '15:00:00'),
+(105, 12, '16:30:00'),
+(106, 12, '18:00:00'),
+(107, 12, '19:30:00'),
+(108, 12, '21:00:00'),
+(109, 13, '09:00:00'),
+(110, 13, '10:30:00'),
+(111, 13, '12:00:00'),
+(112, 13, '13:30:00'),
+(113, 13, '15:00:00'),
+(114, 13, '16:30:00'),
+(115, 13, '18:00:00'),
+(116, 13, '19:30:00'),
+(117, 13, '21:00:00'),
+(118, 14, '09:00:00'),
+(119, 14, '10:30:00'),
+(120, 14, '12:00:00'),
+(121, 14, '13:30:00'),
+(122, 14, '15:00:00'),
+(123, 14, '16:30:00'),
+(124, 14, '18:00:00'),
+(125, 14, '19:30:00'),
+(126, 14, '21:00:00'),
+(127, 15, '09:00:00'),
+(128, 15, '10:30:00'),
+(129, 15, '12:00:00'),
+(130, 15, '13:30:00'),
+(131, 15, '15:00:00'),
+(132, 15, '16:30:00'),
+(133, 15, '18:00:00'),
+(134, 15, '19:30:00'),
+(135, 15, '21:00:00'),
+(136, 16, '09:00:00'),
+(137, 16, '10:30:00'),
+(138, 16, '12:00:00'),
+(139, 16, '13:30:00'),
+(140, 16, '15:00:00'),
+(141, 16, '16:30:00'),
+(142, 16, '18:00:00'),
+(143, 16, '19:30:00'),
+(144, 16, '21:00:00'),
+(145, 17, '09:00:00'),
+(146, 17, '10:30:00'),
+(147, 17, '12:00:00'),
+(148, 17, '13:30:00'),
+(149, 17, '15:00:00'),
+(150, 17, '16:30:00'),
+(151, 17, '18:00:00'),
+(152, 17, '19:30:00'),
+(153, 17, '21:00:00'),
+(154, 18, '09:00:00'),
+(155, 18, '10:30:00'),
+(156, 18, '12:00:00'),
+(157, 18, '13:30:00'),
+(158, 18, '15:00:00'),
+(159, 18, '16:30:00'),
+(160, 18, '18:00:00'),
+(161, 18, '19:30:00'),
+(162, 18, '21:00:00'),
+(163, 19, '09:00:00'),
+(164, 19, '10:30:00'),
+(165, 19, '12:00:00'),
+(166, 19, '13:30:00'),
+(167, 19, '15:00:00'),
+(168, 19, '16:30:00'),
+(169, 19, '18:00:00'),
+(170, 19, '19:30:00'),
+(171, 19, '21:00:00'),
+(172, 20, '09:00:00'),
+(173, 20, '10:30:00'),
+(174, 20, '12:00:00'),
+(175, 20, '13:30:00'),
+(176, 20, '15:00:00'),
+(177, 20, '16:30:00'),
+(178, 20, '18:00:00'),
+(179, 20, '19:30:00'),
+(180, 20, '21:00:00'),
+(181, 21, '09:00:00'),
+(182, 21, '10:30:00'),
+(183, 21, '12:00:00'),
+(184, 21, '13:30:00'),
+(185, 21, '15:00:00'),
+(186, 21, '16:30:00'),
+(187, 21, '18:00:00'),
+(188, 21, '19:30:00'),
+(189, 21, '21:00:00'),
+(190, 22, '09:00:00'),
+(191, 22, '10:30:00'),
+(192, 22, '12:00:00'),
+(193, 22, '13:30:00'),
+(194, 22, '15:00:00'),
+(195, 22, '16:30:00'),
+(196, 22, '18:00:00'),
+(197, 22, '19:30:00'),
+(198, 22, '21:00:00'),
+(199, 23, '09:00:00'),
+(200, 23, '10:30:00'),
+(201, 23, '12:00:00'),
+(202, 23, '13:30:00'),
+(203, 23, '15:00:00'),
+(204, 23, '16:30:00'),
+(205, 23, '18:00:00'),
+(206, 23, '19:30:00'),
+(207, 23, '21:00:00'),
+(208, 24, '09:00:00'),
+(209, 24, '10:30:00'),
+(210, 24, '12:00:00'),
+(211, 24, '13:30:00'),
+(212, 24, '15:00:00'),
+(213, 24, '16:30:00'),
+(214, 24, '18:00:00'),
+(215, 24, '19:30:00'),
+(216, 24, '21:00:00'),
+(217, 25, '09:00:00'),
+(218, 25, '10:30:00'),
+(219, 25, '12:00:00'),
+(220, 25, '13:30:00'),
+(221, 25, '15:00:00'),
+(222, 25, '16:30:00'),
+(223, 25, '18:00:00'),
+(224, 25, '19:30:00'),
+(225, 25, '21:00:00'),
+(226, 26, '09:00:00'),
+(227, 26, '10:30:00'),
+(228, 26, '12:00:00'),
+(229, 26, '13:30:00'),
+(230, 26, '15:00:00'),
+(231, 26, '16:30:00'),
+(232, 26, '18:00:00'),
+(233, 26, '19:30:00'),
+(234, 26, '21:00:00');
 
 -- --------------------------------------------------------
 
@@ -1169,6 +1194,7 @@ INSERT INTO `horarios` (`id_horario`, `pista_id`, `hora_inicio`) VALUES
 -- Estructura de tabla para la tabla `noticias`
 --
 
+DROP TABLE IF EXISTS `noticias`;
 CREATE TABLE IF NOT EXISTS `noticias` (
   `id_noticia` int(100) NOT NULL AUTO_INCREMENT,
   `usuario_id` varchar(9) NOT NULL,
@@ -1240,6 +1266,7 @@ INSERT INTO `noticias` (`id_noticia`, `usuario_id`, `titulo`, `contenido`) VALUE
 -- Estructura de tabla para la tabla `parejas`
 --
 
+DROP TABLE IF EXISTS `parejas`;
 CREATE TABLE IF NOT EXISTS `parejas` (
   `id_capitan` varchar(9) NOT NULL,
   `id_pareja` varchar(9) NOT NULL,
@@ -1249,9 +1276,10 @@ CREATE TABLE IF NOT EXISTS `parejas` (
   `nivel` int(2) NOT NULL,
   `puntuacion` int(2) NOT NULL,
   `clasificado` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id_capitan`,`id_pareja`,`campeonato_id`, `id_grupo`) USING BTREE,
+  PRIMARY KEY (`id_capitan`,`id_pareja`,`campeonato_id`,`id_grupo`) USING BTREE,
   KEY `pareja_ibfk_3` (`id_pareja`),
-  KEY `pareja_ibfk_1` (`campeonato_id`)
+  KEY `pareja_ibfk_1` (`campeonato_id`),
+  KEY `pareja_ibfk_4` (`id_grupo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1366,6 +1394,7 @@ INSERT INTO `parejas` (`id_capitan`, `id_pareja`, `campeonato_id`, `id_grupo`, `
 -- Estructura de tabla para la tabla `parejas_disputan_enfrentamiento`
 --
 
+DROP TABLE IF EXISTS `parejas_disputan_enfrentamiento`;
 CREATE TABLE IF NOT EXISTS `parejas_disputan_enfrentamiento` (
   `id_capitan` varchar(9) NOT NULL,
   `id_pareja` varchar(9) NOT NULL,
@@ -1374,7 +1403,8 @@ CREATE TABLE IF NOT EXISTS `parejas_disputan_enfrentamiento` (
   PRIMARY KEY (`id_capitan`,`id_pareja`,`campeonato_id`,`id_enfrentamiento`),
   KEY `parDisEnf_ibfk_1` (`campeonato_id`),
   KEY `parDisEnf_ibfk_3` (`id_pareja`),
-  KEY `parDisEnf_ibfk_4` (`id_enfrentamiento`)
+  KEY `parDisEnf_ibfk_4` (`id_enfrentamiento`),
+  KEY `id_capitan` (`id_capitan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1383,6 +1413,7 @@ CREATE TABLE IF NOT EXISTS `parejas_disputan_enfrentamiento` (
 -- Estructura de tabla para la tabla `partidos`
 --
 
+DROP TABLE IF EXISTS `partidos`;
 CREATE TABLE IF NOT EXISTS `partidos` (
   `usuario_id` varchar(9) NOT NULL,
   `usuario_id2` varchar(9) NOT NULL,
@@ -1482,6 +1513,7 @@ INSERT INTO `partidos` (`usuario_id`, `usuario_id2`, `usuario_id3`, `usuario_id4
 -- Estructura de tabla para la tabla `pistas`
 --
 
+DROP TABLE IF EXISTS `pistas`;
 CREATE TABLE IF NOT EXISTS `pistas` (
   `num_pista` int(2) NOT NULL AUTO_INCREMENT,
   `tipo` enum('PIEDRA','MOQUETA') CHARACTER SET latin1 NOT NULL,
@@ -1536,6 +1568,7 @@ INSERT INTO `pistas` (`num_pista`, `tipo`, `lugar`) VALUES
 -- Estructura de tabla para la tabla `reservas`
 --
 
+DROP TABLE IF EXISTS `reservas`;
 CREATE TABLE IF NOT EXISTS `reservas` (
   `id_usuario` varchar(9) NOT NULL,
   `id_pista` int(2) NOT NULL,
@@ -1577,6 +1610,7 @@ INSERT INTO `reservas` (`id_usuario`, `id_pista`, `hora`, `fecha`) VALUES
 -- Estructura de tabla para la tabla `usuarios`
 --
 
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `dni` varchar(9) NOT NULL,
   `nombre` varchar(10) NOT NULL,
@@ -2206,64 +2240,29 @@ ALTER TABLE `categorias`
   ADD CONSTRAINT `categorias_ibfk_1` FOREIGN KEY (`campeonato_id`) REFERENCES `campeonatos` (`id_campeonato`);
 
 --
--- Filtros para la tabla `enfrentamientos`
+-- Filtros para la tabla `fechas_propuestas`
 --
-ALTER TABLE `enfrentamientos`
-  ADD CONSTRAINT `enfrentamientos_ibfk_1` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `enfrentamientos_ibfk_2` FOREIGN KEY (`id_capitan1`) REFERENCES `parejas` (`id_capitan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `enfrentamientos_ibfk_3` FOREIGN KEY (`id_capitan2`) REFERENCES `parejas` (`id_capitan`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `grupos`
---
-ALTER TABLE `grupos`
-  ADD CONSTRAINT `grupos_ibfk_1` FOREIGN KEY (`campeonato_id`) REFERENCES `categorias` (`campeonato_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `horarios`
---
-ALTER TABLE `horarios`
-  ADD CONSTRAINT `horarios_ibfk_1` FOREIGN KEY (`pista_id`) REFERENCES `pistas` (`num_pista`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `noticias`
---
-ALTER TABLE `noticias`
-  ADD CONSTRAINT `noticias_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `fechas_propuestas`
+  ADD CONSTRAINT `fechas_propuestas_ibfk_1` FOREIGN KEY (`enfrentamiento_id`) REFERENCES `enfrentamientos` (`id_enfrentamiento`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fechas_propuestas_ibfk_2` FOREIGN KEY (`capitan1_id`) REFERENCES `enfrentamientos` (`id_capitan1`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fechas_propuestas_ibfk_3` FOREIGN KEY (`capitan2_id`) REFERENCES `enfrentamientos` (`id_capitan2`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `parejas`
 --
 ALTER TABLE `parejas`
+  ADD CONSTRAINT `pareja_ibfk_3` FOREIGN KEY (`id_pareja`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pareja_ibfk_4` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_grupo`),
   ADD CONSTRAINT `parejas_ibfk_1` FOREIGN KEY (`campeonato_id`) REFERENCES `categorias` (`campeonato_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `parejas_ibfk_2` FOREIGN KEY (`id_capitan`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `parejas_ibfk_3` FOREIGN KEY (`id_pareja`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `parejas_ibfk_2` FOREIGN KEY (`id_capitan`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `parejas_disputan_enfrentamiento`
 --
 ALTER TABLE `parejas_disputan_enfrentamiento`
-  ADD CONSTRAINT `parDisEnf_ibfk_1` FOREIGN KEY (`campeonato_id`) REFERENCES `parejas` (`campeonato_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `parDisEnf_ibfk_2` FOREIGN KEY (`id_capitan`) REFERENCES `parejas` (`id_capitan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `parDisEnf_ibfk_3` FOREIGN KEY (`id_pareja`) REFERENCES `parejas` (`id_pareja`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `parDisEnf_ibfk_4` FOREIGN KEY (`id_enfrentamiento`) REFERENCES `enfrentamientos` (`id_enfrentamiento`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `partidos`
---
-ALTER TABLE `partidos`
-  ADD CONSTRAINT `partidos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `partidos_ibfk_2` FOREIGN KEY (`usuario_id2`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `partidos_ibfk_3` FOREIGN KEY (`usuario_id3`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `partidos_ibfk_4` FOREIGN KEY (`usuario_id4`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `reservas`
---
-ALTER TABLE `reservas`
-  ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`id_pista`) REFERENCES `pistas` (`num_pista`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `parejas_disputan_enfrentamiento_ibfk_2` FOREIGN KEY (`id_enfrentamiento`) REFERENCES `enfrentamientos` (`id_enfrentamiento`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `parejas_disputan_enfrentamiento_ibfk_3` FOREIGN KEY (`id_capitan`) REFERENCES `parejas` (`id_capitan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `parejas_disputan_enfrentamiento_ibfk_4` FOREIGN KEY (`id_pareja`) REFERENCES `parejas` (`id_pareja`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

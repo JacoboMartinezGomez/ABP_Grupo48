@@ -1,0 +1,7 @@
+Acordar fecha hora:
+	-Vista
+		-Mostrar propuestas propias y del rival. Dejar solo borrar y editar las propias y aceptar las del rival
+		-Mostrar mensaje indicando el limite de reservas (Ej.. 1 semana max)
+	-Controller:
+		- Reservar pista al aceptar la hora y fecha
+		- (Hecho - Controlado a nivel de servidor, pero se muestran todas las fechas) Restringir fecha a mostrar. Solo una semana desde hoy. 
