@@ -85,7 +85,11 @@ class UsuariosTable extends Table
         $validator
             ->scalar('sexo')
             ->requirePresence('sexo', 'create')
-            ->notEmptyString('sexo');
+            ->notEmptyString('sexo')
+            ->add('sexo', 'inList', [
+                'rule' => ['inList', ['MASC', 'FEM']],
+                'message' => 'Por favor, introduzca un sexo valido'
+            ]);
 
         $validator
             ->integer('telefono')
@@ -95,7 +99,11 @@ class UsuariosTable extends Table
         $validator
             ->scalar('rol')
             ->requirePresence('rol', 'create')
-            ->notEmptyString('rol');
+            ->notEmptyString('rol')
+            ->add('rol', 'inList', [
+                'rule' => ['inList', ['ADMIN', 'DEPORTISTA', 'PROFESOR']],
+                'message' => 'Por favor, introduzca un rol valido'
+            ]);
 
         $validator
             ->integer('numero_pistas')
