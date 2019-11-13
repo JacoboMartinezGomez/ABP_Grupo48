@@ -53,11 +53,13 @@ class CampeonatosController extends AppController
             $campeonato = $this->Campeonatos->patchEntity($campeonato, $this->request->getData());
             $fecha_inicio = $this->request->getData()['fecha_inicio'];
             $fecha_fin = $this->request->getData()['fecha_fin'];
+            $fecha_inicio = \Cake\Database\Type::build('date')->marshal($fecha_inicio);
+            $fecha_fin = \Cake\Database\Type::build('date')->marshal($fecha_fin);
             if ($fecha_fin<=$fecha_inicio){
                 $this->Flash->error(__('La fecha de finalización del campeonato debe ser posterior a la de inicio'));
             }
             elseif ($fecha_inicio<Time::now()){
-                $this->Flash->error(__('La de inicio debe ser posterior a la fecha de hoy'));
+                $this->Flash->error(__('La fecha de inicio debe ser posterior a la fecha de hoy'));
             }
             else{
                 $idcamp = $this->Campeonatos->save($campeonato)['id_campeonato'];
@@ -120,14 +122,65 @@ class CampeonatosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function inscribirse($id = null)
-    {
-        $campeonato = $this->Campeonatos->get($id);
-        $pareja = new ParejasController();
-        $pareja->add($id);
+    public function generarGrupos(){
+        if ($this->request->is('post')) {
+            $this->loadModel('Parejas');
+            $idCampeonato = $this->request->getData()['id_campeonato'];
+            $gruposController = new GruposController();
+            //Para cada nivel
+            for($i=1; $i<=3; $i++){
+                for($j = 1; $j <= 3; $j++){
+                    switch ($j){
+                        case 1:
+                            $tipo = "MASC";
+                            break;
+                        case 2:
+                            $tipo = "FEM";
+                            break;
+                        case 3:
+                            $tipo = "MIXTO";
+                            break;
+                    }
 
-
-
-        //return $this->redirect(['action' => 'index']);
+                    $query = $this->Parejas->find('all')->where(['campeonato_id = ' => $idCampeonato, 'nivel = ' => $i, 'tipo = ' => $tipo]);
+                    $numInscritos = $query->all()->count();
+                    if ($numInscritos < 8){ //Si no hay suficientes inscritos, error
+                        $this->Flash->error(__('No hay suficientes inscritos para la categoria ' . $tipo . ' y nivel ' . $i));
+                    }
+                    else{
+                        //Calcular numero de grupos
+                        $numGrupos = $numInscritos / 8;
+                        $numGrupos = floor($numGrupos);
+                        $numParejasSinGrupo = $numInscritos % 8;
+                        if (($numParejasSinGrupo / $numGrupos) > 5){
+                            $this->Flash->error(__('No se pueden realizar grupos para la categoria ' . $tipo . ' y nivel ' . $i));
+                        }
+                        else{
+                            $parejasInscritas = $query->all()->toArray();
+                            $cont1 = 0;
+                            $cont2 = 0;
+                            $cont3 = 0;
+                            for($x = 0; $x < $numGrupos; $x++){
+                                $gruposController->add($x, $idCampeonato, $tipo, $i);
+                            }
+                            foreach ($parejasInscritas as &$pareja){
+                                if($cont2 == $numGrupos){
+                                    $pareja->grupo_id = $cont3;
+                                    if(++$cont3 == $numGrupos){
+                                        $cont3=0;
+                                    }
+                                }else{
+                                    $pareja->grupo_id = $cont2;
+                                    if(++$cont1 == 8){
+                                        $cont1=0;
+                                        $cont2++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
