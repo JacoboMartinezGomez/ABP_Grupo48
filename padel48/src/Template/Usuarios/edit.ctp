@@ -25,7 +25,7 @@
     <fieldset>
         <legend><?= __('Edit Usuario') ?></legend>
         <?php
-            echo $this->Form->control('passwd');
+            echo $this->Form->control('password');
             echo $this->Form->control('nombre');
             echo $this->Form->control('apellido');
             echo $this->Form->control('email');

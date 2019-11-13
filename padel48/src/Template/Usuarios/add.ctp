@@ -24,7 +24,6 @@
             echo $this->Form->control('nombre');
             echo $this->Form->control('apellido');
             echo $this->Form->control('email');
-//            echo $this->Form->select('sexo', ['Hombre' => 'MASC', 'Mujer' => 'FEM'], ['empty' => 'Elegir una']);
             echo $this->Form->control('sexo',['options' => ['MASC' => 'Hombre', 'FEM' => 'Mujer']]);
             echo $this->Form->control('telefono');
         ?>
