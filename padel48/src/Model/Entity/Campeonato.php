@@ -13,7 +13,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Categoria[] $categorias
  * @property \App\Model\Entity\Grupo[] $grupos
  * @property \App\Model\Entity\Pareja[] $parejas
- * @property \App\Model\Entity\ParejasDisputanEnfrentamiento[] $parejas_disputan_enfrentamiento
  */
 class Campeonato extends Entity
 {
@@ -31,7 +30,6 @@ class Campeonato extends Entity
         'fecha_fin' => true,
         'categorias' => true,
         'grupos' => true,
-        'parejas' => true,
-        'parejas_disputan_enfrentamiento' => true
+        'parejas' => true
     ];
 }

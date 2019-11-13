@@ -16,16 +16,15 @@ class ReservasFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'id_usuario' => ['type' => 'string', 'length' => 9, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'id_pista' => ['type' => 'integer', 'length' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'pista_id' => ['type' => 'integer', 'length' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'hora' => ['type' => 'integer', 'length' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'fecha' => ['type' => 'date', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         '_indexes' => [
-            'reserva_ibfk_1' => ['type' => 'index', 'columns' => ['id_pista'], 'length' => []],
+            'pista_id' => ['type' => 'index', 'columns' => ['pista_id'], 'length' => []],
         ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_usuario', 'id_pista', 'hora', 'fecha'], 'length' => []],
-            'reservas_ibfk_1' => ['type' => 'foreign', 'columns' => ['id_pista'], 'references' => ['pistas', 'num_pista'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
-            'reservas_ibfk_2' => ['type' => 'foreign', 'columns' => ['id_usuario'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['id_usuario', 'pista_id', 'hora', 'fecha'], 'length' => []],
+            'reservas_ibfk_1' => ['type' => 'foreign', 'columns' => ['pista_id'], 'references' => ['pistas', 'num_pista'], 'update' => 'restrict', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -42,10 +41,10 @@ class ReservasFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_usuario' => '80fbcde8-9aa1-43de-9640-680623ba4337',
-                'id_pista' => 1,
+                'id_usuario' => 'a780e6e3-3bd3-4182-abf0-a79d5764bc45',
+                'pista_id' => 1,
                 'hora' => 1,
-                'fecha' => '2019-11-10'
+                'fecha' => '2019-11-13'
             ],
         ];
         parent::init();

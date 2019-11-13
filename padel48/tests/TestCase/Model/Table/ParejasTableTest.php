@@ -24,7 +24,9 @@ class ParejasTableTest extends TestCase
      */
     public $fixtures = [
         'app.Parejas',
-        'app.Campeonatos'
+        'app.Campeonatos',
+        'app.Grupos',
+        'app.Categorias'
     ];
 
     /**

@@ -37,8 +37,7 @@ class NoticiasTable extends Table
         $this->setPrimaryKey('id_noticia');
 
         $this->belongsTo('Usuarios', [
-            'foreignKey' => 'usuario_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'usuario_id'
         ]);
     }
 

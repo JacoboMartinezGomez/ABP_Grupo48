@@ -10,6 +10,9 @@ use Cake\Validation\Validator;
  * Grupos Model
  *
  * @property \App\Model\Table\CampeonatosTable&\Cake\ORM\Association\BelongsTo $Campeonatos
+ * @property \App\Model\Table\CategoriasTable&\Cake\ORM\Association\BelongsTo $Categorias
+ * @property \App\Model\Table\EnfrentamientosTable&\Cake\ORM\Association\HasMany $Enfrentamientos
+ * @property \App\Model\Table\ParejasTable&\Cake\ORM\Association\HasMany $Parejas
  *
  * @method \App\Model\Entity\Grupo get($primaryKey, $options = [])
  * @method \App\Model\Entity\Grupo newEntity($data = null, array $options = [])
@@ -40,6 +43,16 @@ class GruposTable extends Table
             'foreignKey' => 'campeonato_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Categorias', [
+            'foreignKey' => 'categoria_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Enfrentamientos', [
+            'foreignKey' => 'grupo_id'
+        ]);
+        $this->hasMany('Parejas', [
+            'foreignKey' => 'grupo_id'
+        ]);
     }
 
     /**
@@ -54,16 +67,6 @@ class GruposTable extends Table
             ->integer('id_grupo')
             ->allowEmptyString('id_grupo', null, 'create');
 
-        $validator
-            ->scalar('tipo')
-            ->requirePresence('tipo', 'create')
-            ->notEmptyString('tipo');
-
-        $validator
-            ->integer('nivel')
-            ->requirePresence('nivel', 'create')
-            ->notEmptyString('nivel');
-
         return $validator;
     }
 
@@ -77,6 +80,7 @@ class GruposTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['campeonato_id'], 'Campeonatos'));
+        $rules->add($rules->existsIn(['categoria_id'], 'Categorias'));
 
         return $rules;
     }

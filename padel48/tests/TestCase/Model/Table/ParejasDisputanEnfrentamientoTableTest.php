@@ -24,7 +24,7 @@ class ParejasDisputanEnfrentamientoTableTest extends TestCase
      */
     public $fixtures = [
         'app.ParejasDisputanEnfrentamiento',
-        'app.Campeonatos'
+        'app.Enfrentamientos'
     ];
 
     /**
