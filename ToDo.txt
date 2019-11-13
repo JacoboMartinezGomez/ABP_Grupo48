@@ -6,7 +6,7 @@ Acordar fecha hora:
 		- Reservar pista al aceptar la hora y fecha
 		- (Hecho - Controlado a nivel de servidor, pero se muestran todas las fechas) Restringir fecha a mostrar. Solo una semana desde hoy. 
 
-Login y register + control del rol --David
+Login y register + control del rol --David --HECHO
 
 Generar Liga Regular --Fer
 
@@ -17,6 +17,8 @@ CSS --Iria
 Reservas --Jacobo
 
 Playoff --Jacobo
+
+Vistas de categorias y grupos? Solo un showall publico quizas?
 
 Ranking
 
