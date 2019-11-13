@@ -20,7 +20,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('dni') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('passwd') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('password') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('nombre') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('apellido') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
@@ -35,7 +35,7 @@
             <?php foreach ($usuarios as $usuario): ?>
             <tr>
                 <td><?= h($usuario->dni) ?></td>
-                <td><?= h($usuario->passwd) ?></td>
+                <td><?= h($usuario->password) ?></td>
                 <td><?= h($usuario->nombre) ?></td>
                 <td><?= h($usuario->apellido) ?></td>
                 <td><?= h($usuario->email) ?></td>

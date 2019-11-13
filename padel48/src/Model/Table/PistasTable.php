@@ -56,13 +56,20 @@ class PistasTable extends Table
         $validator
             ->scalar('tipo')
             ->requirePresence('tipo', 'create')
-            ->notEmptyString('tipo');
+            ->notEmptyString('tipo')
+            ->add('tipo', 'inList', [
+                'rule' => ['inList', ['PIEDRA', 'MOQUETA']],
+                'message' => 'Por favor, introduzca un tipo valido'
+            ]);
 
         $validator
             ->scalar('lugar')
             ->requirePresence('lugar', 'create')
-            ->notEmptyString('lugar');
-
+            ->notEmptyString('lugar')
+            ->add('lugar', 'inList', [
+                'rule' => ['inList', ['EXTERIOR', 'INTERIOR']],
+                'message' => 'Por favor, introduzca un lugar valido'
+            ]);
         return $validator;
     }
 }

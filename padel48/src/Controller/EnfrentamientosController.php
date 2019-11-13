@@ -19,9 +19,15 @@ class EnfrentamientosController extends AppController
      */
     public function index()
     {
-        $enfrentamientos = $this->paginate($this->Enfrentamientos);
+//        $enfrentamientos = $this->paginate($this->Enfrentamientos);
+//
+//        $this->set(compact('enfrentamientos'));
 
-        $this->set(compact('enfrentamientos'));
+        $query = $this->Enfrentamientos->find('all')
+                                            ->where(['OR' =>
+                                                [['id_capitan1' => $this->Auth->user('dni')],
+                                                ['id_capitan2' => $this->Auth->user('dni')]]]);
+        $this->set('enfrentamientos', $this->paginate($query));
     }
 
     /**
