@@ -19,8 +19,7 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('enfrentamiento_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('capitan1_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('capitan2_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('creador') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -31,8 +30,7 @@
             <tr>
                 <td><?= $this->Number->format($fechasPropuesta->id) ?></td>
                 <td><?= $this->Number->format($fechasPropuesta->enfrentamiento_id) ?></td>
-                <td><?= h($fechasPropuesta->capitan1_id) ?></td>
-                <td><?= $fechasPropuesta->has('enfrentamiento') ? $this->Html->link($fechasPropuesta->enfrentamiento->id_enfrentamiento, ['controller' => 'Enfrentamientos', 'action' => 'view', $fechasPropuesta->enfrentamiento->id_enfrentamiento]) : '' ?></td>
+                <td><?= h($fechasPropuesta->creador) ?></td>
                 <td><?= h(date('H:i', strtotime($fechasPropuesta->hora))) ?></td>
                 <td><?= h($fechasPropuesta->fecha) ?></td>
                 <td class="actions">

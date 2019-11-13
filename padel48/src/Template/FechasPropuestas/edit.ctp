@@ -23,11 +23,8 @@
     <fieldset>
         <legend><?= __('Edit Fechas Propuesta') ?></legend>
         <?php
-            echo $this->Form->control('enfrentamiento_id');
-            echo $this->Form->control('capitan1_id');
-            echo $this->Form->control('capitan2_id', ['options' => $enfrentamientos, 'empty' => true]);
-            echo $this->Form->control('hora');
-            echo $this->Form->control('fecha');
+            echo $this->Form->control('hora', ['options' => $hora_inicio, 'default' => date('H:i:s' ,strtotime($hora_elegida))]);
+            echo $this->Form->control('fecha', ['minYear' => date('Y'), 'maxYear' => date('Y')]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
