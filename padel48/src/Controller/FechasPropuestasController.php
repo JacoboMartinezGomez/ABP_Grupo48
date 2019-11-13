@@ -57,15 +57,16 @@ class FechasPropuestasController extends AppController
     {
         //Enviar tambien el usuario en session para meterlo en un input hidden para la consulta en la BD
         $this->loadModel('Horarios');
-        $this->set('hora_inicio', $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
-                                                                        return date('H:i:s' ,strtotime($horarios->get('hora_inicio')));
-                                                                    },
-                                                                'valueField' => function ($horarios) {
-                                                                    return date('H:i' ,strtotime($horarios->get('hora_inicio')));
-                                                                }
-                                                                ]));
+//        $this->set('hora_inicio', $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
+//                                                                        return date('H:i:s' ,strtotime($horarios->get('hora_inicio')));
+//                                                                    },
+//                                                                'valueField' => function ($horarios) {
+//                                                                    return date('H:i' ,strtotime($horarios->get('hora_inicio')));
+//                                                                }
+//                                                                ]));
+        $this->set('hora_inicio', $this->getHorasPista());
 
-        $fechasPropuesta = $this->FechasPropuestas->newEntity();
+            $fechasPropuesta = $this->FechasPropuestas->newEntity();
         if ($this->request->is('post')) {
             $fechasPropuesta = $this->FechasPropuestas->patchEntity($fechasPropuesta, $this->request->getData());
             $fechasPropuesta->enfrentamiento_id = $enfrentamientoID;
