@@ -33,8 +33,8 @@ class CategoriasTable extends Table
         parent::initialize($config);
 
         $this->setTable('categorias');
-        $this->setDisplayField('campeonato_id');
-        $this->setPrimaryKey(['campeonato_id', 'tipo', 'nivel']);
+        $this->setDisplayField('id_categoria');
+        $this->setPrimaryKey(['id_categoria', 'campeonato_id']);
 
         $this->belongsTo('Campeonatos', [
             'foreignKey' => 'campeonato_id',
@@ -51,12 +51,18 @@ class CategoriasTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
+            ->integer('id_categoria')
+            ->allowEmptyString('id_categoria', null, 'create');
+
+        $validator
             ->scalar('tipo')
-            ->allowEmptyString('tipo', null, 'create');
+            ->requirePresence('tipo', 'create')
+            ->notEmptyString('tipo');
 
         $validator
             ->integer('nivel')
-            ->allowEmptyString('nivel', null, 'create');
+            ->requirePresence('nivel', 'create')
+            ->notEmptyString('nivel');
 
         return $validator;
     }

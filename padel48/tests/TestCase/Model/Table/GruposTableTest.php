@@ -24,7 +24,10 @@ class GruposTableTest extends TestCase
      */
     public $fixtures = [
         'app.Grupos',
-        'app.Campeonatos'
+        'app.Campeonatos',
+        'app.Categorias',
+        'app.Enfrentamientos',
+        'app.Parejas'
     ];
 
     /**
