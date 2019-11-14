@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `parejas_disputan_enfrentamiento` (
     `resultado` varchar(9) DEFAULT NULL,
     PRIMARY KEY (`id_pareja1`,`id_pareja2`,`enfrentamiento_id`),
 
-    FOREIGN KEY (`id_pareja2`) REFERENCES parejas(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`id_pareja1`) REFERENCES parejas(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`id_pareja2`) REFERENCES parejas(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`enfrentamiento_id`) REFERENCES enfrentamientos(`id_enfrentamiento`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
