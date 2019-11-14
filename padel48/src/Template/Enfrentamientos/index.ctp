@@ -17,8 +17,6 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id_enfrentamiento') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('id_capitan1') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('id_capitan2') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('id_grupo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
@@ -30,8 +28,6 @@
             <?php foreach ($enfrentamientos as $enfrentamiento): ?>
             <tr>
                 <td><?= $this->Number->format($enfrentamiento->id_enfrentamiento) ?></td>
-                <td><?= h($enfrentamiento->id_capitan1) ?></td>
-                <td><?= h($enfrentamiento->id_capitan2) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->id_grupo) ?></td>
                 <td><?= h(h(date('H:i', strtotime($enfrentamiento->hora)))) ?></td>
                 <td><?= h($enfrentamiento->fecha) ?></td>
