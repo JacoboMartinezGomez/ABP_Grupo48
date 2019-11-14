@@ -38,7 +38,7 @@ use Cake\I18n\Time;
                 <td><?= h($campeonato->fecha_inicio) ?></td>
                 <td><?= h($campeonato->fecha_fin) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $campeonato->id_campeonato]) ?>
+                    <?= $this->Html->link(__('View Groups'), ['controller' => 'grupos','action' => 'index', $campeonato->id_campeonato]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $campeonato->id_campeonato]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $campeonato->id_campeonato], ['confirm' => __('Are you sure you want to delete # {0}?', $campeonato->id_campeonato)]) ?>
                     <?php if($campeonato->fecha_inicio > TIME::now()){?>
