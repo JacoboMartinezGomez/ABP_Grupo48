@@ -65,10 +65,11 @@ class CampeonatosController extends AppController
                 $idcamp = $this->Campeonatos->save($campeonato)['id_campeonato'];
 
                 $categorias = new CategoriasController();
+                $idCategoria=0;
                 for($i=1; $i<=3; $i++){
-                    $categorias->anhadir($idcamp,'MASC',$i);
-                    $categorias->anhadir($idcamp,'FEM',$i);
-                    $categorias->anhadir($idcamp,'MIXTO',$i);
+                    $categorias->anhadir($idcamp,'MASC',$i,$idCategoria++);
+                    $categorias->anhadir($idcamp,'FEM',$i,$idCategoria++);
+                    $categorias->anhadir($idcamp,'MIXTO',$i,$idCategoria++);
                 }
 
                 $this->Flash->success(__('El campeonato ha sido guardado'));
@@ -122,65 +123,129 @@ class CampeonatosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function generarGrupos(){
-        if ($this->request->is('post')) {
-            $this->loadModel('Parejas');
-            $idCampeonato = $this->request->getData()['id_campeonato'];
-            $gruposController = new GruposController();
-            //Para cada nivel
-            for($i=1; $i<=3; $i++){
-                for($j = 1; $j <= 3; $j++){
-                    switch ($j){
-                        case 1:
-                            $tipo = "MASC";
-                            break;
-                        case 2:
-                            $tipo = "FEM";
-                            break;
-                        case 3:
-                            $tipo = "MIXTO";
-                            break;
-                    }
 
-                    $query = $this->Parejas->find('all')->where(['campeonato_id = ' => $idCampeonato, 'nivel = ' => $i, 'tipo = ' => $tipo]);
-                    $numInscritos = $query->all()->count();
-                    if ($numInscritos < 8){ //Si no hay suficientes inscritos, error
-                        $this->Flash->error(__('No hay suficientes inscritos para la categoria ' . $tipo . ' y nivel ' . $i));
+    public function generarGrupos($idCampeonato = null){
+        $this->loadModel('Parejas');
+
+        //Para cada categoria
+        for($i=0; $i<=8; $i++){
+            switch ($i){
+                case 0:
+                    $tipo = "MASC";
+                    $nivel = 1;
+                    break;
+                case 1:
+                    $tipo = "FEM";
+                    $nivel = 1;
+                    break;
+                case 2:
+                    $tipo = "MIXTO";
+                    $nivel = 1;
+                    break;
+                case 3:
+                    $tipo = "MASC";
+                    $nivel = 2;
+                    break;
+                case 4:
+                    $tipo = "FEM";
+                    $nivel = 2;
+                    break;
+                case 5:
+                    $tipo = "MIXTO";
+                    $nivel = 2;
+                    break;
+                case 6:
+                    $tipo = "MASC";
+                    $nivel = 3;
+                    break;
+                case 7:
+                    $tipo = "FEM";
+                    $nivel = 3;
+                    break;
+                case 8:
+                    $tipo = "MIXTO";
+                    $nivel = 3;
+                    break;
+            }
+
+            $query = $this->Parejas->find('all')->where(['campeonato_id = ' => $idCampeonato, 'categoria_id =' => $i]);
+            $numInscritos = $query->all()->count();
+            if ($numInscritos < 8){ //Si no hay suficientes inscritos, error
+                $this->Flash->error(__('No hay suficientes inscritos para la categoria ' . $tipo . ' y nivel ' . $nivel));
+            }
+            else{
+                //Calcular numero de grupos
+                $numGrupos = $numInscritos / 8;
+                $numGrupos = floor($numGrupos);
+                $numParejasSinGrupo = $numInscritos % 8;
+                if ($numInscritos > 12 && $numInscritos <= 15){
+                    $numParejasEliminar = $numInscritos - 12;
+                    $parejasEliminar = $this->Parejas->find()->limit($numParejasEliminar)->where(['campeonato_id = ' => $idCampeonato, 'categoria_id =' => $i])->order(['id' => 'DESC'])->all()->toArray();
+                    foreach ($parejasEliminar as $pareja ){
+                        $this->Parejas->delete($pareja);
+                    }
+                    $this->Flash->error(__('Se eliminaran '.$numParejasEliminar.' parejas para poder realizar grupos correctamente'));
+                }
+
+                $parejasInscritas = $query->all()->toArray();
+                //debug($parejasInscritas);
+                //$cont1 = 0;
+                //$cont2 = 1;
+                //$cont3 = 1;
+
+                $gruposController = new GruposController();
+                for($x = 1; $x <= $numGrupos; $x++){
+                    $gruposController->add($x, $idCampeonato, $i);
+                }
+                foreach ($parejasInscritas as $pareja){
+                    /*
+                    if($cont2 == $numGrupos+1){
+                        $pareja->grupo_id = $cont3;
+                        if(++$cont3 >= $numGrupos){
+                            $cont3=1;
+                        }
+                    }else{
+                        $pareja->grupo_id = $cont2;
+                        if(++$cont1 == 8){
+                            $cont1=0;
+                            $cont2++;
+                        }
+
+                    }*/
+                    $cont8 = 0;
+                    $contGruposRellenadosMinimo = 1;
+                    $contGrupoRellenarMas = 1;
+                    if($contGruposRellenadosMinimo <= $numGrupos){
+                        $pareja->grupo_id = $contGruposRellenadosMinimo;
+                        $cont8++;
+                        if($cont8 == 8){
+                            $contGruposRellenadosMinimo++;
+                        }
                     }
                     else{
-                        //Calcular numero de grupos
-                        $numGrupos = $numInscritos / 8;
-                        $numGrupos = floor($numGrupos);
-                        $numParejasSinGrupo = $numInscritos % 8;
-                        if (($numParejasSinGrupo / $numGrupos) > 5){
-                            $this->Flash->error(__('No se pueden realizar grupos para la categoria ' . $tipo . ' y nivel ' . $i));
-                        }
-                        else{
-                            $parejasInscritas = $query->all()->toArray();
-                            $cont1 = 0;
-                            $cont2 = 0;
-                            $cont3 = 0;
-                            for($x = 0; $x < $numGrupos; $x++){
-                                $gruposController->add($x, $idCampeonato, $tipo, $i);
-                            }
-                            foreach ($parejasInscritas as &$pareja){
-                                if($cont2 == $numGrupos){
-                                    $pareja->grupo_id = $cont3;
-                                    if(++$cont3 == $numGrupos){
-                                        $cont3=0;
-                                    }
-                                }else{
-                                    $pareja->grupo_id = $cont2;
-                                    if(++$cont1 == 8){
-                                        $cont1=0;
-                                        $cont2++;
-                                    }
-                                }
-                            }
+                        $pareja->grupo_id = $contGrupoRellenarMas;
+                        $contGrupoRellenarMas++;
+                        if($contGrupoRellenarMas > $numGrupos){
+                            $contGrupoRellenarMas = 1;
                         }
                     }
+                    $this->Parejas->save($pareja);
                 }
             }
+
+        }
+        $this->generarPartidos($idCampeonato);
+
+        return $this->redirect(['controller' => 'grupos', 'action' => 'index']);
+    }
+
+    public function generarPartidos($idCampeonato){
+        $this->loadModel('Grupos');
+        $query = $this->Grupos->find('all');
+        $grupos = $query->all()->toArray();
+        foreach($grupos as $grupo){
+            
         }
     }
+
 }

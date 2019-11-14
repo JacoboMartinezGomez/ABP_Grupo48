@@ -64,15 +64,7 @@ class CategoriasController extends AppController
         $this->set(compact('categoria', 'campeonatos'));
     }
 
-    public function anhadir($campeonato_id,$tipo,$nivel){
-        $categoria = $this->Categorias->newEntity();
 
-        $categoria->campeonato_id=$campeonato_id;
-        $categoria->tipo=$tipo;
-        $categoria->nivel=$nivel;
-
-        $this->Categorias->save($categoria);
-    }
 
     /**
      * Edit method

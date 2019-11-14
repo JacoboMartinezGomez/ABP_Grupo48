@@ -19,8 +19,7 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id_grupo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('campeonato_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('tipo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nivel') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('categoria_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -29,8 +28,7 @@
             <tr>
                 <td><?= $this->Number->format($grupo->id_grupo) ?></td>
                 <td><?= $grupo->has('campeonato') ? $this->Html->link($grupo->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $grupo->campeonato->id_campeonato]) : '' ?></td>
-                <td><?= h($grupo->tipo) ?></td>
-                <td><?= $this->Number->format($grupo->nivel) ?></td>
+                <td><?= $this->Number->format($grupo->categoria_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $grupo->id_grupo]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $grupo->id_grupo]) ?>

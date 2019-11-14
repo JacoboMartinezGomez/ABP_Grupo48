@@ -24,8 +24,7 @@
         <legend><?= __('Edit Grupo') ?></legend>
         <?php
             echo $this->Form->control('campeonato_id', ['options' => $campeonatos]);
-            echo $this->Form->control('tipo');
-            echo $this->Form->control('nivel');
+            echo $this->Form->control('categoria_id');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

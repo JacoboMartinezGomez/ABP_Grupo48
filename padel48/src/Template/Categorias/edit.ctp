@@ -23,6 +23,7 @@
     <fieldset>
         <legend><?= __('Edit Categoria') ?></legend>
         <?php
+            echo $this->Form->control('id_categoria');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

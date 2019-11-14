@@ -51,12 +51,18 @@ class CategoriasTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
+            ->integer('id_categoria')
+            ->allowEmptyString('id_categoria', null, 'create');
+
+        $validator
             ->scalar('tipo')
-            ->allowEmptyString('tipo', null, 'create');
+            ->requirePresence('tipo', 'create')
+            ->notEmptyString('tipo');
 
         $validator
             ->integer('nivel')
-            ->allowEmptyString('nivel', null, 'create');
+            ->requirePresence('nivel', 'create')
+            ->notEmptyString('nivel');
 
         return $validator;
     }

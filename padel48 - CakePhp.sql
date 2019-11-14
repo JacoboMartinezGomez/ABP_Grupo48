@@ -40,6 +40,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
     `numero_pistas` int(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `usuarios` (`dni`, `password`, `nombre`, `apellido`, `email`, `sexo`, `telefono`, `rol`, `numero_pistas`) VALUES
+('admin', '$2y$10$6idiWmDBiDAugd1agodgd.deDp3gOB/isEDcESMnu7WYbbn4oTPUC', 'Admin', 'Admin', 'esei@esei.es', 'MASC', 123456789, 'DEPORTISTA', 0);
+COMMIT;
+
 -- --------------------------------------------------------
 
 --
@@ -152,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 
 DROP TABLE IF EXISTS `grupos`;
 CREATE TABLE IF NOT EXISTS `grupos` (
-    `id_grupo` int(4) NOT NULL AUTO_INCREMENT,
+    `id_grupo` int(4) NOT NULL,
     `campeonato_id` int(4) NOT NULL,
     `categoria_id` int(4) NOT NULL,
 

@@ -13,6 +13,10 @@
         <li><?= $this->Html->link(__('New Pareja'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Grupos'), ['controller' => 'Grupos', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Grupo'), ['controller' => 'Grupos', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Categoria'), ['controller' => 'Categorias', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="parejas view large-9 medium-8 columns content">
@@ -31,12 +35,16 @@
             <td><?= $pareja->has('campeonato') ? $this->Html->link($pareja->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $pareja->campeonato->id_campeonato]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Tipo') ?></th>
-            <td><?= h($pareja->tipo) ?></td>
+            <th scope="row"><?= __('Grupo') ?></th>
+            <td><?= $pareja->has('grupo') ? $this->Html->link($pareja->grupo->id_grupo, ['controller' => 'Grupos', 'action' => 'view', $pareja->grupo->id_grupo]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Nivel') ?></th>
-            <td><?= $this->Number->format($pareja->nivel) ?></td>
+            <th scope="row"><?= __('Categoria') ?></th>
+            <td><?= $pareja->has('categoria') ? $this->Html->link($pareja->categoria->campeonato_id, ['controller' => 'Categorias', 'action' => 'view', $pareja->categoria->campeonato_id]) : '' ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Id') ?></th>
+            <td><?= $this->Number->format($pareja->id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Puntuacion') ?></th>

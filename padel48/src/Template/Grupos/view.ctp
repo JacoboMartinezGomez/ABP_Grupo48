@@ -23,16 +23,12 @@
             <td><?= $grupo->has('campeonato') ? $this->Html->link($grupo->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $grupo->campeonato->id_campeonato]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Tipo') ?></th>
-            <td><?= h($grupo->tipo) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Id Grupo') ?></th>
             <td><?= $this->Number->format($grupo->id_grupo) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Nivel') ?></th>
-            <td><?= $this->Number->format($grupo->nivel) ?></td>
+            <th scope="row"><?= __('Categoria Id') ?></th>
+            <td><?= $this->Number->format($grupo->categoria_id) ?></td>
         </tr>
     </table>
 </div>

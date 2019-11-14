@@ -8,8 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id_grupo
  * @property int $campeonato_id
- * @property string $tipo
- * @property int $nivel
+ * @property int $categoria_id
  *
  * @property \App\Model\Entity\Campeonato $campeonato
  */
@@ -26,8 +25,8 @@ class Grupo extends Entity
      */
     protected $_accessible = [
         'campeonato_id' => true,
-        'tipo' => true,
-        'nivel' => true,
-        'campeonato' => true
+        'categoria_id' => true,
+        'campeonato' => true,
+        'id_grupo' => true
     ];
 }

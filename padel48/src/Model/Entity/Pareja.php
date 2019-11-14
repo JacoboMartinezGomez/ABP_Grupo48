@@ -6,15 +6,18 @@ use Cake\ORM\Entity;
 /**
  * Pareja Entity
  *
+ * @property int $id
  * @property string $id_capitan
  * @property string $id_pareja
  * @property int $campeonato_id
- * @property string $tipo
- * @property int $nivel
+ * @property int|null $grupo_id
+ * @property int $categoria_id
  * @property int $puntuacion
  * @property bool $clasificado
  *
  * @property \App\Model\Entity\Campeonato $campeonato
+ * @property \App\Model\Entity\Grupo $grupo
+ * @property \App\Model\Entity\Categoria $categoria
  */
 class Pareja extends Entity
 {
@@ -28,11 +31,12 @@ class Pareja extends Entity
      * @var array
      */
     protected $_accessible = [
-        'tipo' => true,
-        'nivel' => true,
+        'id_capitan' => true,
+        'id_pareja' => true,
+        'campeonato_id' => true,
+        'grupo_id' => true,
+        'categoria_id' => true,
         'puntuacion' => true,
-        'clasificado' => true,
-        'campeonato' => true,
-        'id_pareja' => true
+        'clasificado' => true
     ];
 }

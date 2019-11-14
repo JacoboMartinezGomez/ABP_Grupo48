@@ -43,26 +43,17 @@ class GruposController extends AppController
         $this->set('grupo', $grupo);
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add($id_grupo, $campeonato_id, $tipo, $nivel)
+    public function add($id_grupo, $campeonato_id, $categoria_id)
     {
         $grupo = $this->Grupos->newEntity();
         $grupo->id_grupo = $id_grupo;
         $grupo->campeonato_id = $campeonato_id;
-        $grupo->tipo = $tipo;
-        $grupo->nivel = $nivel;
-
+        $grupo->categoria_id = $categoria_id;
         if ($this->Grupos->save($grupo)) {
-            $this->Flash->success(__('The grupo has been saved.'));
-
+            //$this->Flash->success(__('The grupo has been saved.'));
             return $this->redirect(['action' => 'index']);
         }
-        $this->Flash->error(__('The grupo could not be saved. Please, try again.'));
-
+        $this->Flash->error(__('El grupo no pudo ser guardado'));
         //$campeonatos = $this->Grupos->Campeonatos->find('list', ['limit' => 200]);
         //$this->set(compact('grupo', 'campeonatos'));
     }

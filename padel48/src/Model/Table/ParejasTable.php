@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
  * Parejas Model
  *
  * @property \App\Model\Table\CampeonatosTable&\Cake\ORM\Association\BelongsTo $Campeonatos
+ * @property \App\Model\Table\GruposTable&\Cake\ORM\Association\BelongsTo $Grupos
+ * @property \App\Model\Table\CategoriasTable&\Cake\ORM\Association\BelongsTo $Categorias
  *
  * @method \App\Model\Entity\Pareja get($primaryKey, $options = [])
  * @method \App\Model\Entity\Pareja newEntity($data = null, array $options = [])
@@ -40,6 +42,13 @@ class ParejasTable extends Table
             'foreignKey' => 'campeonato_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Grupos', [
+            'foreignKey' => 'grupo_id'
+        ]);
+        $this->belongsTo('Categorias', [
+            'foreignKey' => 'categoria_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -51,24 +60,20 @@ class ParejasTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
+            ->integer('id')
+            ->allowEmptyString('id', null, 'create');
+
+        $validator
             ->scalar('id_capitan')
             ->maxLength('id_capitan', 9)
-            ->allowEmptyString('id_capitan', null, 'create');
+            ->requirePresence('id_capitan', 'create')
+            ->notEmptyString('id_capitan');
 
         $validator
             ->scalar('id_pareja')
             ->maxLength('id_pareja', 9)
-            ->allowEmptyString('id_pareja', null, 'create');
-
-        $validator
-            ->scalar('tipo')
-            ->requirePresence('tipo', 'create')
-            ->notEmptyString('tipo');
-
-        $validator
-            ->integer('nivel')
-            ->requirePresence('nivel', 'create')
-            ->notEmptyString('nivel');
+            ->requirePresence('id_pareja', 'create')
+            ->notEmptyString('id_pareja');
 
         $validator
             ->integer('puntuacion')
@@ -92,7 +97,9 @@ class ParejasTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['campeonato_id'], 'Campeonatos'));
+        $rules->add($rules->existsIn(['id_campeonato'], 'Campeonatos'));
+        $rules->add($rules->existsIn(['id_grupo'], 'Grupos'));
+        $rules->add($rules->existsIn(['id_categoria'], 'Categorias'));
 
         return $rules;
     }

@@ -6,6 +6,7 @@ use Cake\ORM\Entity;
 /**
  * Categoria Entity
  *
+ * @property int $id_categoria
  * @property int $campeonato_id
  * @property string $tipo
  * @property int $nivel
@@ -24,6 +25,9 @@ class Categoria extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id_categoria' => true,
+        'tipo' => true,
+        'nivel' => true,
         'campeonato' => true
     ];
 }
