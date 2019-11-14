@@ -33,8 +33,8 @@ class CategoriasTable extends Table
         parent::initialize($config);
 
         $this->setTable('categorias');
-        $this->setDisplayField('campeonato_id');
-        $this->setPrimaryKey(['campeonato_id', 'tipo', 'nivel']);
+        $this->setDisplayField('id_categoria');
+        $this->setPrimaryKey(['id_categoria', 'campeonato_id']);
 
         $this->belongsTo('Campeonatos', [
             'foreignKey' => 'campeonato_id',

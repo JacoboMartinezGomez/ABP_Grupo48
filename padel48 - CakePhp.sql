@@ -202,8 +202,9 @@ CREATE TABLE IF NOT EXISTS `parejas` (
 
     FOREIGN KEY (`id_capitan`) REFERENCES usuarios(`dni`) ON DELETE CASCADE,
     FOREIGN KEY (`id_pareja`) REFERENCES usuarios(`dni`) ON DELETE CASCADE,
-    FOREIGN KEY (`campeonato_id`) REFERENCES categorias(`id_categoria`) ON DELETE CASCADE,
-    FOREIGN KEY (`grupo_id`) REFERENCES enfrentamientos(`grupo_id`) ON DELETE CASCADE
+    FOREIGN KEY (`grupo_id`) REFERENCES enfrentamientos(`grupo_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`campeonato_id`) REFERENCES categorias(`campeonato_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`categoria_id`) REFERENCES categorias(`id_categoria`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- --------------------------------------------------------
 
@@ -213,14 +214,14 @@ CREATE TABLE IF NOT EXISTS `parejas` (
 
 DROP TABLE IF EXISTS `parejas_disputan_enfrentamiento`;
 CREATE TABLE IF NOT EXISTS `parejas_disputan_enfrentamiento` (
-    `id_capitan1` varchar(9) NOT NULL,
-    `id_capitan2` varchar(9) NOT NULL,
+    `id_pareja1` int(6) NOT NULL,
+    `id_pareja2` int(6) NOT NULL,
     `enfrentamiento_id` int(6) NOT NULL,
     `resultado` varchar(9) DEFAULT NULL,
-    PRIMARY KEY (`id_capitan1`,`id_capitan2`,`enfrentamiento_id`),
+    PRIMARY KEY (`id_pareja1`,`id_pareja2`,`enfrentamiento_id`),
 
-    FOREIGN KEY (`id_capitan1`) REFERENCES parejas(`id_capitan`) ON DELETE CASCADE,
-    FOREIGN KEY (`id_capitan2`) REFERENCES parejas(`id_capitan`) ON DELETE CASCADE,
+    FOREIGN KEY (`id_pareja1`) REFERENCES parejas(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`id_pareja2`) REFERENCES parejas(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`enfrentamiento_id`) REFERENCES enfrentamientos(`id_enfrentamiento`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- --------------------------------------------------------

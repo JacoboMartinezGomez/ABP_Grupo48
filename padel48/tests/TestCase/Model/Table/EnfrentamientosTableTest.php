@@ -23,7 +23,10 @@ class EnfrentamientosTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Enfrentamientos'
+        'app.Enfrentamientos',
+        'app.Grupos',
+        'app.FechasPropuestas',
+        'app.ParejasDisputanEnfrentamiento'
     ];
 
     /**
@@ -66,6 +69,16 @@ class EnfrentamientosTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

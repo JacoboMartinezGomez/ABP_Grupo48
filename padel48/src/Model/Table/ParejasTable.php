@@ -35,8 +35,8 @@ class ParejasTable extends Table
         parent::initialize($config);
 
         $this->setTable('parejas');
-        $this->setDisplayField('id_capitan');
-        $this->setPrimaryKey(['id_capitan', 'id_pareja', 'campeonato_id']);
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->belongsTo('Campeonatos', [
             'foreignKey' => 'campeonato_id',

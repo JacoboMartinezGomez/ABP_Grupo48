@@ -11,6 +11,9 @@ use Cake\ORM\Entity;
  * @property int $categoria_id
  *
  * @property \App\Model\Entity\Campeonato $campeonato
+ * @property \App\Model\Entity\Categoria $categoria
+ * @property \App\Model\Entity\Enfrentamiento[] $enfrentamientos
+ * @property \App\Model\Entity\Pareja[] $parejas
  */
 class Grupo extends Entity
 {
@@ -28,5 +31,6 @@ class Grupo extends Entity
         'categoria_id' => true,
         'campeonato' => true,
         'id_grupo' => true
+        
     ];
 }

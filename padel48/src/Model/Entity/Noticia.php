@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Noticia Entity
  *
  * @property int $id_noticia
- * @property string $usuario_id
+ * @property string|null $usuario_id
  * @property string $titulo
  * @property string $contenido
  *

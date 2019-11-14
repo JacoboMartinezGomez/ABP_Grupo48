@@ -7,9 +7,11 @@ use Cake\ORM\Entity;
  * Reserva Entity
  *
  * @property string $id_usuario
- * @property int $id_pista
+ * @property int $pista_id
  * @property int $hora
  * @property \Cake\I18n\FrozenDate $fecha
+ *
+ * @property \App\Model\Entity\Pista $pista
  */
 class Reserva extends Entity
 {
@@ -23,10 +25,6 @@ class Reserva extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id_usuario' => false,
-        'id_pista' => false,
-        'hora' => false,
-        'fecha' => false
+        'pista' => true
     ];
 }

@@ -13,6 +13,9 @@ use Cake\Validation\Validator;
  * @property &\Cake\ORM\Association\BelongsTo $Categorias
  * @property &\Cake\ORM\Association\HasMany $Enfrentamientos
  * @property &\Cake\ORM\Association\HasMany $Parejas
+ * @property \App\Model\Table\CategoriasTable&\Cake\ORM\Association\BelongsTo $Categorias
+ * @property \App\Model\Table\EnfrentamientosTable&\Cake\ORM\Association\HasMany $Enfrentamientos
+ * @property \App\Model\Table\ParejasTable&\Cake\ORM\Association\HasMany $Parejas
  *
  * @method \App\Model\Entity\Grupo get($primaryKey, $options = [])
  * @method \App\Model\Entity\Grupo newEntity($data = null, array $options = [])

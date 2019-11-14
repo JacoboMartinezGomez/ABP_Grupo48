@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Reservas Model
  *
+ * @property \App\Model\Table\PistasTable&\Cake\ORM\Association\BelongsTo $Pistas
+ *
  * @method \App\Model\Entity\Reserva get($primaryKey, $options = [])
  * @method \App\Model\Entity\Reserva newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Reserva[] newEntities(array $data, array $options = [])
@@ -32,7 +34,12 @@ class ReservasTable extends Table
 
         $this->setTable('reservas');
         $this->setDisplayField('id_usuario');
-        $this->setPrimaryKey(['id_usuario', 'id_pista', 'hora', 'fecha']);
+        $this->setPrimaryKey(['id_usuario', 'pista_id', 'hora', 'fecha']);
+
+        $this->belongsTo('Pistas', [
+            'foreignKey' => 'pista_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -49,10 +56,6 @@ class ReservasTable extends Table
             ->allowEmptyString('id_usuario', null, 'create');
 
         $validator
-            ->integer('id_pista')
-            ->allowEmptyString('id_pista', null, 'create');
-
-        $validator
             ->integer('hora')
             ->allowEmptyString('hora', null, 'create');
 
@@ -61,5 +64,19 @@ class ReservasTable extends Table
             ->allowEmptyDate('fecha', null, 'create');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['pista_id'], 'Pistas'));
+
+        return $rules;
     }
 }
