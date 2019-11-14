@@ -30,8 +30,6 @@
                 <td><?= $this->Number->format($reserva->hora) ?></td>
                 <td><?= h($reserva->fecha) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $reserva->id_usuario]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $reserva->id_usuario]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $reserva->id_usuario], ['confirm' => __('Are you sure you want to delete # {0}?', $reserva->id_usuario)]) ?>
                 </td>
             </tr>

@@ -47,16 +47,32 @@ class ReservasController extends AppController
      */
     public function add()
     {
+        $this->loadModel('Horarios');
+        $this->loadModel('Pistas');
+        $this->set('hora_inicio', $this->getHorasPista());
+        
+
+
+       // $query = $this->Reservas->find('all')->select('fecha')->where(['id_pista = ' => $numeros_pista]);
+        //echo $query;
+        //$reservas = $query->all()->toArray();
+
         $reserva = $this->Reservas->newEntity();
+
+        echo $reserva;
         if ($this->request->is('post')) {
             $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
-            if ($this->Reservas->save($reserva)) {
-                $this->Flash->success(__('The reserva has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+            echo $reserva;
+
+
+            //if ($this->Reservas->save($reserva)) {
+                $this->Flash->success(__('Reserva guardada correctamente.'));
+
+              //  return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
-        }
+        //}
         $this->set(compact('reserva'));
     }
 
@@ -103,4 +119,33 @@ class ReservasController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    //Funcion que comprueba las reservas y muestra las horas disponibles
+    public function comprobarReserva()
+    {
+        $this->loadModel('Horarios');
+        $this->loadModel('Pistas');
+
+        $this->set('hora_inicio', $this->getHorasPista());
+        $this->set('numeros_pista', $this->getPistas());
+
+
+        //$id = '1';
+        //$reserva = $this->Reservas->get($id, ['contain' => []]);
+     
+
+        //$this->set('reserva', $reserva);
+
+
+        //$reservas = $this->Reservas->find('list', ['keyField'=>function($pistas){$pistas->get('hora');}]);
+
+        $query = $this->Reservas->find('all')->where(['pista = ' => $numeros_pista]);
+
+       // echo $reservas;
+        echo $query;
+
+    }
+
+
+
 }
