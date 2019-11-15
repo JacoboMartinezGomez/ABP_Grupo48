@@ -1,21 +1,21 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\ParejasdisputanenfrentamientoTable;
+use App\Model\Table\ParejasDisputanEnfrentamientoTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\ParejasdisputanenfrentamientoTable Test Case
+ * App\Model\Table\ParejasDisputanEnfrentamientoTable Test Case
  */
-class ParejasdisputanenfrentamientoTableTest extends TestCase
+class ParejasDisputanEnfrentamientoTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\ParejasdisputanenfrentamientoTable
+     * @var \App\Model\Table\ParejasDisputanEnfrentamientoTable
      */
-    public $Parejasdisputanenfrentamiento;
+    public $ParejasDisputanEnfrentamiento;
 
     /**
      * Fixtures
@@ -23,8 +23,8 @@ class ParejasdisputanenfrentamientoTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Parejasdisputanenfrentamiento',
-        'app.Enfrentamientos'
+        'app.ParejasDisputanEnfrentamiento',
+        'app.Campeonatos'
     ];
 
     /**
@@ -35,8 +35,8 @@ class ParejasdisputanenfrentamientoTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Parejasdisputanenfrentamiento') ? [] : ['className' => ParejasdisputanenfrentamientoTable::class];
-        $this->Parejasdisputanenfrentamiento = TableRegistry::getTableLocator()->get('Parejasdisputanenfrentamiento', $config);
+        $config = TableRegistry::getTableLocator()->exists('ParejasDisputanEnfrentamiento') ? [] : ['className' => ParejasDisputanEnfrentamientoTable::class];
+        $this->ParejasDisputanEnfrentamiento = TableRegistry::getTableLocator()->get('ParejasDisputanEnfrentamiento', $config);
     }
 
     /**
@@ -46,7 +46,7 @@ class ParejasdisputanenfrentamientoTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Parejasdisputanenfrentamiento);
+        unset($this->ParejasDisputanEnfrentamiento);
 
         parent::tearDown();
     }

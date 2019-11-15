@@ -1,5 +1,5 @@
 <?php foreach ($mailPreviews as $plugin => $previews) : ?>
-<h3><?= $plugin ?></h3>
+<h2><?= $plugin ?></h2>
     <?php foreach ($previews as $preview) : ?>
         <?php $mailPreview = $preview['class'] ?>
         <h4><?= "\u{2709}\u{FE0F}" ?> <?= h($mailPreview->name()) ?></h4>
@@ -26,7 +26,7 @@
 <?php endforeach; ?>
 
 <div style="font-weight:300;margin-top:100px">
-    <h3><?= __d('debug_kit', 'How to use this feature?') ?></h3>
+    <h2><?= __d('debug_kit', 'How to use this feature?') ?></h2>
     <p><?= __d('debug_kit', 'Testing emails can be very time consuming') ?> &#8987;</p>
     <p> <?= __d('debug_kit', 'Specially when you need to click a bunch of times on an interface to trigger them.') ?></p>
     <p><?= __d('debug_kit', "Wouldn't it be better to just change the templates and refresh the browser to see the result?") ?></p>

@@ -401,7 +401,7 @@ parent block:
 .. code-block:: twig
 
     {% block sidebar %}
-        <h3>Table Of Contents</h3>
+        <h2>Table Of Contents</h2>
         ...
         {{ parent() }}
     {% endblock %}

@@ -26,7 +26,8 @@ class CampeonatosTableTest extends TestCase
         'app.Campeonatos',
         'app.Categorias',
         'app.Grupos',
-        'app.Parejas'
+        'app.Parejas',
+        'app.ParejasDisputanEnfrentamiento'
     ];
 
     /**
