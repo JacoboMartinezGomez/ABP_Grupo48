@@ -19,10 +19,6 @@ class PartidosController extends AppController
      */
     public function index()
     {
-//        $this->paginate = [
-//            'contain' => ['Usuarios']
-//        ];
-//        $partidos = $this->paginate($this->Partidos);
 
         $query = $this->Partidos->find()
                                 ->where(['OR' =>
@@ -67,6 +63,7 @@ class PartidosController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('El partido no se ha podido guardar. Por favor intentelo de nuevo.'));
+
         }
         $usuarios = $this->Partidos->Usuarios->find('list', ['limit' => 200]);
         $this->set(compact('partido', 'usuarios'));
@@ -116,7 +113,7 @@ class PartidosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-
+  
     public function inscribirse($id_partido){
         if (!$this->estaInscrito($id_partido)){
 

@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Partido[]|\Cake\Collection\CollectionInterface $partidos
  */
 ?>
+
 <header>
     <div id="head">
         <div id="logoWeb">

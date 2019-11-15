@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Partido $partido
  */
 ?>
+
 <header>
     <div id="head">
         <div id="logoWeb">
@@ -54,6 +55,7 @@
         </ul>
     </nav>
     <div class="showVista" id="anhadirPartido">
+
     <?= $this->Form->create($partido) ?>
     <fieldset>
         <legend><?= __('Add Partido') ?></legend>

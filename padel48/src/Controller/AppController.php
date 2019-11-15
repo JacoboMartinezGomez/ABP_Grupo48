@@ -100,4 +100,5 @@ class AppController extends Controller
 
         return $horasPista;
     }
+
 }
