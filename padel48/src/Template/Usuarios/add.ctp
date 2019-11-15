@@ -3,31 +3,78 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Usuario $usuario
  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Usuarios'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Noticia'), ['controller' => 'Noticias', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Partido'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="usuarios form large-9 medium-8 columns content">
+$this->Html->css(['css'])?>
+<head>
+    <meta charset="utf-8">
+    <title><?php echo 'PADEL48' ?></title>
+    <meta author="" name="" content="">
+    <link rel="stylesheet" type="text/css" href="./src/Template/Index/css/css.css" />
+</head>
+<body>
+<header>
+    <div id="head">
+        <div id="logoWeb">
+            <?php echo $this->Html->image('padel.png', ['alt' => 'palaPadel']);?>
+            <div id="nombreWeb">
+                <div class="letrasLogo">ádel</div>
+                <div class="numeroLogo">48</div>
+            </div>
+        </div>
+    </div>
+</header> 
+<div class = "container">
+    <nav class="menu"><ul class = "nav">
+            <li class="heading"></li>
+            <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+                <ul>
+                    <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="showVista" id="anhadirUsuarios">
     <?= $this->Form->create($usuario) ?>
     <fieldset>
-        <legend><?= __('Add Usuario') ?></legend>
+        <legend><?= __('Añadir Usuario') ?></legend>
         <?php
-            echo $this->Form->control('dni',  ['type' => 'text', 'required' => true]);
-            echo $this->Form->control('password');
-            echo $this->Form->control('nombre');
-            echo $this->Form->control('apellido');
-            echo $this->Form->control('email');
-            echo $this->Form->select('sexo', ['Hombre' => 'MASC', 'Mujer' => 'FEM'], ['empty' => 'Elegir una']);
-            echo $this->Form->control('telefono');
+           echo $this->Form->control('dni',  ['type' => 'text', 'required' => true]);
+           echo $this->Form->control('password');
+           echo $this->Form->control('nombre');
+           echo $this->Form->control('apellido');
+           echo $this->Form->control('email');
+           echo $this->Form->control('sexo',['options' => ['MASC' => 'Hombre', 'FEM' => 'Mujer']]);
+           echo $this->Form->control('telefono');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Enviar')) ?>
     <?= $this->Form->end() ?>
+</div>
 </div>

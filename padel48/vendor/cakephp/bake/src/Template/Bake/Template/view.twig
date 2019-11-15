@@ -44,7 +44,7 @@
     </ul>
 </nav>
 <div class="{{ pluralVar }} view large-9 medium-8 columns content">
-    <h3><?= h(${{ singularVar }}->{{ displayField }}) ?></h3>
+    <h2><?= h(${{ singularVar }}->{{ displayField }}) ?></h2>
     <table class="vertical-table">
 {% if groupedFields['string'] %}
 {% for field in groupedFields['string'] %}

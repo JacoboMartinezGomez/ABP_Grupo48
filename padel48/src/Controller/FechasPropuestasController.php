@@ -57,18 +57,21 @@ class FechasPropuestasController extends AppController
     {
         //Enviar tambien el usuario en session para meterlo en un input hidden para la consulta en la BD
         $this->loadModel('Horarios');
-        $this->set('hora_inicio', $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
-                                                                        return date('H:i:s' ,strtotime($horarios->get('hora_inicio')));
-                                                                    },
-                                                                'valueField' => function ($horarios) {
-                                                                    return date('H:i' ,strtotime($horarios->get('hora_inicio')));
-                                                                }
-                                                                ]));
+//        $this->set('hora_inicio', $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
+//                                                                        return date('H:i:s' ,strtotime($horarios->get('hora_inicio')));
+//                                                                    },
+//                                                                'valueField' => function ($horarios) {
+//                                                                    return date('H:i' ,strtotime($horarios->get('hora_inicio')));
+//                                                                }
+//                                                                ]));
+        $this->set('hora_inicio', $this->getHorasPista());
 
         $fechasPropuesta = $this->FechasPropuestas->newEntity();
+
         if ($this->request->is('post')) {
             $fechasPropuesta = $this->FechasPropuestas->patchEntity($fechasPropuesta, $this->request->getData());
             $fechasPropuesta->enfrentamiento_id = $enfrentamientoID;
+            $fechasPropuesta->creador = $this->Auth->user('dni');
 
             $fecha = $fechasPropuesta->fecha;
             $fechaLimite = Time::now()->modify('+7 days');
@@ -99,6 +102,16 @@ class FechasPropuestasController extends AppController
      */
     public function edit($id = null)
     {
+        $this->loadModel('Horarios');
+        $this->set('hora_inicio', $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
+                                                                    return date('H:i:s' ,strtotime($horarios->get('hora_inicio')));
+                                                                },
+                                                                    'valueField' => function ($horarios) {
+                                                                        return date('H:i' ,strtotime($horarios->get('hora_inicio')));
+                                                                    }
+                                                                ]));
+        $this->set('hora_elegida', $this->FechasPropuestas->get($id)->hora);
+
         $fechasPropuesta = $this->FechasPropuestas->get($id, [
             'contain' => []
         ]);
@@ -107,7 +120,7 @@ class FechasPropuestasController extends AppController
             if ($this->FechasPropuestas->save($fechasPropuesta)) {
                 $this->Flash->success(__('La fechas propuesta ha sido guardada.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index', $fechasPropuesta->enfrentamiento_id]);
             }
             $this->Flash->error(__('La fecha propuesta no ha podido ser guardada. Intentelo de nuevo.'));
         }
@@ -180,5 +193,26 @@ class FechasPropuestasController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
+    }
+
+    public function isAuthorized($user)
+    {
+        //El creador de la fecha propuesta no puede aceptarla
+        if ($this->request->getParam('action') === 'acept') {
+            $fechaId = (int)$this->request->getParam('pass.0');
+            if ($this->FechasPropuestas->isOwnedBy($fechaId, $user['dni'])) {
+                return false;
+            }
+        }
+
+        //Solo puede borrar o editar si el creador de la fecha propuesta
+        if (in_array($this->request->getParam('action'), ['edit', 'delete'])) {
+            $fechaId = (int)$this->request->getParam('pass.0');
+            if ($this->FechasPropuestas->isOwnedBy($fechaId, $user['dni'])) {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
     }
 }

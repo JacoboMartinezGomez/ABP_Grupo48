@@ -29,7 +29,7 @@
     <div class="terminal"></div>
     <?php if (!empty($packages)): ?>
         <section class="section-tile">
-            <h3><?= __d('debug_kit', 'Requirements ({0})', count($packages)) ?> </h3>
+            <h2><?= __d('debug_kit', 'Requirements ({0})', count($packages)) ?> </h2>
             <table cellspacing="0" cellpadding="0" class="debug-table">
                 <thead>
                 <tr>
@@ -55,7 +55,7 @@
     <?php endif; ?>
     <?php if (!empty($devPackages)): ?>
         <section class="section-tile">
-            <h3><?= __d('debug_kit', 'Dev Requirements ({0})', count($devPackages)) ?> </h3>
+            <h2><?= __d('debug_kit', 'Dev Requirements ({0})', count($devPackages)) ?> </h2>
             <table cellspacing="0" cellpadding="0" class="debug-table">
                 <thead>
                 <tr>

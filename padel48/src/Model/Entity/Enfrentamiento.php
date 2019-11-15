@@ -7,12 +7,14 @@ use Cake\ORM\Entity;
  * Enfrentamiento Entity
  *
  * @property int $id_enfrentamiento
- * @property string $id_capitan1
- * @property string $id_capitan2
- * @property int $id_grupo
- * @property \Cake\I18n\FrozenTime $hora
- * @property \Cake\I18n\FrozenDate $fecha
+ * @property int $grupo_id
+ * @property \Cake\I18n\FrozenTime|null $hora
+ * @property \Cake\I18n\FrozenDate|null $fecha
  * @property int $fase
+ *
+ * @property \App\Model\Entity\Grupo $grupo
+ * @property \App\Model\Entity\FechasPropuesta[] $fechas_propuestas
+ * @property \App\Model\Entity\ParejasDisputanEnfrentamiento[] $parejas_disputan_enfrentamiento
  */
 class Enfrentamiento extends Entity
 {
@@ -26,11 +28,12 @@ class Enfrentamiento extends Entity
      * @var array
      */
     protected $_accessible = [
-        'id_capitan1' => true,
-        'id_capitan2' => true,
-        'id_grupo' => true,
+        'grupo_id' => true,
         'hora' => true,
         'fecha' => true,
-        'fase' => true
+        'fase' => true,
+        'grupo' => true,
+        'fechas_propuestas' => true,
+        'parejas_disputan_enfrentamiento' => true
     ];
 }

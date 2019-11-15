@@ -20,7 +20,7 @@ class CategoriasFixture extends TestFixture
         'nivel' => ['type' => 'integer', 'length' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['campeonato_id', 'tipo', 'nivel'], 'length' => []],
-            'categorias_ibfk_1' => ['type' => 'foreign', 'columns' => ['campeonato_id'], 'references' => ['campeonatos', 'id_campeonato'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'categorias_ibfk_1' => ['type' => 'foreign', 'columns' => ['campeonato_id'], 'references' => ['campeonatos', 'campeonato_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',

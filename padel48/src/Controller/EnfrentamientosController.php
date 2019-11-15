@@ -20,8 +20,36 @@ class EnfrentamientosController extends AppController
     public function index()
     {
         $enfrentamientos = $this->paginate($this->Enfrentamientos);
-
+//
         $this->set(compact('enfrentamientos'));
+
+        $query = $this->Enfrentamientos->find('all')
+                                            ->join([
+                                                'd' =>[
+                                                    'table' => 'parejas_disputan_enfrentamiento',
+                                                    'type' => 'INNER',
+                                                    'conditions' => 'enfrentamientos.id_enfrentamiento = d.enfrentamiento_id'
+                                                    ],
+                                                'p' =>[
+                                                    'table' => 'parejas',
+                                                    'type' => 'INNER',
+                                                    'conditions' => [
+                                                        ['OR' => [['d.id_pareja1 = p.id'], ['d.id_pareja2 = p.id']]],
+                                                        ['OR' => [['p.id_capitan' => $this->Auth->user('dni')],
+                                                            ['p.id_pareja' => $this->Auth->user('dni')]] ]
+                                                        ]
+                                                ]])
+                                            ->select(['enfrentamientos.id_enfrentamiento',
+                                                        'enfrentamientos.grupo_id',
+                                                        'enfrentamientos.hora',
+                                                        'enfrentamientos.fecha',
+                                                        'enfrentamientos.fase',
+                                                        'd.resultado']);
+
+//        ['OR' => [['p.id_capitan1' => $this->Auth->user('dni')],
+//            ['p.id_capitan2' => $this->Auth->user('dni')]] ]
+
+        $this->set('enfrentamientos', $this->paginate($query));
     }
 
     /**
@@ -102,5 +130,53 @@ class EnfrentamientosController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function introducirResultado($id = null){
+        $this->loadModel('ParejasDisputanEnfrentamiento');
+        $this->loadModel('Parejas');
+
+        /*$niveles = $this->ParejasDisputanEnfrentamiento->find('list', [ 'keyField' => ,
+                                                        'valueField' => function ($categorias) {
+                                                            return $categorias->get('nivel');
+                                                        }
+                                                    ]);*/
+
+        $pareja = $this->ParejasDisputanEnfrentamiento->find('all')->where(['enfrentamiento_id' => $id])->first()->toArray();
+        $parejas = [$pareja['id_pareja1'] => $pareja['id_pareja1'], $pareja['id_pareja2'] => $pareja['id_pareja2']];
+        $this->set('parejas',$parejas);
+
+        $enfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
+        if ($this->request->is('post')) {
+
+            $enfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($enfrentamiento, $this->ParejasDisputanEnfrentamiento->find('all')->where(['enfrentamiento_id =' => $id])->first()->toArray());
+            $enfrentamiento->resultado = $this->request->getData()['resultado'];
+
+            debug($enfrentamiento);
+            //debug($this->Parejas->find('all')->where(['id =' => $enfrentamiento['id_pareja1']])->all()->toArray());
+
+            //$this->ParejasDisputanEnfrentamiento->save($enfrentamiento);
+
+            $pareja1 = $this->Parejas->newEntity();
+            $pareja1 = $this->Parejas->patchEntity($pareja1, $this->Parejas->find('all')->where(['id =' => $enfrentamiento['id_pareja1']])->first()->toArray());
+            //debug($pareja1);
+            $pareja2 = $this->Parejas->newEntity();
+            $pareja2 = $this->Parejas->patchEntity($pareja2, $this->Parejas->find('all')->where(['id =' => $enfrentamiento['id_pareja2']])->first()->toArray());
+
+            if ($enfrentamiento['resultado'] == $enfrentamiento['id_pareja1']) {
+                $pareja1->puntuacion += 3;
+                $pareja2->puntuacion += 1;
+            } else {
+                $pareja1->puntuacion += 1;
+                $pareja2->puntuacion += 3;
+            }
+            //debug($pareja1);
+            //debug($pareja2);
+            $this->ParejasDisputanEnfrentamiento->save($enfrentamiento);
+            $this->Parejas->save($pareja1);
+            $this->Parejas->save($pareja2);
+
+            return $this->redirect(['controller' => 'enfrentamientos', 'action' => 'index']);
+        }
     }
 }

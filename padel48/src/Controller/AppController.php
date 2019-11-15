@@ -77,7 +77,27 @@ class AppController extends Controller
 
     public function isAuthorized($user)
     {
+        // Admin can access every action
+        if (isset($user['rol']) && $user['rol'] === 'ADMIN') {
+            return true;
+        }
+
         // By default deny access.
         return false;
+    }
+
+    // Devuelve un array asociativo con las horas_inicio como clave, y valor a la vez.
+    // Pensado para usarse en inputs de tipo select en formularios
+    public function getHorasPista(){
+        $this->loadModel('Horarios');
+        $horasPista = $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
+                                                                        return date('H:i:s' ,strtotime($horarios->get('hora_inicio')));
+                                                                    },
+                                                                        'valueField' => function ($horarios) {
+                                                                            return date('H:i' ,strtotime($horarios->get('hora_inicio')));
+                                                                        }
+                                                                    ]);
+
+        return $horasPista;
     }
 }

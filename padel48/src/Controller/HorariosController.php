@@ -74,11 +74,9 @@ class HorariosController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function changeHours($id = null)
+    public function edit()
     {
-        $horario = $this->Horarios->get($id, [
-            'contain' => []
-        ]);
+        $horario = $this->Horarios->newEntity();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $horario = $this->Horarios->patchEntity($horario, $this->request->getData());
 

@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CategoriasTable&\Cake\ORM\Association\HasMany $Categorias
  * @property \App\Model\Table\GruposTable&\Cake\ORM\Association\HasMany $Grupos
  * @property \App\Model\Table\ParejasTable&\Cake\ORM\Association\HasMany $Parejas
- * @property \App\Model\Table\ParejasDisputanEnfrentamientoTable&\Cake\ORM\Association\HasMany $ParejasDisputanEnfrentamiento
  *
  * @method \App\Model\Entity\Campeonato get($primaryKey, $options = [])
  * @method \App\Model\Entity\Campeonato newEntity($data = null, array $options = [])
@@ -46,9 +45,6 @@ class CampeonatosTable extends Table
             'foreignKey' => 'campeonato_id'
         ]);
         $this->hasMany('Parejas', [
-            'foreignKey' => 'campeonato_id'
-        ]);
-        $this->hasMany('ParejasDisputanEnfrentamiento', [
             'foreignKey' => 'campeonato_id'
         ]);
     }

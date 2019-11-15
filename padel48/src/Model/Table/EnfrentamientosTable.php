@@ -9,6 +9,10 @@ use Cake\Validation\Validator;
 /**
  * Enfrentamientos Model
  *
+ * @property \App\Model\Table\GruposTable&\Cake\ORM\Association\BelongsTo $Grupos
+ * @property \App\Model\Table\FechasPropuestasTable&\Cake\ORM\Association\HasMany $FechasPropuestas
+ * @property \App\Model\Table\ParejasDisputanEnfrentamientoTable&\Cake\ORM\Association\HasMany $ParejasDisputanEnfrentamiento
+ *
  * @method \App\Model\Entity\Enfrentamiento get($primaryKey, $options = [])
  * @method \App\Model\Entity\Enfrentamiento newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Enfrentamiento[] newEntities(array $data, array $options = [])
@@ -33,6 +37,17 @@ class EnfrentamientosTable extends Table
         $this->setTable('enfrentamientos');
         $this->setDisplayField('id_enfrentamiento');
         $this->setPrimaryKey('id_enfrentamiento');
+
+        $this->belongsTo('Grupos', [
+            'foreignKey' => 'grupo_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('FechasPropuestas', [
+            'foreignKey' => 'enfrentamiento_id'
+        ]);
+        $this->hasMany('ParejasDisputanEnfrentamiento', [
+            'foreignKey' => 'enfrentamiento_id'
+        ]);
     }
 
     /**
@@ -48,31 +63,12 @@ class EnfrentamientosTable extends Table
             ->allowEmptyString('id_enfrentamiento', null, 'create');
 
         $validator
-            ->scalar('id_capitan1')
-            ->maxLength('id_capitan1', 9)
-            ->requirePresence('id_capitan1', 'create')
-            ->notEmptyString('id_capitan1');
-
-        $validator
-            ->scalar('id_capitan2')
-            ->maxLength('id_capitan2', 9)
-            ->requirePresence('id_capitan2', 'create')
-            ->notEmptyString('id_capitan2');
-
-        $validator
-            ->integer('id_grupo')
-            ->requirePresence('id_grupo', 'create')
-            ->notEmptyString('id_grupo');
-
-        $validator
             ->time('hora')
-            ->requirePresence('hora', 'create')
-            ->notEmptyTime('hora');
+            ->allowEmptyTime('hora');
 
         $validator
             ->date('fecha')
-            ->requirePresence('fecha', 'create')
-            ->notEmptyDate('fecha');
+            ->allowEmptyDate('fecha');
 
         $validator
             ->integer('fase')
@@ -80,5 +76,19 @@ class EnfrentamientosTable extends Table
             ->notEmptyString('fase');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        //$rules->add($rules->existsIn(['grupo_id'], 'Grupos'));
+
+        return $rules;
     }
 }

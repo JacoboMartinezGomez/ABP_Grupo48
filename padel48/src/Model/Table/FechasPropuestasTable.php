@@ -10,8 +10,6 @@ use Cake\Validation\Validator;
  * FechasPropuestas Model
  *
  * @property \App\Model\Table\EnfrentamientosTable&\Cake\ORM\Association\BelongsTo $Enfrentamientos
- * @property \App\Model\Table\EnfrentamientosTable&\Cake\ORM\Association\BelongsTo $Enfrentamientos
- * @property \App\Model\Table\EnfrentamientosTable&\Cake\ORM\Association\BelongsTo $Enfrentamientos
  *
  * @method \App\Model\Entity\FechasPropuesta get($primaryKey, $options = [])
  * @method \App\Model\Entity\FechasPropuesta newEntity($data = null, array $options = [])
@@ -43,10 +41,7 @@ class FechasPropuestasTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Enfrentamientos', [
-            'foreignKey' => 'capitan1_id'
-        ]);
-        $this->belongsTo('Enfrentamientos', [
-            'foreignKey' => 'capitan2_id'
+            'foreignKey' => 'creador'
         ]);
     }
 
@@ -85,9 +80,15 @@ class FechasPropuestasTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['enfrentamiento_id'], 'Enfrentamientos'));
-        $rules->add($rules->existsIn(['capitan1_id'], 'Enfrentamientos'));
-        $rules->add($rules->existsIn(['capitan2_id'], 'Enfrentamientos'));
+        $rules->add($rules->existsIn(['creador'], 'Enfrentamientos'));
 
         return $rules;
     }
+
+    public function isOwnedBy($fechaId, $userId)
+    {
+        return $this->exists(['id' => $fechaId, 'creador' => $userId]);
+    }
+
+
 }

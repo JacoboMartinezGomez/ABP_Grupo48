@@ -8,8 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $enfrentamiento_id
- * @property string|null $capitan1_id
- * @property string|null $capitan2_id
+ * @property string $creador
  * @property \Cake\I18n\FrozenTime $hora
  * @property \Cake\I18n\FrozenDate $fecha
  *
@@ -28,8 +27,7 @@ class FechasPropuesta extends Entity
      */
     protected $_accessible = [
         'enfrentamiento_id' => true,
-        'capitan1_id' => true,
-        'capitan2_id' => true,
+        'creador' => true,
         'hora' => true,
         'fecha' => true,
         'enfrentamiento' => true

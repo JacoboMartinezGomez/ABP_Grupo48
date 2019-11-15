@@ -53,20 +53,23 @@ class CampeonatosController extends AppController
             $campeonato = $this->Campeonatos->patchEntity($campeonato, $this->request->getData());
             $fecha_inicio = $this->request->getData()['fecha_inicio'];
             $fecha_fin = $this->request->getData()['fecha_fin'];
+            $fecha_inicio = \Cake\Database\Type::build('date')->marshal($fecha_inicio);
+            $fecha_fin = \Cake\Database\Type::build('date')->marshal($fecha_fin);
             if ($fecha_fin<=$fecha_inicio){
                 $this->Flash->error(__('La fecha de finalización del campeonato debe ser posterior a la de inicio'));
             }
             elseif ($fecha_inicio<Time::now()){
-                $this->Flash->error(__('La de inicio debe ser posterior a la fecha de hoy'));
+                $this->Flash->error(__('La fecha de inicio debe ser posterior a la fecha de hoy'));
             }
             else{
                 $idcamp = $this->Campeonatos->save($campeonato)['id_campeonato'];
 
                 $categorias = new CategoriasController();
+                $idCategoria=0;
                 for($i=1; $i<=3; $i++){
-                    $categorias->anhadir($idcamp,'MASC',$i);
-                    $categorias->anhadir($idcamp,'FEM',$i);
-                    $categorias->anhadir($idcamp,'MIXTO',$i);
+                    $categorias->anhadir($idcamp,'MASC',$i,$idCategoria++);
+                    $categorias->anhadir($idcamp,'FEM',$i,$idCategoria++);
+                    $categorias->anhadir($idcamp,'MIXTO',$i,$idCategoria++);
                 }
 
                 $this->Flash->success(__('El campeonato ha sido guardado'));
@@ -120,14 +123,148 @@ class CampeonatosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function inscribirse($id = null)
-    {
-        $campeonato = $this->Campeonatos->get($id);
-        $pareja = new ParejasController();
-        $pareja->add($id);
+
+    public function generarGrupos($idCampeonato = null){
+        $this->loadModel('Parejas');
+
+        //Para cada categoria
+        for($i=0; $i<=8; $i++){
+            switch ($i){
+                case 0:
+                    $tipo = "MASC";
+                    $nivel = 1;
+                    break;
+                case 1:
+                    $tipo = "FEM";
+                    $nivel = 1;
+                    break;
+                case 2:
+                    $tipo = "MIXTO";
+                    $nivel = 1;
+                    break;
+                case 3:
+                    $tipo = "MASC";
+                    $nivel = 2;
+                    break;
+                case 4:
+                    $tipo = "FEM";
+                    $nivel = 2;
+                    break;
+                case 5:
+                    $tipo = "MIXTO";
+                    $nivel = 2;
+                    break;
+                case 6:
+                    $tipo = "MASC";
+                    $nivel = 3;
+                    break;
+                case 7:
+                    $tipo = "FEM";
+                    $nivel = 3;
+                    break;
+                case 8:
+                    $tipo = "MIXTO";
+                    $nivel = 3;
+                    break;
+            }
+
+            $query = $this->Parejas->find('all')->where(['campeonato_id = ' => $idCampeonato, 'categoria_id =' => $i]);
+            $numInscritos = $query->all()->count();
+            if ($numInscritos < 8){ //Si no hay suficientes inscritos, error
+                $this->Flash->error(__('No hay suficientes inscritos para la categoria ' . $tipo . ' y nivel ' . $nivel));
+            }
+            else{
+                //Calcular numero de grupos
+                $numGrupos = $numInscritos / 8;
+                $numGrupos = floor($numGrupos);
+                //Puede haber como máximo 8 grupos
+                if($numGrupos>8){
+                    $numGrupos=8;
+                }
+                //$numParejasSinGrupo = $numInscritos % 8;
+                if ($numInscritos > 12 && $numInscritos <= 15){
+                    $numParejasEliminar = $numInscritos - 12;
+                    $parejasEliminar = $this->Parejas->find()->limit($numParejasEliminar)->where(['campeonato_id = ' => $idCampeonato, 'categoria_id =' => $i])->order(['id' => 'DESC'])->all()->toArray();
+                    foreach ($parejasEliminar as $pareja ){
+                        $this->Parejas->delete($pareja);
+                    }
+                    $this->Flash->error(__('Se eliminaran '.$numParejasEliminar.' parejas para poder realizar grupos correctamente'));
+                }
+
+                $parejasInscritas = $query->all()->toArray();
 
 
+                $gruposController = new GruposController();
+                for($x = 1; $x <= $numGrupos; $x++){
+                    $gruposController->add($x, $idCampeonato, $i);
+                }
+                foreach ($parejasInscritas as $pareja){
+                    $cont8 = 0;
+                    $contGruposRellenadosMinimo = 1;
+                    $contGrupoRellenarMas = 1;
+                    if($contGruposRellenadosMinimo <= $numGrupos){
+                        $pareja->grupo_id = $contGruposRellenadosMinimo;
+                        $cont8++;
+                        if($cont8 == 8){
+                            $contGruposRellenadosMinimo++;
+                        }
+                    }
+                    else{
+                        $pareja->grupo_id = $contGrupoRellenarMas;
+                        $contGrupoRellenarMas++;
+                        if($contGrupoRellenarMas > $numGrupos){
+                            $contGrupoRellenarMas = 1;
+                        }
+                    }
+                    $this->Parejas->save($pareja);
+                }
+            }
 
-        //return $this->redirect(['action' => 'index']);
+        }
+        $this->generarPartidos($idCampeonato);
+
+        return $this->redirect(['controller' => 'grupos', 'action' => 'index']);
     }
+
+    public function generarPartidos($idCampeonato){
+        $this->loadModel('Grupos');
+        $this->loadModel('Parejas');
+        $this->loadModel('Enfrentamientos');
+        $this->loadModel('ParejasDisputanEnfrentamiento');
+        $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
+        $grupos = $query->all()->toArray();
+
+        foreach($grupos as $grupo){
+            $query = $this->Parejas->find('all')->where(['grupo_id =' => $grupo['id_grupo'],
+                                                        'campeonato_id =' => $grupo['campeonato_id'],
+                                                        'categoria_id =' => $grupo['categoria_id']]);
+            $parejas = $query->all()->toArray();
+            $numElementos = count($parejas);
+            $keys = array_keys($parejas);
+
+            for($i = 0; $i<$numElementos; $i++){
+
+                for($j = $i+1; $j<$numElementos; $j++){
+                    //debug($parejas[$keys[$i]]['id']);
+
+                    $enfrentamiento = $this->Enfrentamientos->newEntity();
+                    $enfrentamiento = $this->Enfrentamientos->patchEntity($enfrentamiento, ['grupo_id' => $parejas[$keys[$i]]['grupo_id'],
+                        'fase' => 1]);
+                    $id = $this->Enfrentamientos->save($enfrentamiento)['id_enfrentamiento'];
+                    $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
+                    //debug($parejasDisputanEnfrentamiento);
+                    //die;
+                    $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($parejasDisputanEnfrentamiento, [
+                                                                                                                                        'id_pareja1' => $parejas[$keys[$i]]['id'],
+                                                                                                                                        'id_pareja2' => $parejas[$keys[$j]]['id'],
+                                                                                                                                        'enfrentamiento_id' => $id
+                                                                                                                                        ]);
+                    //debug($parejasDisputanEnfrentamiento);
+                    $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
+
+                }
+            }
+        }
+    }
+
 }
