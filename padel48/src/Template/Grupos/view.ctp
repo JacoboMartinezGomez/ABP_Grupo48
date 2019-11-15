@@ -63,7 +63,6 @@
             <th scope="col"><?= $this->Paginator->sort('campeonato_id') ?></th>
             <th scope="col"><?= $this->Paginator->sort('puntuacion') ?></th>
             <th scope="col"><?= $this->Paginator->sort('clasificado') ?></th>
-            <th scope="col" class="actions"><?= __('Actions') ?></th>
         </tr>
         </thead>
         <tbody>
