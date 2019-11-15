@@ -1,21 +1,21 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\ParejasDisputanEnfrentamientoTable;
+use App\Model\Table\ParejasdisputanenfrentamientoTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\ParejasDisputanEnfrentamientoTable Test Case
+ * App\Model\Table\ParejasdisputanenfrentamientoTable Test Case
  */
-class ParejasDisputanEnfrentamientoTableTest extends TestCase
+class ParejasdisputanenfrentamientoTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\ParejasDisputanEnfrentamientoTable
+     * @var \App\Model\Table\ParejasdisputanenfrentamientoTable
      */
-    public $ParejasDisputanEnfrentamiento;
+    public $Parejasdisputanenfrentamiento;
 
     /**
      * Fixtures
@@ -23,7 +23,7 @@ class ParejasDisputanEnfrentamientoTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.ParejasDisputanEnfrentamiento',
+        'app.Parejasdisputanenfrentamiento',
         'app.Enfrentamientos'
     ];
 
@@ -35,8 +35,8 @@ class ParejasDisputanEnfrentamientoTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('ParejasDisputanEnfrentamiento') ? [] : ['className' => ParejasDisputanEnfrentamientoTable::class];
-        $this->ParejasDisputanEnfrentamiento = TableRegistry::getTableLocator()->get('ParejasDisputanEnfrentamiento', $config);
+        $config = TableRegistry::getTableLocator()->exists('Parejasdisputanenfrentamiento') ? [] : ['className' => ParejasdisputanenfrentamientoTable::class];
+        $this->Parejasdisputanenfrentamiento = TableRegistry::getTableLocator()->get('Parejasdisputanenfrentamiento', $config);
     }
 
     /**
@@ -46,7 +46,7 @@ class ParejasDisputanEnfrentamientoTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->ParejasDisputanEnfrentamiento);
+        unset($this->Parejasdisputanenfrentamiento);
 
         parent::tearDown();
     }

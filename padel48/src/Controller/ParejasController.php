@@ -60,6 +60,8 @@ class ParejasController extends AppController
             return $this->redirect(['controller' => 'Campeonatos' ,'action' => 'index']);
         }
 
+
+
         $pareja = $this->Parejas->newEntity();
         if ($this->request->is('post')) {
 
@@ -68,7 +70,7 @@ class ParejasController extends AppController
             $pareja->id_grupo = 0;
             $nivel = $this->request->getData()['nivel'];
 
-            $pareja->id_capitan='admin'; //cambiar por session id
+            $pareja->id_capitan=$this->Auth->user('dni'); //cambiar por session id
             $pareja->puntuacion='0';
             $pareja->clasificado='0';
 
@@ -93,6 +95,13 @@ class ParejasController extends AppController
             }
             $categoria = $query->first()->toArray()['id_categoria'];
             $pareja->categoria_id = $categoria;
+
+            //Comprobar que ese campeonato, categoria y nivel no este lleno (96 parejas apuntadas)
+            $query = $this->Parejas->find('all')->where(['campeonato_id =' => $campeonato_id, 'categoria_id =' => $categoria]);
+            if($query->all->count()==96){
+                $this->Flash->error(__('Esta categoría y nivel para este campeonato ya está llena.'));
+                return $this->redirect(['action' => 'index']);
+            }
 
             //Comprobacion de que el capitan no este ya inscrito
             $query = $this->Parejas->find('all')->where([

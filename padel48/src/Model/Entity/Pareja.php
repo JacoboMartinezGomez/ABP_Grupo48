@@ -31,6 +31,7 @@ class Pareja extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => true,
         'id_capitan' => true,
         'id_pareja' => true,
         'campeonato_id' => true,
