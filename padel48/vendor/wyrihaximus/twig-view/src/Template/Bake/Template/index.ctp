@@ -46,7 +46,7 @@ if (!empty($indexColumns)) {
     </ul>
 </nav>
 <div class="<%= $pluralVar %> index large-9 medium-8 columns content">
-    <h3>{{ __('<%= $pluralHumanName %>') }}</h3>
+    <h2>{{ __('<%= $pluralHumanName %>') }}</h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>

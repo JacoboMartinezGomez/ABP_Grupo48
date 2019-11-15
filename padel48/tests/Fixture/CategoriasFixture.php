@@ -15,16 +15,12 @@ class CategoriasFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'id_categoria' => ['type' => 'integer', 'length' => 4, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'campeonato_id' => ['type' => 'integer', 'length' => 4, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'tipo' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'nivel' => ['type' => 'integer', 'length' => 2, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        '_indexes' => [
-            'campeonato_id' => ['type' => 'index', 'columns' => ['campeonato_id'], 'length' => []],
-        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_categoria', 'campeonato_id'], 'length' => []],
-            'categorias_ibfk_1' => ['type' => 'foreign', 'columns' => ['campeonato_id'], 'references' => ['campeonatos', 'id_campeonato'], 'update' => 'restrict', 'delete' => 'cascade', 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['campeonato_id', 'tipo', 'nivel'], 'length' => []],
+            'categorias_ibfk_1' => ['type' => 'foreign', 'columns' => ['campeonato_id'], 'references' => ['campeonatos', 'campeonato_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -41,9 +37,8 @@ class CategoriasFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_categoria' => 1,
                 'campeonato_id' => 1,
-                'tipo' => 'Lorem ipsum dolor sit amet',
+                'tipo' => '6caf7083-da3f-495a-acb4-6d3f5f2fedfb',
                 'nivel' => 1
             ],
         ];

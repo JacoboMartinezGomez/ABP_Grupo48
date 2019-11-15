@@ -4,16 +4,58 @@
  * @var \App\Model\Entity\Grupo[]|\Cake\Collection\CollectionInterface $grupos
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Grupo'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="grupos index large-9 medium-8 columns content">
-    <h3><?= __('Grupos') ?></h3>
+<header>
+    <div id="head">
+        <div id="logoWeb">
+            <?php echo $this->Html->image('padel.png', ['alt' => 'palaPadel']);?>
+            <div id="nombreWeb">
+                <div class="letrasLogo">ádel</div>
+                <div class="numeroLogo">48</div>
+            </div>
+        </div>
+    </div>
+</header> 
+<div class = "container">
+    <nav class="menu">
+        <ul class = "nav">
+            <li class="heading"></li>
+            <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+                <ul>
+                    <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="showVista" id="campeonatos">
+    <h2><?= __('Grupos') ?></h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -30,9 +72,12 @@
                 <td><?= $grupo->has('campeonato') ? $this->Html->link($grupo->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $grupo->campeonato->id_campeonato]) : '' ?></td>
                 <td><?= $this->Number->format($grupo->categoria_id) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $grupo->id_grupo]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $grupo->id_grupo]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $grupo->id_grupo], ['confirm' => __('Are you sure you want to delete # {0}?', $grupo->id_grupo)]) ?>
+                    <?php echo $this->Html->image("ver.png", array(
+                        "src" => "Ver",
+                        "alt" => "ver",
+                        'url' => array('action' => 'view', $grupo->id_grupo),
+                        "class" => "icono"
+                    )); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -48,4 +93,5 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
+</div>
 </div>

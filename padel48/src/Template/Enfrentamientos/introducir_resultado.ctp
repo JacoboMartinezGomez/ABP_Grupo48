@@ -21,7 +21,7 @@
     <fieldset>
         <legend><?= __('Introduce resultado') ?></legend>
         <?php
-        echo $this->Form->control('resultado', ['options' => $parejas]);
+        echo $this->Form->control('resultado');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

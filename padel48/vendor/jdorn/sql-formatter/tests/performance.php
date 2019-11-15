@@ -40,5 +40,5 @@ echo "<p>Took ".number_format($end-$start,5)." seconds total, ".number_format(($
 
 echo "<p>Used ".number_format($uend-$ustart)." bytes of memory</p>";
 
-echo "<h3>Cache Stats</h3><pre>".print_r(SqlFormatter::getCacheStats(),true)."</pre>";
+echo "<h2>Cache Stats</h2><pre>".print_r(SqlFormatter::getCacheStats(),true)."</pre>";
 

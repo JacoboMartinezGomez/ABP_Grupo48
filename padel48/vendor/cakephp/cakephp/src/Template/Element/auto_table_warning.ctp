@@ -18,7 +18,7 @@ if (!$autoTables) {
     return;
 }
 ?>
-<h3>Could this be caused by using Auto-Tables?</h3>
+<h2>Could this be caused by using Auto-Tables?</h2>
 <p>
 Some of the Table objects in your application were created by instantiating "<strong>Cake\ORM\Table</strong>"
 instead of any other specific subclass.
