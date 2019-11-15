@@ -1,5 +1,5 @@
 <?php if (isset($param)) { ?>
-   <h3>some text</h3>
+   <h2>some text</h2>
 <?php }
 
 if (($condition1

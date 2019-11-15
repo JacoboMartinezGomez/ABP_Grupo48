@@ -25,6 +25,7 @@ class Categoria extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id_categoria' => true,
         'tipo' => true,
         'nivel' => true,
         'campeonato' => true

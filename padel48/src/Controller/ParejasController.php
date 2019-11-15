@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\I18n\Time;
+
 /**
  * Parejas Controller
  *
@@ -20,9 +21,11 @@ class ParejasController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Campeonatos']
+            'contain' => ['Campeonatos', 'Grupos']
         ];
+
         $parejas = $this->paginate($this->Parejas);
+
 
         $this->set(compact('parejas'));
     }
@@ -37,21 +40,17 @@ class ParejasController extends AppController
     public function view($id = null)
     {
         $pareja = $this->Parejas->get($id, [
-            'contain' => ['Campeonatos']
+            'contain' => ['Campeonatos', 'Grupos', 'Categorias']
         ]);
 
         $this->set('pareja', $pareja);
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
     public function add($campeonato_id)
     {
         $this->loadModel('Usuarios');
         $this->loadModel('Campeonatos');
+        $this->loadModel('Categorias');
 
         //Comprobar que el campeonato no tenga las inscripciones cerradas
         $query = $this->Campeonatos->find('all')->where(['id_campeonato = '=>$campeonato_id]);
@@ -61,14 +60,27 @@ class ParejasController extends AppController
             return $this->redirect(['controller' => 'Campeonatos' ,'action' => 'index']);
         }
 
+        $niveles = $this->Categorias->find('list', [ 'keyField' => function ($categorias) {
+                                                                    return $categorias->get('nivel');
+                                                                },
+                                                                    'valueField' => function ($categorias) {
+                                                                        return $categorias->get('nivel');
+                                                                    }
+                                                                ]);
+
+        $this->set('niveles', $niveles);
         $pareja = $this->Parejas->newEntity();
         if ($this->request->is('post')) {
+
             $pareja = $this->Parejas->patchEntity($pareja, $this->request->getData());
             $pareja->campeonato_id=$campeonato_id;
+            if($pareja->id_pareja == $this->Auth->user('dni')){
+                $this->Flash->error(__('No puedes introducir tu id como tu pareja'));
+                return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
+            }
+            $nivel = $this->request->getData()['nivel'];
 
-
-
-            $pareja->id_capitan='2'; //cambiar por session id
+            $pareja->id_capitan=$this->Auth->user('dni'); //cambiar por session id
             $pareja->puntuacion='0';
             $pareja->clasificado='0';
 
@@ -77,7 +89,7 @@ class ParejasController extends AppController
             $parejaQuery = $this->Usuarios->find('all')->where(['dni ='=>$pareja->id_pareja]);
             if($parejaQuery->all()->count()==0){
                 $this->Flash->error(__('No existe ningun deportista con ese DNI'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'campeonatos','action' => 'index']);
             }
 
 
@@ -86,17 +98,26 @@ class ParejasController extends AppController
             $sexoCapitanQuery = $this->Usuarios->find('all')->select('sexo')->where(['dni ='=>$pareja->id_capitan]);
             $sexoCapitan = $sexoCapitanQuery->first()->toArray()['sexo'];
             if ($sexoPareja == $sexoCapitan){
-                $pareja->tipo=$sexoCapitan;
+                $query = $this->Categorias->find('all')->where(['campeonato_id ='=>$campeonato_id, 'tipo =' => $sexoPareja, 'nivel =' => $nivel]);
             }
             else{
-                $pareja->tipo='MIXTO';
+                $query = $this->Categorias->find('all')->where(['campeonato_id ='=>$campeonato_id, 'tipo =' => 'MIXTO', 'nivel =' => $nivel]);
+            }
+
+            $categoria = $query->first()->toArray()['id_categoria'];
+            $pareja->categoria_id = $categoria;
+
+            //Comprobar que ese campeonato, categoria y nivel no este lleno (96 parejas apuntadas)
+            $query = $this->Parejas->find('all')->where(['campeonato_id =' => $campeonato_id, 'categoria_id =' => $categoria]);
+            if($query->all()->count()==96){
+                $this->Flash->error(__('Esta categoría y nivel para este campeonato ya está llena.'));
+                return $this->redirect(['action' => 'index']);
             }
 
             //Comprobacion de que el capitan no este ya inscrito
             $query = $this->Parejas->find('all')->where([
                 'campeonato_id =' => ($campeonato_id),
-                'tipo =' => $pareja->tipo,
-                'nivel =' => $pareja->nivel,
+                'categoria_id =' => $categoria,
                 'OR'=>[['id_capitan =' => $pareja->id_capitan],
                     ['id_pareja =' => $pareja->id_capitan]
                 ]
@@ -111,8 +132,7 @@ class ParejasController extends AppController
             //Comprobacion de que el otro miembro de la pareja ya este inscrito
             $query = $this->Parejas->find('all')->where([
                 'campeonato_id' => ($campeonato_id),
-                'tipo' => $pareja->tipo,
-                'nivel' => $pareja->nivel,
+                'categoria_id =' => $categoria,
                 'OR'=>[['id_capitan =' => $pareja->id_pareja],
                     ['id_pareja =' => $pareja->id_pareja]
                 ]
@@ -123,10 +143,11 @@ class ParejasController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
 
+
             if ($this->Parejas->save($pareja)) {
                 $this->Flash->success(__("Correcto"));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Campeonatos' ,'action' => 'index']);
+                //return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The pareja could not be saved. Please, try again.'));
 
@@ -158,7 +179,9 @@ class ParejasController extends AppController
             $this->Flash->error(__('The pareja could not be saved. Please, try again.'));
         }
         $campeonatos = $this->Parejas->Campeonatos->find('list', ['limit' => 200]);
-        $this->set(compact('pareja', 'campeonatos'));
+        $grupos = $this->Parejas->Grupos->find('list', ['limit' => 200]);
+        $categorias = $this->Parejas->Categorias->find('list', ['limit' => 200]);
+        $this->set(compact('pareja', 'campeonatos', 'grupos', 'categorias'));
     }
 
     /**

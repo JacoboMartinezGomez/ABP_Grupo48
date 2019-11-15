@@ -22,7 +22,7 @@
 <?php else: ?>
     <?php foreach ($metrics as $name => $counters): ?>
     <section class="section-tile">
-        <h3><?= __d('debug_kit', '{0} Metrics', h($name)) ?> </h3>
+        <h2><?= __d('debug_kit', '{0} Metrics', h($name)) ?> </h2>
         <button class="btn-primary clear-cache" data-name="<?= h($name) ?>"><?= __d('debug_kit', 'Clear {0} cache', h($name)) ?></button>
         <span class="inline-message"></span>
         <table cellspacing="0" cellpadding="0" class="debug-table">

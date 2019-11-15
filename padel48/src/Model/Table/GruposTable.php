@@ -10,6 +10,9 @@ use Cake\Validation\Validator;
  * Grupos Model
  *
  * @property \App\Model\Table\CampeonatosTable&\Cake\ORM\Association\BelongsTo $Campeonatos
+ * @property &\Cake\ORM\Association\BelongsTo $Categorias
+ * @property &\Cake\ORM\Association\HasMany $Enfrentamientos
+ * @property &\Cake\ORM\Association\HasMany $Parejas
  * @property \App\Model\Table\CategoriasTable&\Cake\ORM\Association\BelongsTo $Categorias
  * @property \App\Model\Table\EnfrentamientosTable&\Cake\ORM\Association\HasMany $Enfrentamientos
  * @property \App\Model\Table\ParejasTable&\Cake\ORM\Association\HasMany $Parejas
@@ -37,7 +40,7 @@ class GruposTable extends Table
 
         $this->setTable('grupos');
         $this->setDisplayField('id_grupo');
-        $this->setPrimaryKey('id_grupo');
+        $this->setPrimaryKey(['id_grupo', 'campeonato_id', 'categoria_id']);
 
         $this->belongsTo('Campeonatos', [
             'foreignKey' => 'campeonato_id',
@@ -80,7 +83,7 @@ class GruposTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['campeonato_id'], 'Campeonatos'));
-        $rules->add($rules->existsIn(['categoria_id'], 'Categorias'));
+        //$rules->add($rules->existsIn(['categoria_id'], 'Categorias'));
 
         return $rules;
     }

@@ -21,15 +21,16 @@ class PartidosFixture extends TestFixture
         'usuario_id4' => ['type' => 'string', 'length' => 9, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'hora' => ['type' => 'time', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         '_indexes' => [
-            'usuario_id2' => ['type' => 'index', 'columns' => ['usuario_id2'], 'length' => []],
-            'usuario_id3' => ['type' => 'index', 'columns' => ['usuario_id3'], 'length' => []],
-            'usuario_id4' => ['type' => 'index', 'columns' => ['usuario_id4'], 'length' => []],
+            'partido_ibfk_2' => ['type' => 'index', 'columns' => ['usuario_id2'], 'length' => []],
+            'partido_ibfk_3' => ['type' => 'index', 'columns' => ['usuario_id3'], 'length' => []],
+            'partido_ibfk_4' => ['type' => 'index', 'columns' => ['usuario_id4'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['usuario_id', 'usuario_id2', 'usuario_id3', 'usuario_id4'], 'length' => []],
-            'partidos_ibfk_1' => ['type' => 'foreign', 'columns' => ['usuario_id2'], 'references' => ['usuarios', 'dni'], 'update' => 'restrict', 'delete' => 'cascade', 'length' => []],
-            'partidos_ibfk_2' => ['type' => 'foreign', 'columns' => ['usuario_id3'], 'references' => ['usuarios', 'dni'], 'update' => 'restrict', 'delete' => 'cascade', 'length' => []],
-            'partidos_ibfk_3' => ['type' => 'foreign', 'columns' => ['usuario_id4'], 'references' => ['usuarios', 'dni'], 'update' => 'restrict', 'delete' => 'cascade', 'length' => []],
+            'partidos_ibfk_1' => ['type' => 'foreign', 'columns' => ['usuario_id'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'partidos_ibfk_2' => ['type' => 'foreign', 'columns' => ['usuario_id2'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'partidos_ibfk_3' => ['type' => 'foreign', 'columns' => ['usuario_id3'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'partidos_ibfk_4' => ['type' => 'foreign', 'columns' => ['usuario_id4'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -46,11 +47,11 @@ class PartidosFixture extends TestFixture
     {
         $this->records = [
             [
-                'usuario_id' => '6b47f69d-3257-4149-b9ae-3d5e2b917bcd',
-                'usuario_id2' => '33489bce-6155-467a-bbce-4dca973cb490',
-                'usuario_id3' => 'bba0726c-322d-4ea0-ba71-5437ee0914c6',
-                'usuario_id4' => 'f687b118-839e-4a72-9aa9-738675e04cf3',
-                'hora' => '20:10:31'
+                'usuario_id' => 'b66fc2ea-7244-4a40-9c94-77f26ec2a2af',
+                'usuario_id2' => '6e46edf9-d833-40e6-8499-11fc11deb789',
+                'usuario_id3' => '639133ec-5799-40fe-8c17-b5d988bf4f0f',
+                'usuario_id4' => '5720c772-9fd4-46a6-898e-87a012befa5a',
+                'hora' => '16:51:03'
             ],
         ];
         parent::init();

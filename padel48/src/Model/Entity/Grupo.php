@@ -30,8 +30,7 @@ class Grupo extends Entity
         'campeonato_id' => true,
         'categoria_id' => true,
         'campeonato' => true,
-        'categoria' => true,
-        'enfrentamientos' => true,
-        'parejas' => true
+        'id_grupo' => true
+        
     ];
 }

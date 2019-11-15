@@ -3,37 +3,82 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Categoria[]|\Cake\Collection\CollectionInterface $categorias
  */
+$this->Html->css(['css'])
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Categoria'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="categorias index large-9 medium-8 columns content">
-    <h3><?= __('Categorias') ?></h3>
+<head>
+    <meta charset="utf-8">
+    <title><?php echo 'PADEL48' ?></title>
+    <meta author="" name="" content="">
+    <link rel="stylesheet" type="text/css" href="./src/Template/Index/css/css.css" />
+</head>
+<body>
+<header>
+    <div id="head">
+        <div id="logoWeb">
+            <?php echo $this->Html->image('padel.png', ['alt' => 'palaPadel']);?>
+            <div id="nombreWeb">
+                <div class="letrasLogo">ádel</div>
+                <div class="numeroLogo">48</div>
+            </div>
+        </div>
+    </div>
+</header> 
+<div class = "container">
+    <nav class="menu"><ul class = "nav">
+            <li class="heading"></li>
+            <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+                <ul>
+                    <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="showVista" id="categorias">
+    <h2><?= __('Categorias') ?></h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
+                <th scope="col"><?= $this->Paginator->sort('id_categoria') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('campeonato_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('tipo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('nivel') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($categorias as $categoria): ?>
             <tr>
-                <td><?= $categoria->has('campeonato') ? $this->Html->link($categoria->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $categoria->campeonato->id_campeonato]) : '' ?></td>
+            <td><?= $this->Number->format($categoria->id_categoria) ?></td>
+                <td><?= $categoria->has('campeonato') ? $this->Html->link($categoria->campeonato->campeonato_id, ['controller' => 'Campeonatos', 'action' => 'view', $categoria->campeonato->campeonato_id]) : '' ?></td>
                 <td><?= h($categoria->tipo) ?></td>
                 <td><?= $this->Number->format($categoria->nivel) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $categoria->campeonato_id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $categoria->campeonato_id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $categoria->campeonato_id], ['confirm' => __('Are you sure you want to delete # {0}?', $categoria->campeonato_id)]) ?>
-                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
@@ -48,4 +93,5 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
+</div>
 </div>
