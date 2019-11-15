@@ -23,10 +23,26 @@ class EnfrentamientosController extends AppController
 //
 //        $this->set(compact('enfrentamientos'));
 
-        $query = $this->Enfrentamientos->find('all')
-                                            ->where(['OR' =>
-                                                [['id_capitan1' => $this->Auth->user('dni')],
-                                                ['id_capitan2' => $this->Auth->user('dni')]]]);
+        $query = $this->Enfrentamientos->find()
+                                            ->join([
+                                                'd' =>[
+                                                    'table' => 'parejas_disputan_enfrentamiento',
+                                                    'type' => 'LEFT',
+                                                    'conditions' => 'enfrentamientos.id_enfrentamiento = d.enfrentamiento_id'
+                                                    ],
+                                                'p' =>[
+                                                    'table' => 'parejas',
+                                                    'type' => 'INNER',
+                                                    'conditions' => [
+                                                        ['OR' => [['d.id_pareja1 = p.id'], ['d.id_pareja2 = p.id']]],
+                                                        ['OR' => [['p.id_capitan' => $this->Auth->user('dni')],
+                                                            ['p.id_pareja' => $this->Auth->user('dni')]] ]
+                                                        ]
+                                                ]]);
+
+//        ['OR' => [['p.id_capitan1' => $this->Auth->user('dni')],
+//            ['p.id_capitan2' => $this->Auth->user('dni')]] ]
+
         $this->set('enfrentamientos', $this->paginate($query));
     }
 

@@ -17,14 +17,22 @@ class GruposController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
+    public function index($campeonato_id)
     {
-        $this->paginate = [
-            'contain' => ['Campeonatos']
-        ];
-        $grupos = $this->paginate($this->Grupos);
+        $query = $this->Grupos->find()
+                        ->join(['table' => 'parejas',
+                                'type' => 'INNER',
+                                'alias' => 'p',
+                                'conditions' => [
+                                                'Grupos.campeonato_id' => $campeonato_id,
+                                                'id_grupo = p.grupo_id',
+                                                'OR' => [
+                                                    ['p.id_capitan' => $this->Auth->user('dni')],
+                                                    ['p.id_pareja' =>$this->Auth->user('dni')]
+                                                ]]
+                            ]);
 
-        $this->set(compact('grupos'));
+        $this->set('grupos', $this->paginate($query));
     }
 
     /**
@@ -36,11 +44,16 @@ class GruposController extends AppController
      */
     public function view($id = null)
     {
-        $grupo = $this->Grupos->get($id, [
-            'contain' => ['Campeonatos']
-        ]);
+//        $grupo = $this->Grupos->get($id, [
+//            'contain' => ['Campeonatos']
+//        ]);
 
-        $this->set('grupo', $grupo);
+        $this->loadModel('Parejas');
+        $parejas = $this->Parejas->find('all')
+                                ->where(['grupo_id' => $id])
+                                ->order(['puntuacion' => 'ASC']);
+
+        $this->set('parejas', $parejas);
     }
 
     /**

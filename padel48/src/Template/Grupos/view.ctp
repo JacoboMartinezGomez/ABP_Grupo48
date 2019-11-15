@@ -1,38 +1,32 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Grupo $grupo
+ * @var \App\Model\Entity\Pareja $parejas
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Grupo'), ['action' => 'edit', $grupo->id_grupo]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Grupo'), ['action' => 'delete', $grupo->id_grupo], ['confirm' => __('Are you sure you want to delete # {0}?', $grupo->id_grupo)]) ?> </li>
-        <li><?= $this->Html->link(__('List Grupos'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Grupo'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
 <div class="grupos view large-9 medium-8 columns content">
-    <h3><?= h($grupo->id_grupo) ?></h3>
-    <table class="vertical-table">
+    <h3><?= __('Parejas') ?></h3>
+    <table cellpadding="0" cellspacing="0">
+        <thead>
         <tr>
-            <th scope="row"><?= __('Campeonato') ?></th>
-            <td><?= $grupo->has('campeonato') ? $this->Html->link($grupo->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $grupo->campeonato->id_campeonato]) : '' ?></td>
+            <th scope="col"><?= $this->Paginator->sort('id_capitan') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('id_pareja') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('campeonato_id') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('puntuacion') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('clasificado') ?></th>
+            <th scope="col" class="actions"><?= __('Actions') ?></th>
         </tr>
-        <tr>
-            <th scope="row"><?= __('Tipo') ?></th>
-            <td><?= h($grupo->tipo) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id Grupo') ?></th>
-            <td><?= $this->Number->format($grupo->id_grupo) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Nivel') ?></th>
-            <td><?= $this->Number->format($grupo->nivel) ?></td>
-        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($parejas as $pareja): ?>
+            <tr>
+                <td><?= h($pareja->id_capitan) ?></td>
+                <td><?= h($pareja->id_pareja) ?></td>
+                <td><?= $pareja->has('campeonato_id') ? $this->Html->link(h($pareja->campeonato_id), ['controller' => 'Campeonatos', 'action' => 'view', $pareja->campeonato_id]) : '' ?></td>
+                <td><?= $this->Number->format($pareja->puntuacion) ?></td>
+                <td><?= h($pareja->clasificado) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
     </table>
 </div>
