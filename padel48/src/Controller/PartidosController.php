@@ -135,7 +135,29 @@ class PartidosController extends AppController
     }
 
     public function desinscribirse($id_partido){
+        if($this->estaInscrito($id_partido)){
+            $partido = $this->Partidos->get($id_partido);
+            if($partido->usuario_id != null){
+                $partido->usuario_id = null;
+                $this->save($partido);
+            }else if($partido->usuario_id2 != null){
+                $partido->usuario_id2 = null;
+                $this->save($partido);
+            }else if($partido->usuario_id3 != null){
+                $partido->usuario_id3 = null;
+                $this->save($partido);
+            }else if($partido->usuario_id4 != null){
+                $partido->usuario_id4 = null;
+                $this->save($partido);
+            }
 
+            $this->Flash->success(__('Se ha desinscrito en el partido correctamente.'));
+            return $this->redirect(['action' => 'view', $id_partido]);
+
+        }else{
+            $this->Flash->success(__('No se ha podido desinscribir en el partido. Usted no esta inscrito.'));
+            return $this->redirect(['action' => 'view', $id_partido]);
+        }
     }
 
     public function estaInscrito($id_partido){
@@ -156,5 +178,7 @@ class PartidosController extends AppController
         if (in_array($this->request->getParam('action'), ['add', 'edit', 'delete'])) {
             return false;
         }
+
+        return parent::isAuthorized($user);
     }
 }
