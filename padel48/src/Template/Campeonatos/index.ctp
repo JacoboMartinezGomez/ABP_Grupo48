@@ -23,7 +23,7 @@ $this->Html->css(['css'])
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -45,7 +45,7 @@ $this->Html->css(['css'])
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
-            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
                 </ul>
@@ -88,9 +88,9 @@ $this->Html->css(['css'])
                         )); ?>
                         <?php echo $this->Form->postLink(
                             $this->Html->image(
-                                "borrar.png", 
+                                "borrar.png",
                                 ["alt" => __('Delete')]
-                            ), 
+                            ),
                             ['action' => 'delete',  $campeonato->id_campeonato],
                             ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $campeonato->id_campeonato)]
                         )?>
