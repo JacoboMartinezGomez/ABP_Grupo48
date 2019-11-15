@@ -97,9 +97,9 @@ class ParejasTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['campeonato_id'], 'Campeonatos'));
-        $rules->add($rules->existsIn(['grupo_id'], 'Grupos'));
-        $rules->add($rules->existsIn(['categoria_id'], 'Categorias'));
+        $rules->add($rules->existsIn(['id_campeonato'], 'Campeonatos'));
+        $rules->add($rules->existsIn(['id_grupo'], 'Grupos'));
+        $rules->add($rules->existsIn(['id_categoria'], 'Categorias'));
 
         return $rules;
     }

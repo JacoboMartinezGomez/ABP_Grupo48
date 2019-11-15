@@ -46,7 +46,7 @@ use Cake\I18n\Time;
                     <?php
                     };
                     ?>
-                    <?= $this->Html->link(__('Generar liga regular'), ['action' => 'generarGrupos', $campeonato->id_campeonato]) ?>
+                    <?= $this->Form->postLink(__('Generar liga regular'), ['action' => 'generarGrupos', $campeonato->id_campeonato]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

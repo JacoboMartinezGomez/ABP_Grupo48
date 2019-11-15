@@ -4,16 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ParejasDisputanEnfrentamiento Entity
+ * Parejasdisputanenfrentamiento Entity
  *
- * @property string $id_capitan1
- * @property string $id_capitan2
+ * @property int $id_pareja1
+ * @property int $id_pareja2
  * @property int $enfrentamiento_id
  * @property string|null $resultado
  *
  * @property \App\Model\Entity\Enfrentamiento $enfrentamiento
  */
-class ParejasDisputanEnfrentamiento extends Entity
+class Parejasdisputanenfrentamiento extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -26,6 +26,8 @@ class ParejasDisputanEnfrentamiento extends Entity
      */
     protected $_accessible = [
         'resultado' => true,
-        'enfrentamiento' => true
+        'enfrentamiento_id' => true,
+        'id_pareja1' => true,
+        'id_pareja2' => true
     ];
 }

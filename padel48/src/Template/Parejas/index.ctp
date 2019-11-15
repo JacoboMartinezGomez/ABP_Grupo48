@@ -10,6 +10,10 @@
         <li><?= $this->Html->link(__('New Pareja'), ['action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Grupos'), ['controller' => 'Grupos', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Grupo'), ['controller' => 'Grupos', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Categoria'), ['controller' => 'Categorias', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="parejas index large-9 medium-8 columns content">
@@ -17,11 +21,12 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
+                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('id_capitan') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('id_pareja') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('campeonato_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('tipo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nivel') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('grupo_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('categoria_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('puntuacion') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('clasificado') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -30,11 +35,12 @@
         <tbody>
             <?php foreach ($parejas as $pareja): ?>
             <tr>
+                <td><?= $this->Number->format($pareja->id) ?></td>
                 <td><?= h($pareja->id_capitan) ?></td>
                 <td><?= h($pareja->id_pareja) ?></td>
                 <td><?= $pareja->has('campeonato') ? $this->Html->link($pareja->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $pareja->campeonato->id_campeonato]) : '' ?></td>
-                <td><?= h($pareja->tipo) ?></td>
-                <td><?= $this->Number->format($pareja->nivel) ?></td>
+                <td><?= $pareja->has('grupo') ? $this->Html->link($pareja->grupo->id_grupo, ['controller' => 'Grupos', 'action' => 'view', $pareja->grupo->id_grupo]) : '' ?></td>
+                <td><?= $pareja->has('categoria') ? $this->Html->link($pareja->categoria->campeonato_id, ['controller' => 'Categorias', 'action' => 'view', $pareja->categoria->campeonato_id]) : '' ?></td>
                 <td><?= $this->Number->format($pareja->puntuacion) ?></td>
                 <td><?= h($pareja->clasificado) ?></td>
                 <td class="actions">

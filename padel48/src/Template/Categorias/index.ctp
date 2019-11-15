@@ -17,6 +17,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
+                <th scope="col"><?= $this->Paginator->sort('id_categoria') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('campeonato_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('tipo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('nivel') ?></th>
@@ -26,6 +27,7 @@
         <tbody>
             <?php foreach ($categorias as $categoria): ?>
             <tr>
+                <td><?= $this->Number->format($categoria->id_categoria) ?></td>
                 <td><?= $categoria->has('campeonato') ? $this->Html->link($categoria->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $categoria->campeonato->id_campeonato]) : '' ?></td>
                 <td><?= h($categoria->tipo) ?></td>
                 <td><?= $this->Number->format($categoria->nivel) ?></td>

@@ -10,6 +10,10 @@
         <li><?= $this->Html->link(__('List Parejas'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Grupos'), ['controller' => 'Grupos', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Grupo'), ['controller' => 'Grupos', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Categoria'), ['controller' => 'Categorias', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="parejas form large-9 medium-8 columns content">
@@ -19,6 +23,8 @@
         <?php
             echo $this->Form->control('id_pareja', ['type' => 'text']);
             echo $this->Form->control('nivel');
+
+
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -87,7 +87,7 @@ class EnfrentamientosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['grupo_id'], 'Grupos'));
+        //$rules->add($rules->existsIn(['grupo_id'], 'Grupos'));
 
         return $rules;
     }

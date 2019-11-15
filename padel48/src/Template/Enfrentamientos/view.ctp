@@ -85,14 +85,14 @@
             </tr>
             <?php foreach ($enfrentamiento->parejas_disputan_enfrentamiento as $parejasDisputanEnfrentamiento): ?>
             <tr>
-                <td><?= h($parejasDisputanEnfrentamiento->id_capitan1) ?></td>
-                <td><?= h($parejasDisputanEnfrentamiento->id_capitan2) ?></td>
+                <td><?= h($parejasDisputanEnfrentamiento->id_pareja1) ?></td>
+                <td><?= h($parejasDisputanEnfrentamiento->id_pareja2) ?></td>
                 <td><?= h($parejasDisputanEnfrentamiento->enfrentamiento_id) ?></td>
                 <td><?= h($parejasDisputanEnfrentamiento->resultado) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'ParejasDisputanEnfrentamiento', 'action' => 'view', $parejasDisputanEnfrentamiento->id_capitan1]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'ParejasDisputanEnfrentamiento', 'action' => 'edit', $parejasDisputanEnfrentamiento->id_capitan1]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'ParejasDisputanEnfrentamiento', 'action' => 'delete', $parejasDisputanEnfrentamiento->id_capitan1], ['confirm' => __('Are you sure you want to delete # {0}?', $parejasDisputanEnfrentamiento->id_capitan1)]) ?>
+                    <?= $this->Html->link(__('View'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'view', $parejasDisputanEnfrentamiento->id_pareja1]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'edit', $parejasDisputanEnfrentamiento->id_pareja1]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'delete', $parejasDisputanEnfrentamiento->id_pareja1], ['confirm' => __('Are you sure you want to delete # {0}?', $parejasDisputanEnfrentamiento->id_pareja1)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
