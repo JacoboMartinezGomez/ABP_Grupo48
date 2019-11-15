@@ -23,7 +23,7 @@
 
 $printer = function ($section, $data) {
 ?>
-    <h3><?= h(ucfirst($section)) ?> </h3>
+    <h2><?= h(ucfirst($section)) ?> </h2>
     <ul class="list deprecation-list">
     <?php foreach ($data as $message): ?>
         <li>

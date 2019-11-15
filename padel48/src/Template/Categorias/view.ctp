@@ -27,6 +27,10 @@
             <td><?= h($categoria->tipo) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Id Categoria') ?></th>
+            <td><?= $this->Number->format($categoria->id_categoria) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Nivel') ?></th>
             <td><?= $this->Number->format($categoria->nivel) ?></td>
         </tr>

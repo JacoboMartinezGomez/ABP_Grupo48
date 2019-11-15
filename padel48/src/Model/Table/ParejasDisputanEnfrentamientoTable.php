@@ -7,20 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * ParejasDisputanEnfrentamiento Model
+ * Parejasdisputanenfrentamiento Model
  *
  * @property \App\Model\Table\EnfrentamientosTable&\Cake\ORM\Association\BelongsTo $Enfrentamientos
  *
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento get($primaryKey, $options = [])
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento findOrCreate($search, callable $callback = null, $options = [])
  */
-class ParejasDisputanEnfrentamientoTable extends Table
+class ParejasdisputanenfrentamientoTable extends Table
 {
     /**
      * Initialize method
@@ -33,8 +33,8 @@ class ParejasDisputanEnfrentamientoTable extends Table
         parent::initialize($config);
 
         $this->setTable('parejas_disputan_enfrentamiento');
-        $this->setDisplayField('id_capitan1');
-        $this->setPrimaryKey(['id_capitan1', 'id_capitan2', 'enfrentamiento_id']);
+        $this->setDisplayField('id_pareja1');
+        $this->setPrimaryKey(['id_pareja1', 'id_pareja2', 'enfrentamiento_id']);
 
         $this->belongsTo('Enfrentamientos', [
             'foreignKey' => 'enfrentamiento_id',
@@ -51,14 +51,12 @@ class ParejasDisputanEnfrentamientoTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->scalar('id_capitan1')
-            ->maxLength('id_capitan1', 9)
-            ->allowEmptyString('id_capitan1', null, 'create');
+            ->integer('id_pareja1')
+            ->allowEmptyString('id_pareja1', null, 'create');
 
         $validator
-            ->scalar('id_capitan2')
-            ->maxLength('id_capitan2', 9)
-            ->allowEmptyString('id_capitan2', null, 'create');
+            ->integer('id_pareja2')
+            ->allowEmptyString('id_pareja2', null, 'create');
 
         $validator
             ->scalar('resultado')

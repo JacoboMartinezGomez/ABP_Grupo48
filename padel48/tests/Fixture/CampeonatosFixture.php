@@ -15,11 +15,11 @@ class CampeonatosFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'id_campeonato' => ['type' => 'integer', 'length' => 4, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'campeonato_id' => ['type' => 'integer', 'length' => 4, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'fecha_inicio' => ['type' => 'date', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'fecha_fin' => ['type' => 'date', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_campeonato'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['campeonato_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -36,7 +36,7 @@ class CampeonatosFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_campeonato' => 1,
+                'campeonato_id' => 1,
                 'fecha_inicio' => '2019-11-07',
                 'fecha_fin' => '2019-11-07'
             ],

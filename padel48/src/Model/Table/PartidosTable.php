@@ -86,4 +86,52 @@ class PartidosTable extends Table
 
         return $rules;
     }
+
+    /**
+     * Returns Falso si el partido esta cerrado, es decir, tiene ya 4 inscritos y verdadero
+     * si tiene algun hueco libre y ha podido añadir al deportista
+     *
+     * @param $id_partido ID del partido a comprobar
+     * @param $dni dni del usuario a introducir
+     * @return bool
+     */
+    public function addDeportista($id_partido, $dni){
+        $partido = $this->get($id_partido);
+
+        if($partido->usuario_id != null){
+            $partido->usuario_id = $dni;
+            $this->save($partido);
+            return true;
+        }else if($partido->usuario_id2 != null){
+            $partido->usuario_id2 = $dni;
+            $this->save($partido);
+            return true;
+        }else if($partido->usuario_id3 != null){
+            $partido->usuario_id3 = $dni;
+            $this->save($partido);
+            return true;
+        }else if($partido->usuario_id4 != null){
+            $partido->usuario_id4 = $dni;
+            $this->save($partido);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
+
+//    public function statusPartido($id_partido){
+//        $partido = $this->get($id_partido);
+//
+//        if($partido->usuario_id != null){
+//            return true;
+//        }else if($partido->usuario_id2 != null){
+//            return true;
+//        }else if($partido->usuario_id3 != null){
+//            return true;
+//        }else if($partido->usuario_id4 != null){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
