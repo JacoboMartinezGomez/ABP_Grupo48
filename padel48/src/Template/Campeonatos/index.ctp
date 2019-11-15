@@ -80,6 +80,12 @@ $this->Html->css(['css'])
                 <td><?= h($campeonato->fecha_inicio) ?></td>
                 <td><?= h($campeonato->fecha_fin) ?></td>
                     <td class="actions">
+                        <?php echo $this->Html->image("ver.png", array(
+                            "src" => "Ver",
+                            "alt" => "ver",
+                            'url' => array('controller' => 'Grupos','action' => 'index', $campeonato->id_campeonato),
+                            "class" => "icono"
+                        )); ?>
                         <?php echo $this->Html->image("editar.png", array(
                             "src" => "Editar",
                             "alt" => "editar",
@@ -94,6 +100,12 @@ $this->Html->css(['css'])
                             ['action' => 'delete',  $campeonato->id_campeonato],
                             ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $campeonato->id_campeonato)]
                         )?>
+                        <?php echo $this->Html->image("generar.png", array(
+                            "src" => "Generar",
+                            "alt" => "generar",
+                            'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
+                            "class" => "icono"
+                        )); ?>
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
                                 "src" => "Inscribirse",

@@ -54,8 +54,8 @@
             </li>
         </ul>
     </nav>
-    <div class="showVista" id="campeonatos">
-    <h2><?= __('Grupos') ?></h2>
+    <div class="showVista" id="grupos">
+    <h2><?= __('Grupos pertenecientes al campeonato '/*.$grupos[0]->id_campeonato*/) ?></h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>

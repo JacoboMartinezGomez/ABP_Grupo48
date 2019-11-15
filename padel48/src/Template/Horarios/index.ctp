@@ -61,7 +61,17 @@ $this->Html->css(['css'])?>
         </ul>
     </nav>
     <div class="showVista" id="horarios">
-    <h2><?= __('Horarios') ?></h2>
+    <div id="cabeceraHorario">
+        <h2><?= __('Horarios') ?> </h2>
+        <div id="iconoHorario">
+            <?php echo $this->Html->image("editar.png", array(
+                "src" => "Editar",
+                "alt" => "editar",
+                'url' => array('action' => 'edit'),
+                "class" => "icono"
+            )); ?>
+        </div>
+    </div>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
