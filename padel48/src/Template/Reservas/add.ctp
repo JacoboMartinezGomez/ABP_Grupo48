@@ -65,8 +65,8 @@ $this->Html->css(['css'])?>
     <fieldset>
         <legend><?= __('Añadir reserva') ?></legend>
         <?php
-            echo $this->Form->control('Fecha',['class'=>'datepicker']);
-            echo $this->Form->control('Hora', ['options' => $hora_inicio]);
+            echo $this->Form->control('fecha',['type'=>'text', 'class'=>'datepicker']);
+            echo $this->Form->control('hora', ['type'=>'select', 'options' => $hora_inicio]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Reservar')) ?>

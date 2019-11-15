@@ -25,6 +25,9 @@ class Reserva extends Entity
      * @var array
      */
     protected $_accessible = [
-        'pista' => true
+        'pista_id' => true,
+        'id_usuario' => true,
+        'hora' => true,
+        'fecha' => true,
     ];
 }
