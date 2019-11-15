@@ -2,7 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Datasource\ConnectionManager;
+use Cake\I18n\Time;
 /**
  * Reservas Controller
  *
@@ -45,33 +46,42 @@ class ReservasController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
+
     public function add()
     {
+       
         $this->loadModel('Horarios');
         $this->loadModel('Pistas');
-        $this->set('hora_inicio', $this->getHorasPista());
+        $this->set('hora_inicio', $this->getHorasPistaEntero());
+        
+        
         
 
 
-       // $query = $this->Reservas->find('all')->select('fecha')->where(['id_pista = ' => $numeros_pista]);
-        //echo $query;
-        //$reservas = $query->all()->toArray();
-
         $reserva = $this->Reservas->newEntity();
 
-        echo $reserva;
         if ($this->request->is('post')) {
             $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
-
-            echo $reserva;
+            $reserva->hora = $this->request->getData()['hora'];
+            //$fecha = new Time($this->request->getData()['fecha']);
+            //$fecha = $fecha->format('Y-m-d');
+            //$reserva->fecha = $fecha;
+    
+            //SELECT * FROM horarios WHERE NOT horarios.id_horario IN( SELECT reservas.hora FROM reservas WHERE reservas.fecha = $fecha)
+            
+            $horasReservadas = $this->Reservas->find('all')->where(['fecha' => $reserva->fecha])->all()->toArray();
+            debug($horasReservadas);
+            die;
+            $horasDisponibles = $this->Horarios->find('all')->where([]);
+            
 
 
             //if ($this->Reservas->save($reserva)) {
-                $this->Flash->success(__('Reserva guardada correctamente.'));
+               // $this->Flash->success(__('Reserva guardada correctamente.'));
 
               //  return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
+            ///$this->Flash->error(__('The reserva could not be saved. Please, try again.'));
         //}
         $this->set(compact('reserva'));
     }

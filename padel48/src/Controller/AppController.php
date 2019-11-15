@@ -91,7 +91,7 @@ class AppController extends Controller
     public function getHorasPista(){
         $this->loadModel('Horarios');
         $horasPista = $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
-                                                                        return date('H:i:s' ,strtotime($horarios->get('hora_inicio')));
+                                                                        return date('H:i' ,strtotime($horarios->get('hora_inicio')));
                                                                     },
                                                                         'valueField' => function ($horarios) {
                                                                             return date('H:i' ,strtotime($horarios->get('hora_inicio')));
@@ -99,6 +99,27 @@ class AppController extends Controller
                                                                     ]);
 
         return $horasPista;
+    }
+
+    // Devuelve un array asociativo con las horas_inicio como clave, y valor a la vez.
+    // Pensado para usarse en inputs de tipo select en formularios
+    public function getHorasPistaEntero(){
+        $this->loadModel('Horarios');
+        $horasPista = $this->Horarios->find('all')->select('hora_inicio')->all()->toArray();
+        /*$horasPista = $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
+                                                                        return date('H:i' ,strtotime($horarios->get('hora_inicio')));
+                                                                    },
+                                                                        'valueField' => 0
+                                                                    ]);
+        */
+                                                                        //date('H:i', strtotime($horasPista[$i]['hora_inicio']))
+        $toret=array();
+        for($i = 0; $i<=8; $i++){
+            $toret[$i+1] = date('H:i', strtotime($horasPista[$i]['hora_inicio']));
+        }
+        
+
+        return $toret;
     }
 
 }
