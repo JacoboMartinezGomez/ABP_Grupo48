@@ -135,6 +135,17 @@ class EnfrentamientosController extends AppController
     public function introducirResultado($id = null){
         $this->loadModel('ParejasDisputanEnfrentamiento');
         $this->loadModel('Parejas');
+
+        /*$niveles = $this->ParejasDisputanEnfrentamiento->find('list', [ 'keyField' => ,
+                                                        'valueField' => function ($categorias) {
+                                                            return $categorias->get('nivel');
+                                                        }
+                                                    ]);*/
+
+        $pareja = $this->ParejasDisputanEnfrentamiento->find('all')->where(['enfrentamiento_id' => $id])->first()->toArray();
+        $parejas = [$pareja['id_pareja1'] => $pareja['id_pareja1'], $pareja['id_pareja2'] => $pareja['id_pareja2']];
+        $this->set('parejas',$parejas);
+
         $enfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
         if ($this->request->is('post')) {
 
