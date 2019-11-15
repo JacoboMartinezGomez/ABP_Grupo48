@@ -23,11 +23,11 @@ class EnfrentamientosController extends AppController
 //
         $this->set(compact('enfrentamientos'));
 
-        $query = $this->Enfrentamientos->find()
+        $query = $this->Enfrentamientos->find('all')
                                             ->join([
                                                 'd' =>[
                                                     'table' => 'parejas_disputan_enfrentamiento',
-                                                    'type' => 'LEFT',
+                                                    'type' => 'INNER',
                                                     'conditions' => 'enfrentamientos.id_enfrentamiento = d.enfrentamiento_id'
                                                     ],
                                                 'p' =>[
@@ -38,7 +38,13 @@ class EnfrentamientosController extends AppController
                                                         ['OR' => [['p.id_capitan' => $this->Auth->user('dni')],
                                                             ['p.id_pareja' => $this->Auth->user('dni')]] ]
                                                         ]
-                                                ]]);
+                                                ]])
+                                            ->select(['enfrentamientos.id_enfrentamiento',
+                                                        'enfrentamientos.grupo_id',
+                                                        'enfrentamientos.hora',
+                                                        'enfrentamientos.fecha',
+                                                        'enfrentamientos.fase',
+                                                        'd.resultado']);
 
 //        ['OR' => [['p.id_capitan1' => $this->Auth->user('dni')],
 //            ['p.id_capitan2' => $this->Auth->user('dni')]] ]
@@ -129,6 +135,17 @@ class EnfrentamientosController extends AppController
     public function introducirResultado($id = null){
         $this->loadModel('ParejasDisputanEnfrentamiento');
         $this->loadModel('Parejas');
+
+        /*$niveles = $this->ParejasDisputanEnfrentamiento->find('list', [ 'keyField' => ,
+                                                        'valueField' => function ($categorias) {
+                                                            return $categorias->get('nivel');
+                                                        }
+                                                    ]);*/
+
+        $pareja = $this->ParejasDisputanEnfrentamiento->find('all')->where(['enfrentamiento_id' => $id])->first()->toArray();
+        $parejas = [$pareja['id_pareja1'] => $pareja['id_pareja1'], $pareja['id_pareja2'] => $pareja['id_pareja2']];
+        $this->set('parejas',$parejas);
+
         $enfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
         if ($this->request->is('post')) {
 

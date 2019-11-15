@@ -20,7 +20,7 @@
  */
 ?>
 <section>
-    <h3><?= __d('debug_kit', 'Memory') ?></h3>
+    <h2><?= __d('debug_kit', 'Memory') ?></h2>
     <div class="peak-mem-use">
         <strong><?= __d('debug_kit', 'Peak Memory Use:') ?></strong>
         <?= $this->Number->toReadableSize($peakMemory) ?>
@@ -45,7 +45,7 @@
 </section>
 
 <section>
-    <h3><?= __d('debug_kit', 'Timers') ?></h3>
+    <h2><?= __d('debug_kit', 'Timers') ?></h2>
     <div class="request-time">
         <strong><?= __d('debug_kit', 'Total Request Time:') ?></strong>
         <?= $this->Number->precision($requestTime * 1000, 0) ?> ms

@@ -42,7 +42,7 @@ Remove duplicate route names in your route configuration.</p>
 <?php endif; ?>
 
 <?php if (isset($attributes['duplicate'])): ?>
-    <h3>Duplicate Route</h3>
+    <h2>Duplicate Route</h2>
     <table cellspacing="0" cellpadding="0">
     <tr><th>Template</th><th>Defaults</th><th>Options</th></tr>
     <?php

@@ -9,7 +9,7 @@ parent block when overriding a block by using the ``parent`` function:
     {% extends "base.html" %}
 
     {% block sidebar %}
-        <h3>Table Of Contents</h3>
+        <h2>Table Of Contents</h2>
         ...
         {{ parent() }}
     {% endblock %}

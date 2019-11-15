@@ -21,7 +21,7 @@
     <p class="info"><?= __d('debug_kit', 'There were no log entries made this request') ?></p>
 <?php else: ?>
     <?php foreach ($logger->all() as $logName => $logs): ?>
-        <h3><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h3>
+        <h2><?= __d('debug_kit', '{0} Messages', h(ucfirst($logName))) ?> </h2>
         <table cellspacing="0" cellpadding="0" class="debug-table">
             <thead>
                 <tr>

@@ -27,6 +27,10 @@ class PartidosFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['usuario_id', 'usuario_id2', 'usuario_id3', 'usuario_id4'], 'length' => []],
+            'partidos_ibfk_1' => ['type' => 'foreign', 'columns' => ['usuario_id'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'partidos_ibfk_2' => ['type' => 'foreign', 'columns' => ['usuario_id2'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'partidos_ibfk_3' => ['type' => 'foreign', 'columns' => ['usuario_id3'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
+            'partidos_ibfk_4' => ['type' => 'foreign', 'columns' => ['usuario_id4'], 'references' => ['usuarios', 'dni'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -43,11 +47,11 @@ class PartidosFixture extends TestFixture
     {
         $this->records = [
             [
-                'usuario_id' => '3afa1472-ddaf-42ae-93b8-104136499ab1',
-                'usuario_id2' => 'daffa649-dd4d-48f4-8dff-e79ddef20a92',
-                'usuario_id3' => '92c8773d-3eb4-4504-98c3-ad7183030c95',
-                'usuario_id4' => '5746657f-53f6-4d59-a46e-ff843929ce74',
-                'hora' => '11:34:09'
+                'usuario_id' => 'b66fc2ea-7244-4a40-9c94-77f26ec2a2af',
+                'usuario_id2' => '6e46edf9-d833-40e6-8499-11fc11deb789',
+                'usuario_id3' => '639133ec-5799-40fe-8c17-b5d988bf4f0f',
+                'usuario_id4' => '5720c772-9fd4-46a6-898e-87a012befa5a',
+                'hora' => '16:51:03'
             ],
         ];
         parent::init();

@@ -3,25 +3,69 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Pareja[]|\Cake\Collection\CollectionInterface $parejas
  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Pareja'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Grupos'), ['controller' => 'Grupos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Grupo'), ['controller' => 'Grupos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Categoria'), ['controller' => 'Categorias', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="parejas index large-9 medium-8 columns content">
-    <h3><?= __('Parejas') ?></h3>
+$this->Html->css(['css'])?>
+<head>
+    <meta charset="utf-8">
+    <title><?php echo 'PADEL48' ?></title>
+    <meta author="" name="" content="">
+    <link rel="stylesheet" type="text/css" href="./src/Template/Index/css/css.css" />
+</head>
+<body>
+<header>
+    <div id="head">
+        <div id="logoWeb">
+            <?php echo $this->Html->image('padel.png', ['alt' => 'palaPadel']);?>
+            <div id="nombreWeb">
+                <div class="letrasLogo">ádel</div>
+                <div class="numeroLogo">48</div>
+            </div>
+        </div>
+    </div>
+</header> 
+<div class = "container">
+    <nav class="menu"><ul class = "nav">
+            <li class="heading"></li>
+            <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+                <ul>
+                    <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="showVista" id="parejas">
+    <h2><?= __('Parejas') ?></h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('id_capitan') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('id_pareja') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('campeonato_id') ?></th>
@@ -29,13 +73,13 @@
                 <th scope="col"><?= $this->Paginator->sort('categoria_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('puntuacion') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('clasificado') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="col" class="actions"><?= __('Acciones') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($parejas as $pareja): ?>
             <tr>
-                <td><?= $this->Number->format($pareja->id) ?></td>
+            <td><?= $this->Number->format($pareja->id) ?></td>
                 <td><?= h($pareja->id_capitan) ?></td>
                 <td><?= h($pareja->id_pareja) ?></td>
                 <td><?= $pareja->has('campeonato') ? $this->Html->link($pareja->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $pareja->campeonato->id_campeonato]) : '' ?></td>
@@ -44,9 +88,14 @@
                 <td><?= $this->Number->format($pareja->puntuacion) ?></td>
                 <td><?= h($pareja->clasificado) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $pareja->id_capitan]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $pareja->id_capitan]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pareja->id_capitan], ['confirm' => __('Are you sure you want to delete # {0}?', $pareja->id_capitan)]) ?>
+                    <?php echo $this->Form->postLink(
+                            $this->Html->image(
+                                "borrar.png", 
+                                ["alt" => __('Delete')]
+                            ), 
+                            ['action' => 'delete',   $pareja->id_capitan],
+                            ['escape' => false, 'confirm' => __('¿Quieres eliminar la pareja {0}?',  $pareja->id_capitan)]
+                        )?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -62,4 +111,5 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
+</div>
 </div>
