@@ -32,7 +32,7 @@ class PartidosController extends AppController
                                     ['usuario_id4' => $this->Auth->user('dni')]
                                 ]);
 
-        $this->set('partidos', $query);
+        $this->set('partidos', $this->paginate($query));
     }
 
     /**

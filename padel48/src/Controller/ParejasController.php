@@ -60,14 +60,24 @@ class ParejasController extends AppController
             return $this->redirect(['controller' => 'Campeonatos' ,'action' => 'index']);
         }
 
+        $niveles = $this->Categorias->find('list', [ 'keyField' => function ($categorias) {
+                                                                    return $categorias->get('nivel');
+                                                                },
+                                                                    'valueField' => function ($categorias) {
+                                                                        return $categorias->get('nivel');
+                                                                    }
+                                                                ]);
 
-
+        $this->set('niveles', $niveles);
         $pareja = $this->Parejas->newEntity();
         if ($this->request->is('post')) {
 
             $pareja = $this->Parejas->patchEntity($pareja, $this->request->getData());
             $pareja->campeonato_id=$campeonato_id;
-            $pareja->id_grupo = 0;
+            if($pareja->id_pareja == $this->Auth->user('dni')){
+                $this->Flash->error(__('No puedes introducir tu id como tu pareja'));
+                return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
+            }
             $nivel = $this->request->getData()['nivel'];
 
             $pareja->id_capitan=$this->Auth->user('dni'); //cambiar por session id
@@ -93,12 +103,13 @@ class ParejasController extends AppController
             else{
                 $query = $this->Categorias->find('all')->where(['campeonato_id ='=>$campeonato_id, 'tipo =' => 'MIXTO', 'nivel =' => $nivel]);
             }
+
             $categoria = $query->first()->toArray()['id_categoria'];
             $pareja->categoria_id = $categoria;
 
             //Comprobar que ese campeonato, categoria y nivel no este lleno (96 parejas apuntadas)
             $query = $this->Parejas->find('all')->where(['campeonato_id =' => $campeonato_id, 'categoria_id =' => $categoria]);
-            if($query->all->count()==96){
+            if($query->all()->count()==96){
                 $this->Flash->error(__('Esta categoría y nivel para este campeonato ya está llena.'));
                 return $this->redirect(['action' => 'index']);
             }
