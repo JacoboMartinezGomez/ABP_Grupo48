@@ -18,8 +18,8 @@
         <li><?= $this->Html->link(__('New Grupo'), ['controller' => 'Grupos', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Fechas Propuestas'), ['controller' => 'FechasPropuestas', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Fechas Propuesta'), ['controller' => 'FechasPropuestas', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Parejas Disputan Enfrentamiento'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Parejas Disputan Enfrentamiento'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Parejas Disputan Enfrentamiento'), ['controller' => 'ParejasDisputanEnfrentamiento', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Parejas Disputan Enfrentamiento'), ['controller' => 'ParejasDisputanEnfrentamiento', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="enfrentamientos form large-9 medium-8 columns content">

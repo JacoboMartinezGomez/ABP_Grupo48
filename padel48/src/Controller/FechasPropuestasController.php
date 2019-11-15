@@ -66,7 +66,8 @@ class FechasPropuestasController extends AppController
 //                                                                ]));
         $this->set('hora_inicio', $this->getHorasPista());
 
-            $fechasPropuesta = $this->FechasPropuestas->newEntity();
+        $fechasPropuesta = $this->FechasPropuestas->newEntity();
+
         if ($this->request->is('post')) {
             $fechasPropuesta = $this->FechasPropuestas->patchEntity($fechasPropuesta, $this->request->getData());
             $fechasPropuesta->enfrentamiento_id = $enfrentamientoID;
@@ -119,7 +120,7 @@ class FechasPropuestasController extends AppController
             if ($this->FechasPropuestas->save($fechasPropuesta)) {
                 $this->Flash->success(__('La fechas propuesta ha sido guardada.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index', $fechasPropuesta->enfrentamiento_id]);
             }
             $this->Flash->error(__('La fecha propuesta no ha podido ser guardada. Intentelo de nuevo.'));
         }

@@ -22,7 +22,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id_enfrentamiento') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('grupo_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('id_grupo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fase') ?></th>
@@ -33,8 +33,8 @@
             <?php foreach ($enfrentamientos as $enfrentamiento): ?>
             <tr>
                 <td><?= $this->Number->format($enfrentamiento->id_enfrentamiento) ?></td>
-                <td><?= $enfrentamiento->has('grupo') ? $this->Html->link($enfrentamiento->grupo->id_grupo, ['controller' => 'Grupos', 'action' => 'view', $enfrentamiento->grupo->id_grupo]) : '' ?></td>
-                <td><?= h($enfrentamiento->hora) ?></td>
+                <td><?= $this->Number->format($enfrentamiento->id_grupo) ?></td>
+                <td><?= h(h(date('H:i', strtotime($enfrentamiento->hora)))) ?></td>
                 <td><?= h($enfrentamiento->fecha) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->fase) ?></td>
                 <td class="actions">

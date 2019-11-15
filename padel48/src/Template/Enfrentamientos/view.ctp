@@ -15,8 +15,8 @@
         <li><?= $this->Html->link(__('New Grupo'), ['controller' => 'Grupos', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Fechas Propuestas'), ['controller' => 'FechasPropuestas', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Fechas Propuesta'), ['controller' => 'FechasPropuestas', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Parejas Disputan Enfrentamiento'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Parejas Disputan Enfrentamiento'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Parejas Disputan Enfrentamiento'), ['controller' => 'ParejasDisputanEnfrentamiento', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Parejas Disputan Enfrentamiento'), ['controller' => 'ParejasDisputanEnfrentamiento', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="enfrentamientos view large-9 medium-8 columns content">
@@ -73,12 +73,12 @@
         <?php endif; ?>
     </div>
     <div class="related">
-        <h4><?= __('Related Parejasdisputanenfrentamiento') ?></h4>
+        <h4><?= __('Related Parejas Disputan Enfrentamiento') ?></h4>
         <?php if (!empty($enfrentamiento->parejas_disputan_enfrentamiento)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Id Pareja1') ?></th>
-                <th scope="col"><?= __('Id Pareja2') ?></th>
+                <th scope="col"><?= __('Id Capitan1') ?></th>
+                <th scope="col"><?= __('Id Capitan2') ?></th>
                 <th scope="col"><?= __('Enfrentamiento Id') ?></th>
                 <th scope="col"><?= __('Resultado') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>

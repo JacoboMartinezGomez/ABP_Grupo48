@@ -20,7 +20,7 @@ Playoff --Jacobo
 
 Vistas de categorias y grupos? Solo un showall publico quizas?
 
-Ranking
+Ranking --Esta hecho, es el View de Grupos
 
 
 BASE DE DATOS:
