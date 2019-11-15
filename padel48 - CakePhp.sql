@@ -90,13 +90,16 @@ CREATE TABLE IF NOT EXISTS `horarios` (
 
 DROP TABLE IF EXISTS `partidos`;
 CREATE TABLE IF NOT EXISTS `partidos` (
-    `usuario_id` varchar(9) NOT NULL,
-    `usuario_id2` varchar(9) NOT NULL,
-    `usuario_id3` varchar(9) NOT NULL,
-    `usuario_id4` varchar(9) NOT NULL,
+    `id_partido` int(4) NOT NULL AUTO_INCREMENT,
+    `usuario_id` varchar(9) DEFAULT NULL,
+    `usuario_id2` varchar(9) DEFAULT NULL,
+    `usuario_id3` varchar(9) DEFAULT NULL,
+    `usuario_id4` varchar(9) DEFAULT NULL,
+    `fecha` date NOT NULL,
     `hora` time NOT NULL,
-    PRIMARY KEY (`usuario_id`,`usuario_id2`,`usuario_id3`,`usuario_id4`),
+    PRIMARY KEY (`id_partido`),
 
+    FOREIGN KEY (`usuario_id`) REFERENCES usuarios(`dni`) ON DELETE CASCADE,
     FOREIGN KEY (`usuario_id2`) REFERENCES usuarios(`dni`) ON DELETE CASCADE,
     FOREIGN KEY (`usuario_id3`) REFERENCES usuarios(`dni`) ON DELETE CASCADE,
     FOREIGN KEY (`usuario_id4`) REFERENCES usuarios(`dni`) ON DELETE CASCADE
@@ -152,11 +155,11 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 
 DROP TABLE IF EXISTS `grupos`;
 CREATE TABLE IF NOT EXISTS `grupos` (
-    `id_grupo` int(4) NOT NULL AUTO_INCREMENT,
+    `id_grupo` int(4) NOT NULL,
     `campeonato_id` int(4) NOT NULL,
     `categoria_id` int(4) NOT NULL,
 
-    PRIMARY KEY (`id_grupo`),
+    PRIMARY KEY (`id_grupo`, `campeonato_id`,`categoria_id`),
     FOREIGN KEY (`campeonato_id`) REFERENCES categorias(`campeonato_id`) ON DELETE CASCADE,
     FOREIGN KEY (`categoria_id`) REFERENCES categorias(`id_categoria`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -196,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `parejas` (
 
     FOREIGN KEY (`id_capitan`) REFERENCES usuarios(`dni`) ON DELETE CASCADE,
     FOREIGN KEY (`id_pareja`) REFERENCES usuarios(`dni`) ON DELETE CASCADE,
-    FOREIGN KEY (`grupo_id`) REFERENCES enfrentamientos(`grupo_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`grupo_id`) REFERENCES grupos(`id_grupo`) ON DELETE CASCADE,
     FOREIGN KEY (`campeonato_id`) REFERENCES categorias(`campeonato_id`) ON DELETE CASCADE,
     FOREIGN KEY (`categoria_id`) REFERENCES categorias(`id_categoria`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
