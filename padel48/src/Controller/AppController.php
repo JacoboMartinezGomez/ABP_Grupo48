@@ -112,13 +112,28 @@ class AppController extends Controller
                                                                         'valueField' => 0
                                                                     ]);
         */
-                                                                        //date('H:i', strtotime($horasPista[$i]['hora_inicio']))
+        //date('H:i', strtotime($horasPista[$i]['hora_inicio']))
         $toret=array();
         for($i = 0; $i<=8; $i++){
-            $toret[$i+1] = date('H:i', strtotime($horasPista[$i]['hora_inicio']));
+            $toret[$i+1] = date('H:i:s', strtotime($horasPista[$i]['hora_inicio']));
         }
-        
+        return $toret;
+    }
 
+    public function getHorasPistaInverso(){
+        $this->loadModel('Horarios');
+        $horasPista = $this->Horarios->find('all')->select('hora_inicio')->all()->toArray();
+        /*$horasPista = $this->Horarios->find('list', [ 'keyField' => function ($horarios) {
+                                                                        return date('H:i' ,strtotime($horarios->get('hora_inicio')));
+                                                                    },
+                                                                        'valueField' => 0
+                                                                    ]);
+        */
+        //date('H:i', strtotime($horasPista[$i]['hora_inicio']))
+        $toret=array();
+        for($i = 0; $i<=8; $i++){
+            $toret[date('H:i:s', strtotime($horasPista[$i]['hora_inicio']))] = $i+1;
+        }
         return $toret;
     }
 

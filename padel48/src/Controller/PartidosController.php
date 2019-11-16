@@ -118,13 +118,30 @@ class PartidosController extends AppController
         if (!$this->estaInscrito($id_partido)){
 
             if($this->Partidos->addDeportista($id_partido, $this->Auth->user('dni'))){
+                $partido = $this->Partidos->get($id_partido);
+                $reservasController = new ReservasController();
+                if($reservasController->hayPistaDisponible($partido->fecha, $partido->hora)){
+                    $this->Flash->success(__('Se ha inscrito en el partido correctamente.'));
+                    //se hace una reserva
+                    $aux = $this->getHorasPistaInverso();
+                    $this->getRequest()->getSession()->write(['Reservas.fecha' => $partido->fecha]);
+                    $this->getRequest()->getSession()->write(['Reservas.hora' => $aux[$partido->hora]]);
+                    $this->getRequest()->getSession()->write(['Reservas.dni' => 'admin']);
+                    $reservasController->add();
+                    //$this->Partidos->delete($partido); Se elimina el partido?
+                }
+                else{
+                    $this->Partidos->delete($partido);
+                    $this->Flash->error(__('No hay pistas disponibles para realizar este partido'));
+                }
 
-                $this->Flash->success(__('Se ha inscrito en el partido correctamente.'));
                 return $this->redirect(['action' => 'view', $id_partido]);
-            }else{
+            }
+            else{
                 $this->Flash->error(__('No se ha podido inscribir en el partido. El partido esta completo.'));
             }
-        }else{
+        }
+        else{
             $this->Flash->error(__('No se ha podido inscribir en el partido. Usted ya esta inscrito.'));
         }
 
