@@ -9,12 +9,12 @@ Acordar fecha hora:
 - Gestionar Pistas:
 	- Al añadir una pista tiene que añadir tambien un nuevo horario!!!
 
-Reservas --Jacobo
+Reservas --Fer
 	- Cuando esten hechas, es necesario añadirlas a proponerFechaHoraController y a partidoController
 
 Manual de instalacion y archivos --David
 
-Playoffs
+Playoffs  --Jacobo
 
 Datos de prueba --Iria
 
