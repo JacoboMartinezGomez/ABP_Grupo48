@@ -6,6 +6,9 @@ Acordar fecha hora:
 		-Mostrar propuestas propias y del rival. Dejar solo borrar y editar las propias y aceptar las del rival
 		-Mostrar mensaje indicando el limite de reservas (Ej.. 1 semana max)
 
+- Gestionar Pistas:
+	- Al añadir una pista tiene que añadir tambien un nuevo horario!!!
+
 Reservas --Jacobo
 	- Cuando esten hechas, es necesario añadirlas a proponerFechaHoraController y a partidoController
 
@@ -19,6 +22,8 @@ Revisar las vistas:
 	- Cuales son publicas, cuales no
 	- Boton logout y login/register en todas las vistas
 	- Ocultar/mostrar acciones. Ej: Un deportista no puede generar la ligar regular, un deportista no puede aceptar sus propias propuestas
+
+Añadir un boton de atras a todas las vistas
 
 Probar todo --Todos
 
