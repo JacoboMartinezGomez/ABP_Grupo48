@@ -34,6 +34,8 @@ class ReservasController extends AppController
      */
     public function view($id = null)
     {
+        $this->borrarReservasPasadas();
+
         $reserva = $this->Reservas->get($id, [
             'contain' => []
         ]);
@@ -49,66 +51,45 @@ class ReservasController extends AppController
 
     public function add()
     {
-       
-        $this->loadModel('Horarios');
+        $this->borrarReservasPasadas();
+        $this->loadModel('Usuarios');
         $this->loadModel('Pistas');
         $this->set('hora_inicio', $this->getHorasPistaEntero());
-        
-        
-        
-
 
         $reserva = $this->Reservas->newEntity();
 
         if ($this->request->is('post')) {
             $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
             $reserva->hora = $this->request->getData()['hora'];
-            //$fecha = new Time($this->request->getData()['fecha']);
-            //$fecha = $fecha->format('Y-m-d');
-            //$reserva->fecha = $fecha;
-    
-            //SELECT * FROM horarios WHERE NOT horarios.id_horario IN( SELECT reservas.hora FROM reservas WHERE reservas.fecha = $fecha)
-            
-            $horasReservadas = $this->Reservas->find('all')->where(['fecha' => $reserva->fecha])->all()->toArray();
-            debug($horasReservadas);
-            die;
-            $horasDisponibles = $this->Horarios->find('all')->where([]);
-            
+            $reserva->id_usuario = $this->Auth->user('dni');
+            $usuario = $this->Usuarios->find('all')->where(['dni' => $this->Auth->user('dni')])->first();
 
 
-            //if ($this->Reservas->save($reserva)) {
-               // $this->Flash->success(__('Reserva guardada correctamente.'));
+            $numReservas = $this->Reservas->find('all')->where(['fecha' => $reserva->fecha, 'hora' => $reserva->hora])->all()->count();
+            $numeroPistas = $this->Pistas->find('all')->all()->count();
 
-              //  return $this->redirect(['action' => 'index']);
-            }
-            ///$this->Flash->error(__('The reserva could not be saved. Please, try again.'));
-        //}
-        $this->set(compact('reserva'));
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Reserva id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $reserva = $this->Reservas->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
-            if ($this->Reservas->save($reserva)) {
-                $this->Flash->success(__('The reserva has been saved.'));
-
+            if($usuario->numero_pistas == 5){
+                $this->Flash->error(__('No puedes reservar más de 5 pistas'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
+
+            if($numReservas == $numeroPistas){
+                $this->Flash->error(__('Las reservas están llenas para ese día y hora'));
+            }
+            else{
+                $reserva->pista_id = $numReservas+1;
+                if($this->Reservas->save($reserva)){
+
+                    $usuario->numero_pistas = $usuario->numero_pistas+1;
+                    $this->Usuarios->save($usuario);
+                    $this->Flash->success(__('Reserva guardada correctamente para la pista '. ($numReservas+1) ));
+                    return $this->redirect(['action' => 'index']);
+                }
+            }
         }
         $this->set(compact('reserva'));
     }
+
 
     /**
      * Delete method
@@ -119,41 +100,30 @@ class ReservasController extends AppController
      */
     public function delete($id = null)
     {
+        $this->loadModel('Usuarios');
+
         $this->request->allowMethod(['post', 'delete']);
         $reserva = $this->Reservas->get($id);
         if ($this->Reservas->delete($reserva)) {
-            $this->Flash->success(__('The reserva has been deleted.'));
+            $usuario = $this->Usuarios->find('all')->where(['dni' => $reserva->id_usuario])->first();
+            $usuario->numero_pistas = $usuario->numero_pistas - 1;
+            $this->Usuarios->save($usuario);
+            $this->Flash->success(__('La reserva fue eliminada.'));
         } else {
-            $this->Flash->error(__('The reserva could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La reserva no pudo ser eliminada.'));
         }
-
         return $this->redirect(['action' => 'index']);
     }
 
-    //Funcion que comprueba las reservas y muestra las horas disponibles
-    public function comprobarReserva()
-    {
-        $this->loadModel('Horarios');
-        $this->loadModel('Pistas');
+    public function borrarReservasPasadas(){
+        $this->loadModel('Usuarios');
 
-        $this->set('hora_inicio', $this->getHorasPista());
-        $this->set('numeros_pista', $this->getPistas());
-
-
-        //$id = '1';
-        //$reserva = $this->Reservas->get($id, ['contain' => []]);
-     
-
-        //$this->set('reserva', $reserva);
-
-
-        //$reservas = $this->Reservas->find('list', ['keyField'=>function($pistas){$pistas->get('hora');}]);
-
-        $query = $this->Reservas->find('all')->where(['pista = ' => $numeros_pista]);
-
-       // echo $reservas;
-        echo $query;
-
+        $usuario = $this->Usuarios->find('all')->where(['dni' => $this->Auth->user('dni')])->first();
+        $reservas = $this->Reservas->find('all')->where(['id_usuario' => $usuario->dni, 'fecha <' => Time::now()]);
+        $numeroReservas = $reservas->count();
+        $usuario->numero_pistas = $usuario->numero_pistas - $numeroReservas;
+        $reservas->delete()->execute();
+        $this->Usuarios->save($usuario);
     }
 
 
