@@ -1,29 +1,28 @@
+**IMPORTANTE**
+- Antes de entregar desactivar el modo debug: config/app.php --Linea 20: 'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN) => 'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
+
 Acordar fecha hora:
 	-Vista
 		-Mostrar propuestas propias y del rival. Dejar solo borrar y editar las propias y aceptar las del rival
 		-Mostrar mensaje indicando el limite de reservas (Ej.. 1 semana max)
-	-Controller:
-		- Reservar pista al aceptar la hora y fecha
-		- (Hecho - Controlado a nivel de servidor, pero se muestran todas las fechas) Restringir fecha a mostrar. Solo una semana desde hoy. 
-
-Login y register + control del rol --David --HECHO
-
-Generar Liga Regular --Fer
-
-Hacer portada-- Iria
-
-CSS --Iria
 
 Reservas --Jacobo
+	- Cuando esten hechas, es necesario añadirlas a proponerFechaHoraController y a partidoController
 
-Playoff --Jacobo
+Manual de instalacion y archivos --David
 
-Vistas de categorias y grupos? Solo un showall publico quizas?
+Playoffs
 
-Ranking --Esta hecho, es el View de Grupos
+Datos de prueba --Iria
 
+Revisar las vistas:
+	- Cuales son publicas, cuales no
+	- Boton logout y login/register en todas las vistas
+	- Ocultar/mostrar acciones. Ej: Un deportista no puede generar la ligar regular, un deportista no puede aceptar sus propias propuestas
 
-BASE DE DATOS:
-	--Cambiar en enfrentamiento las claves de parejas o hacer un id en parejas
-	--Tabla parejas_disputan_enfrentamiento?? QUe hacemos con ella, esta bien la relacion?
-	--Hace falta campo ganador(idPareja)
+Probar todo --Todos
+
+Errores:
+	- Crear partido promociando falla. El controller es PartidoController no PromocionarPartidoController.
+	- En acordar fecha y hora hace falta mostrar otra tabla con las horas propuestas del rival
+	
