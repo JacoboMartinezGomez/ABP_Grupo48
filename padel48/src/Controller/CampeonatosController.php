@@ -273,6 +273,13 @@ class CampeonatosController extends AppController
         $this->loadModel('ParejasDisputanEnfrentamiento');
         $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
         $grupos = $query->all()->toArray();
+        foreach($grupos as $grupo){
+            $query = $this->Parejas->find('all')->where(['grupo_id =' => $grupo['id_grupo'],
+                                                        'campeonato_id =' => $grupo['campeonato_id'],
+                                                        'categoria_id =' => $grupo['categoria_id']])->order(['puntuacion' => 'DESC']);
+            debug($query);
+            die;
+        }
     }
 
 }
