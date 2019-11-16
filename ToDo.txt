@@ -23,6 +23,8 @@ Revisar las vistas:
 	- Boton logout y login/register en todas las vistas
 	- Ocultar/mostrar acciones. Ej: Un deportista no puede generar la ligar regular, un deportista no puede aceptar sus propias propuestas
 
+Añadir un boton de atras a todas las vistas
+
 Probar todo --Todos
 
 Errores:
