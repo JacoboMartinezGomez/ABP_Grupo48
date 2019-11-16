@@ -200,7 +200,7 @@ CREATE TABLE `enfrentamientos` (
   FOREIGN KEY (`grupo_id`) REFERENCES grupos(`id_grupo`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--
+
 
 --
 -- Estructura de tabla para la tabla `fechas_propuestas`
