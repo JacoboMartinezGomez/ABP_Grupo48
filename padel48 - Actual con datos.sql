@@ -30,7 +30,7 @@ USE `padel48`;
 --
 DROP TABLE IF EXISTS `campeonatos`;
 CREATE TABLE `campeonatos` (
-  `id_campeonato` int(4) NOT NULL,
+  `id_campeonato` int(4) NOT NULL AUTO_INCREMENT,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
   PRIMARY KEY (`id_campeonato`)
@@ -182,7 +182,7 @@ INSERT INTO `enfrentamientos` (`id_enfrentamiento`, `grupo_id`, `hora`, `fecha`,
 --
 DROP TABLE IF EXISTS `fechas_propuestas`;
 CREATE TABLE `fechas_propuestas` (
-  `id` int(6) NOT NULL,
+  `id` int(6) NOT NULL AUTO_INCREMENT,
   `enfrentamiento_id` int(6) NOT NULL,
   `creador` varchar(9) NOT NULL,
   `hora` time NOT NULL,
@@ -311,7 +311,7 @@ INSERT INTO `horarios` (`id_horario`, `pista_id`, `hora_inicio`) VALUES
 --
 DROP TABLE IF EXISTS `noticias`;
 CREATE TABLE `noticias` (
-  `id_noticia` int(100) NOT NULL,
+  `id_noticia` int(100) NOT NULL AUTO_INCREMENT,
   `usuario_id` varchar(9) DEFAULT NULL,
   `titulo` varchar(150) CHARACTER SET utf8mb4 NOT NULL,
   `contenido` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
@@ -478,7 +478,18 @@ INSERT INTO `parejas` (`id`, `id_capitan`, `id_pareja`, `campeonato_id`, `grupo_
 (47, '87012353H', '409218805', 16, 9, 17, 43, 0),
 (48, '399613160', '514158440', 30, 2, 17, 77, 0),
 (49, '870344358', '283607945', 28, 14, 9, 94, 0),
-(50, '324467712', '147606049', 6, 22, 8, 14, 0);
+(50, '324467712', '147606049', 6, 22, 8, 14, 0),
+-- parejas de campeonato 0, grupo1, categoria 0 `
+(51, 'usuario1', 'usuario2', 0, 1, 0, 0, 0),
+(52, 'usuario3', 'usuario4', 0, 1, 0, 0, 0),
+(53, 'usuario5', 'usuario6', 0, 1, 0, 0, 0),
+(54, 'usuario7', 'usuario8', 0, 1, 0, 0, 0),
+(55, 'usuario9', 'usuario10', 0, 1, 0, 0, 0),
+(56, 'usuario11', 'usuario12', 0, 1, 0, 0, 0),
+(57, 'usuario13', 'usuario14', 0, 1, 0, 0, 0),
+(58, 'usuario15', 'usuario16', 0, 1, 0, 0, 0);
+
+
 
 -- --------------------------------------------------------
 
@@ -588,7 +599,7 @@ INSERT INTO `parejas_disputan_enfrentamiento` (`id_pareja1`, `id_pareja2`, `enfr
 --
 DROP TABLE IF EXISTS `partidos`;
 CREATE TABLE `partidos` (
-  `id_partido` int(4) NOT NULL,
+  `id_partido` int(4) NOT NULL AUTO_INCREMENT,
   `usuario_id` varchar(9) DEFAULT NULL,
   `usuario_id2` varchar(9) DEFAULT NULL,
   `usuario_id3` varchar(9) DEFAULT NULL,
@@ -654,7 +665,7 @@ INSERT INTO `partidos` (`id_partido`, `usuario_id`, `usuario_id2`, `usuario_id3`
 --
 DROP TABLE IF EXISTS `pistas`;
 CREATE TABLE `pistas` (
-  `num_pista` int(2) NOT NULL,
+  `num_pista` int(2) NOT NULL AUTO_INCREMENT,
   `tipo` enum('PIEDRA','MOQUETA') CHARACTER SET latin1 NOT NULL,
   `lugar` enum('EXTERIOR','INTERIOR') CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`num_pista`)
@@ -785,7 +796,6 @@ CREATE TABLE `usuarios` (
 --
 -- Volcado de datos para la tabla `usuarios`
 --
-
 INSERT INTO `usuarios` (`dni`, `password`, `nombre`, `apellido`, `email`, `sexo`, `telefono`, `rol`, `numero_pistas`) VALUES
 ('115440091', 'hW2DQ9ucEnb5', 'Trenton', 'MacKintosh', 'tmackintoshp@mtv.com', 'MASC', 15152, 'PROFESOR', 0),
 ('116813347', 'wszgky', 'Carver', 'Aucutt', 'caucutt2a@accuweathe', 'MASC', 3317, 'ADMIN', 0),
@@ -892,7 +902,6 @@ INSERT INTO `usuarios` (`dni`, `password`, `nombre`, `apellido`, `email`, `sexo`
 ('992566787', 'bSYXJCI', 'Jannelle', 'Kneafsey', 'jkneafsey9@china.com', 'MASC', 21652, 'DEPORTISTA', 0),
 ('999782009', 'LmSQUUbc', 'Kirby', 'Ruffy', 'kruffy27@shareasale.', 'MASC', 19372, 'PROFESOR', 0),
 ('admin', '$2y$10$6idiWmDBiDAugd1agodgd.deDp3gOB/isEDcESMnu7WYbbn4oTPUC', 'Admin', 'Admin', 'esei@esei.es', 'MASC', 123456789, 'DEPORTISTA', 0);
--- --------------------------------------------------------
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
