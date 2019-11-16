@@ -34,7 +34,7 @@ class PartidosTable extends Table
 
         $this->setTable('partidos');
         $this->setDisplayField('usuario_id');
-        $this->setPrimaryKey(['usuario_id', 'usuario_id2', 'usuario_id3', 'usuario_id4']);
+        $this->setPrimaryKey(['id_partido']);
 
         $this->belongsTo('Usuarios', [
             'foreignKey' => 'usuario_id',

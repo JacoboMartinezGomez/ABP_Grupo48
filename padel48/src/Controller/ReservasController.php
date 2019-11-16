@@ -56,24 +56,30 @@ class ReservasController extends AppController
         $this->loadModel('Pistas');
         $this->set('hora_inicio', $this->getHorasPistaEntero());
 
+
         $reserva = $this->Reservas->newEntity();
-
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') || $this->getRequest()->getSession()->check('Reservas.dni')) {
             $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
-            $reserva->hora = $this->request->getData()['hora'];
-            $reserva->id_usuario = $this->Auth->user('dni');
-            $usuario = $this->Usuarios->find('all')->where(['dni' => $this->Auth->user('dni')])->first();
 
+            if($this->getRequest()->getSession()->check('Reservas.dni')){
+                $reserva->id_usuario = $this->getRequest()->getSession()->consume('Reservas.dni');
+                $reserva->hora = $this->getRequest()->getSession()->consume('Reservas.hora');
+                $reserva->fecha = $this->getRequest()->getSession()->consume('Reservas.fecha');
+            }
+            else{
+                $reserva->hora = $this->request->getData()['hora'];
+                $reserva->id_usuario = $this->Auth->user('dni');
+            }
 
+            $usuario = $this->Usuarios->find('all')->where(['dni' => $reserva->id_usuario])->first();
             $numReservas = $this->Reservas->find('all')->where(['fecha' => $reserva->fecha, 'hora' => $reserva->hora])->all()->count();
-            $numeroPistas = $this->Pistas->find('all')->all()->count();
 
-            if($usuario->numero_pistas == 5){
+            if($usuario->numero_pistas == 5 && $usuario->dni != 'admin'){
                 $this->Flash->error(__('No puedes reservar más de 5 pistas'));
                 return $this->redirect(['action' => 'index']);
             }
 
-            if($numReservas == $numeroPistas){
+            if(!$this->hayPistaDisponible($reserva->fecha, $reserva->hora)){
                 $this->Flash->error(__('Las reservas están llenas para ese día y hora'));
             }
             else{
@@ -88,6 +94,18 @@ class ReservasController extends AppController
             }
         }
         $this->set(compact('reserva'));
+    }
+
+    public function hayPistaDisponible($fecha, $hora){
+        $this->loadModel('Pistas');
+        $numReservas = $this->Reservas->find('all')->where(['fecha' => $fecha, 'hora' => $hora])->all()->count();
+        $numeroPistas = $this->Pistas->find('all')->all()->count();
+        if($numReservas == $numeroPistas){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 
@@ -118,14 +136,22 @@ class ReservasController extends AppController
     public function borrarReservasPasadas(){
         $this->loadModel('Usuarios');
 
+        //Se borran las reservas del usuario que ha hecho la peticion
         $usuario = $this->Usuarios->find('all')->where(['dni' => $this->Auth->user('dni')])->first();
         $reservas = $this->Reservas->find('all')->where(['id_usuario' => $usuario->dni, 'fecha <' => Time::now()]);
         $numeroReservas = $reservas->count();
         $usuario->numero_pistas = $usuario->numero_pistas - $numeroReservas;
         $reservas->delete()->execute();
         $this->Usuarios->save($usuario);
+
+        //Si el usuario que ha hecho la peticion no es 'admin', se comprueban y borran las reservas de admin
+        if($this->Auth->user('dni') != 'admin'){
+            $usuarioAdmin = $this->Usuarios->find('all')->where(['dni' => 'admin'])->first();
+            $reservasAdmin = $this->Reservas->find('all')->where(['id_usuario' => $usuario->dni, 'fecha <' => Time::now()]);
+            $numeroReservasAdmin = $reservas->count();
+            $usuarioAdmin->numero_pistas = $usuarioAdmin->numero_pistas - $numeroReservas;
+            $reservasAdmin->delete()->execute();
+            $this->Usuarios->save($usuarioAdmin);
+        }
     }
-
-
-
 }

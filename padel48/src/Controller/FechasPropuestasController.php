@@ -74,6 +74,7 @@ class FechasPropuestasController extends AppController
             $fechasPropuesta->creador = $this->Auth->user('dni');
 
             $fecha = $fechasPropuesta->fecha;
+
             $fechaLimite = Time::now()->modify('+7 days');
 
             if ($fecha <= $fechaLimite && $fecha >= Time::now()){
@@ -152,6 +153,8 @@ class FechasPropuestasController extends AppController
     }
 
     public function acept($id){
+        $this->loadModel('Reservas');
+
         $fechaPropuesta = $this->FechasPropuestas->get($id);
         $enfrentamiento_id = $fechaPropuesta->enfrentamiento_id;
 
@@ -169,9 +172,14 @@ class FechasPropuestasController extends AppController
             return $this->redirect(['action' => 'index', $enfrentamiento_id]);
         };
 
+        $aux = $this->getHorasPistaInverso();
+        $reservasController = new ReservasController();
+        if($reservasController->hayPistaDisponible($fecha, $aux[$hora])){
+            $this->getRequest()->getSession()->write(['Reservas.fecha' => $fecha]);
+            $this->getRequest()->getSession()->write(['Reservas.hora' => $aux[$hora]]);
+            $this->getRequest()->getSession()->write(['Reservas.dni' => 'admin']);
 
-        // FALTA AQUI COMPROBAR QUE HAY PISTA DISPONIBLE EN ESA FECHA Y HORA
-        if(true){
+            //debug($this->getRequest()->getSession()->read('Reservas.hora'));
             $this->loadModel('Enfrentamientos');
             $enfrentamiento = $this->Enfrentamientos->get($enfrentamiento_id);
 
@@ -183,6 +191,7 @@ class FechasPropuestasController extends AppController
             //Eliminamos todas las fechas propuestas
             $this->FechasPropuestas->deleteAll(['enfrentamiento_id =' => $enfrentamiento_id]);
 
+            $reservasController->add();
             $this->Flash->success('Fecha aceptada. Se ha reservado una pista correctamente . Todas la fechas propuestas han sido borradas');
 
             return $this->redirect(['controller' => 'Enfrentamientos','action' => 'index', $enfrentamiento_id]);

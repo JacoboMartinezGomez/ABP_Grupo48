@@ -22,7 +22,7 @@ $this->Html->css(['css'])?>
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -44,7 +44,7 @@ $this->Html->css(['css'])?>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
-            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
                 </ul>
@@ -80,34 +80,34 @@ $this->Html->css(['css'])?>
         <tbody>
             <?php foreach ($enfrentamientos as $enfrentamiento): ?>
             <tr>
-                <td><?= $this->Number->format($enfrentamiento->enfrentamiento['id_enfrentamiento']) ?></td>
-                <td><?= h($enfrentamiento->enfrentamiento['id_pareja1']) ?></td>
-                <td><?= h($enfrentamiento->enfrentamiento['id_pareja2']) ?></td>
-                <td><?= $this->Number->format($enfrentamiento->enfrentamiento['id_grupo']) ?></td>
-                <td><?= h(h(date('H:i', strtotime($enfrentamiento->enfrentamiento['hora'])))) ?></td>
-                <td><?= h($enfrentamiento->enfrentamiento['fecha']) ?></td>
-                <td><?= $this->Number->format($enfrentamiento->enfrentamiento['fase']) ?></td>
+                <td><?= $this->Number->format($enfrentamiento->enfrentamientos['id_enfrentamiento']) ?></td>
+                <td><?= h($enfrentamiento->enfrentamientos['id_pareja1']) ?></td>
+                <td><?= h($enfrentamiento->enfrentamientos['id_pareja2']) ?></td>
+                <td><?= $this->Number->format($enfrentamiento->enfrentamientos['id_grupo']) ?></td>
+                <td><?= h(h(date('H:i', strtotime($enfrentamiento->enfrentamientos['hora'])))) ?></td>
+                <td><?= h($enfrentamiento->enfrentamientos['fecha']) ?></td>
+                <td><?= $this->Number->format($enfrentamiento->enfrentamientos['fase']) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->d['resultado']) ?></td>
                 <td class="actions">
                     <?php echo $this->Html->image("calendario.png", array(
                         "src" => "Proponer fecha",
                         "alt" => "proponerFecha",
-                        'url' => array('controller' => 'FechasPropuestas', 'action' => 'index', $enfrentamiento->id_enfrentamiento),
+                        'url' => array('controller' => 'FechasPropuestas', 'action' => 'index', $enfrentamiento->enfrentamientos['id_enfrentamiento']),
                         "class" => "icono"
                     )); ?>
                     <?php echo $this->Html->image("marcador.png", array(
                         "src" => "Añadir Resultado",
                         "alt" => "anhadirResultado",
-                        'url' => array('controller' => 'Enfrentamientos', 'action' => 'introducirResultado', $enfrentamiento->id_enfrentamiento),
+                        'url' => array('controller' => 'Enfrentamientos', 'action' => 'introducirResultado', $enfrentamiento->enfrentamientos['id_enfrentamiento']),
                         "class" => "icono"
                     )); ?>
                     <?php echo $this->Form->postLink(
                             $this->Html->image(
-                                "borrar.png", 
+                                "borrar.png",
                                 ["alt" => __('Delete')]
-                            ), 
+                            ),
                             ['action' => 'delete',   $enfrentamiento->id_enfrentamiento],
-                            ['escape' => false, 'confirm' => __('¿Quieres eliminar el enfrentamiento {0}?',  $enfrentamiento->id_enfrentamiento)]
+                            ['escape' => false, 'confirm' => __('¿Quieres eliminar el enfrentamiento {0}?',  $enfrentamiento->enfrentamientos['id_enfrentamiento'])]
                     )?>
                 </td>
             </tr>
