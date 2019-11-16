@@ -76,23 +76,23 @@ class PartidosController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $partido = $this->Partidos->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $partido = $this->Partidos->patchEntity($partido, $this->request->getData());
-            if ($this->Partidos->save($partido)) {
-                $this->Flash->success(__('El partido ha sido guardado.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('El partido no se ha podido guardar. Por favor intentelo de nuevo.'));
-        }
-        $usuarios = $this->Partidos->Usuarios->find('list', ['limit' => 200]);
-        $this->set(compact('partido', 'usuarios'));
-    }
+//    public function edit($id = null)
+//    {
+//        $partido = $this->Partidos->get($id, [
+//            'contain' => []
+//        ]);
+//        if ($this->request->is(['patch', 'post', 'put'])) {
+//            $partido = $this->Partidos->patchEntity($partido, $this->request->getData());
+//            if ($this->Partidos->save($partido)) {
+//                $this->Flash->success(__('El partido ha sido guardado.'));
+//
+//                return $this->redirect(['action' => 'index']);
+//            }
+//            $this->Flash->error(__('El partido no se ha podido guardar. Por favor intentelo de nuevo.'));
+//        }
+//        $usuarios = $this->Partidos->Usuarios->find('list', ['limit' => 200]);
+//        $this->set(compact('partido', 'usuarios'));
+//    }
 
     /**
      * Delete method
@@ -113,7 +113,7 @@ class PartidosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-  
+
     public function inscribirse($id_partido){
         if (!$this->estaInscrito($id_partido)){
 
