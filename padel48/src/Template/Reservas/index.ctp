@@ -21,7 +21,7 @@ $this->Html->css(['css'])?>
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -43,7 +43,7 @@ $this->Html->css(['css'])?>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
-            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
                 </ul>
@@ -76,15 +76,15 @@ $this->Html->css(['css'])?>
             <?php foreach ($reservas as $reserva): ?>
             <tr>
                 <td><?= h($reserva->id_usuario) ?></td>
-                <td><?= $this->Number->format($reserva->id_pista) ?></td>
+                <td><?= $this->Number->format($reserva->pista_id) ?></td>
                 <td><?= $this->Number->format($reserva->hora) ?></td>
                 <td><?= h($reserva->fecha) ?></td>
                 <td class="actions">
                     <?php echo $this->Form->postLink(
                             $this->Html->image(
-                                "borrar.png", 
+                                "borrar.png",
                                 ["alt" => __('Delete')]
-                            ), 
+                            ),
                             ['action' => 'delete',   $reserva->id_usuario],
                             ['escape' => false, 'confirm' => __('¿Quieres eliminar la reserva del usuario {0}?',  $reserva->id_usuario)]
                         )?>
