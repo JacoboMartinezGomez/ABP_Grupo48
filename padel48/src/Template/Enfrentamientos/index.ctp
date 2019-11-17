@@ -68,8 +68,6 @@ $this->Html->css(['css'])?>
         <thead>
             <tr>
                 <th scope="col" width = "140px"><?= $this->Paginator->sort('id_enfrentamiento') ?> </th>
-                <th scope="col"><?= $this->Paginator->sort('id_pareja1') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('id_pareja2') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('id_grupo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
@@ -82,9 +80,7 @@ $this->Html->css(['css'])?>
             <?php foreach ($enfrentamientos as $enfrentamiento): ?>
             <tr>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['id_enfrentamiento']) ?></td>
-                <td><?= h($enfrentamiento->enfrentamientos['id_pareja1']) ?></td>
-                <td><?= h($enfrentamiento->enfrentamientos['id_pareja2']) ?></td>
-                <td><?= $this->Number->format($enfrentamiento->enfrentamientos['id_grupo']) ?></td>
+                <td><?= $this->Number->format($enfrentamiento->enfrentamientos['grupo_id']) ?></td>
                 <td><?= h(h(date('H:i', strtotime($enfrentamiento->enfrentamientos['hora'])))) ?></td>
                 <td><?= h($enfrentamiento->enfrentamientos['fecha']) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['fase']) ?></td>

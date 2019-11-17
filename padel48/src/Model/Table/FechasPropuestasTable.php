@@ -80,7 +80,6 @@ class FechasPropuestasTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['enfrentamiento_id'], 'Enfrentamientos'));
-        $rules->add($rules->existsIn(['creador'], 'Enfrentamientos'));
 
         return $rules;
     }
