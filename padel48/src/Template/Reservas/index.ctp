@@ -85,7 +85,7 @@ $this->Html->css(['css'])?>
                                 "borrar.png",
                                 ["alt" => __('Delete')]
                             ),
-                            ['action' => 'delete',   $reserva->id_usuario],
+                            ['action' => 'delete',   $reserva->id_usuario, $reserva->pista_id, $reserva->hora, $reserva->fecha],
                             ['escape' => false, 'confirm' => __('¿Quieres eliminar la reserva del usuario {0}?',  $reserva->id_usuario)]
                         )?>
                 </td>

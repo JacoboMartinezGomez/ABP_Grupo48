@@ -69,10 +69,6 @@ $this->Html->css(['css'])?>
             <td><?= h($usuario->dni) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Password') ?></th>
-            <td><?= h($usuario->password) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Nombre') ?></th>
             <td><?= h($usuario->nombre) ?></td>
         </tr>
@@ -102,7 +98,7 @@ $this->Html->css(['css'])?>
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Related Noticias') ?></h4>
+        <h4><?= __('Noticias de este Usuario') ?></h4>
         <?php if (!empty($usuario->noticias)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
@@ -122,35 +118,6 @@ $this->Html->css(['css'])?>
                     <?= $this->Html->link(__('View'), ['controller' => 'Noticias', 'action' => 'view', $noticias->id_noticia]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Noticias', 'action' => 'edit', $noticias->id_noticia]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Noticias', 'action' => 'delete', $noticias->id_noticia], ['confirm' => __('Are you sure you want to delete # {0}?', $noticias->id_noticia)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
-    <div class="related">
-        <h4><?= __('Related Partidos') ?></h4>
-        <?php if (!empty($usuario->partidos)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Usuario Id') ?></th>
-                <th scope="col"><?= __('Usuario Id2') ?></th>
-                <th scope="col"><?= __('Usuario Id3') ?></th>
-                <th scope="col"><?= __('Usuario Id4') ?></th>
-                <th scope="col"><?= __('Hora') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($usuario->partidos as $partidos): ?>
-            <tr>
-                <td><?= h($partidos->usuario_id) ?></td>
-                <td><?= h($partidos->usuario_id2) ?></td>
-                <td><?= h($partidos->usuario_id3) ?></td>
-                <td><?= h($partidos->usuario_id4) ?></td>
-                <td><?= h($partidos->hora) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Partidos', 'action' => 'view', $partidos->usuario_id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Partidos', 'action' => 'edit', $partidos->usuario_id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Partidos', 'action' => 'delete', $partidos->usuario_id], ['confirm' => __('Are you sure you want to delete # {0}?', $partidos->usuario_id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
