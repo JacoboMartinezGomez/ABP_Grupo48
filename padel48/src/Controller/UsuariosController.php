@@ -41,8 +41,8 @@ class UsuariosController extends AppController
     {
         $this->Flash->success('Has cerrado sesión.');
         //return $this->redirect($this->Auth->logout());
-        return $this->redirect(array("controller" => "Index",
-        "action" => "index",));
+        return $this->redirect(array("controller" => "Pages",
+        "action" => "display",));
     }
 
     /**
