@@ -56,7 +56,7 @@ class CampeonatosController extends AppController
             $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
             return $this->redirect(['action' => 'index']);
         }
-        
+
         $campeonato = $this->Campeonatos->newEntity();
         if ($this->request->is('post')) {
             $campeonato = $this->Campeonatos->patchEntity($campeonato, $this->request->getData());
@@ -328,7 +328,7 @@ class CampeonatosController extends AppController
 
         if(!empty($grupos)){
             $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
-                ['fase ==' => $fase]]);
+                ['fase >=' => $fase]]);
             $enfrentamientos = $query2->all()->toArray();
 
             return !empty($enfrentamientos);
