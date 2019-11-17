@@ -20,8 +20,16 @@ class CampeonatosController extends AppController
      */
     public function index()
     {
+<<<<<<< HEAD
         $campeonatos = $this->paginate($this->Campeonatos);
         $this->set('user', $this->Auth->user());
+=======
+        $campeonatos = $this->Campeonatos->find('all')->all()->toArray();
+        foreach ($campeonatos as $campeonato){
+            $campeonato['gruposGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 1);
+            $campeonato['playoffsGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 2);
+        }
+>>>>>>> fe4d271261b189df5cbf64f7592163a29902ba31
         $this->set(compact('campeonatos'));
     }
 
@@ -48,6 +56,11 @@ class CampeonatosController extends AppController
      */
     public function add()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+        
         $campeonato = $this->Campeonatos->newEntity();
         if ($this->request->is('post')) {
             $campeonato = $this->Campeonatos->patchEntity($campeonato, $this->request->getData());
@@ -253,7 +266,7 @@ class CampeonatosController extends AppController
                                                                                                                                         'id_pareja2' => $parejas[$keys[$j]]['id'],
                                                                                                                                         'enfrentamiento_id' => $id
                                                                                                                                         ]);
-                    
+
                     $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
 
                 }
@@ -311,16 +324,20 @@ class CampeonatosController extends AppController
         return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
     }
 
-    public function playOffGenerado($idCampeonato){
+    public function faseGenerada($idCampeonato, $fase){
         $this->loadModel('Grupos');
         $this->loadModel('Enfrentamientos');
         $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
         $grupos = $query->all()->toArray();
 
-        $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
-                                                              ['fase =' => '2']]);
-        $enfrentamientos = $query2->all()->toArray();
+        if(!empty($grupos)){
+            $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
+                ['fase >=' => $fase]]);
+            $enfrentamientos = $query2->all()->toArray();
 
-        debug(empty($enfrentamientos));
+            return !empty($enfrentamientos);
+        }
+        return false;
+
     }
 }

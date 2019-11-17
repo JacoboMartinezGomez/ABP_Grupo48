@@ -49,6 +49,10 @@ class PartidosController extends AppController
      */
     public function add()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->set('hora_inicio', $this->getHorasPista());
         $partido = $this->Partidos->newEntity();
         if ($this->request->is('post')) {

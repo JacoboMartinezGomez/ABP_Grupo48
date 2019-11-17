@@ -29,6 +29,7 @@ class FechasPropuestasController extends AppController
 
         $query = $this->FechasPropuestas->find('all')->where(['enfrentamiento_id' => $id]);
         $this->set('fechasPropuestas', $this->paginate($query));
+        $this->set('dniUser', $this->Auth->user('dni'));
         $this->set('enfrentamiento_id', $id);
     }
 
@@ -78,12 +79,15 @@ class FechasPropuestasController extends AppController
             $fechaLimite = Time::now()->modify('+7 days');
 
             if ($fecha <= $fechaLimite && $fecha >= Time::now()){
+                $fechasPropuesta->fecha;
+
                 if ($this->FechasPropuestas->save($fechasPropuesta)) {
                     $this->Flash->success(__('La fecha propuesta ha sido guardada.'));
 
                     return $this->redirect(['action' => 'index', $enfrentamientoID]);
+                }else{
+                    $this->Flash->error(__('La fecha propuesta no ha podido ser guardada. Intentelo de nuevo.'));
                 }
-                $this->Flash->error(__('La fecha propuesta no ha podido ser guardada. Intentelo de nuevo.'));
             }else{
                 $this->Flash->error(__('La fecha propuesta excede el limite de una semana.'));
             }

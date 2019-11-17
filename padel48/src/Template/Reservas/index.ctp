@@ -30,7 +30,6 @@ $this->Html->css(['css'])?>
                     <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
-            <li><?= $this->Html->link(__('Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
                 <ul>
@@ -78,7 +77,7 @@ $this->Html->css(['css'])?>
             <tr>
                 <td><?= h($reserva->id_usuario) ?></td>
                 <td><?= $this->Number->format($reserva->pista_id) ?></td>
-                <td><?= $this->Number->format($reserva->hora) ?></td>
+                <td><?= date('H:i', strtotime($horas[$reserva->hora])) ?></td>
                 <td><?= h($reserva->fecha) ?></td>
                 <td class="actions">
                     <?php echo $this->Form->postLink(
@@ -96,13 +95,13 @@ $this->Html->css(['css'])?>
     </table>
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->first('<< ' . __('primero')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <?= $this->Paginator->next(__('siguiente') . ' >') ?>
+            <?= $this->Paginator->last(__('ultimo') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+            <p><?= $this->Paginator->counter(['format' => __('Pagina {{page}} de {{pages}}, mostrando {{current}} entrada(s) de un total de {{count}} ')]) ?></p>
     </div>
 </div>
 </div>

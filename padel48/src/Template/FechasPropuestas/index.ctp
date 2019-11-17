@@ -21,7 +21,7 @@ $this->Html->css(['css'])?>
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -30,7 +30,6 @@ $this->Html->css(['css'])?>
                     <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
-            <li><?= $this->Html->link(__('Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
                 <ul>
@@ -62,7 +61,7 @@ $this->Html->css(['css'])?>
         </ul>
     </nav>
     <div class="showVista" id="fechasPropuestas">
-    <h2><?= __('Fechas Propuestas') ?></h2>
+    <h2><?= __('Fechas Propuestas por ti') ?></h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -75,7 +74,9 @@ $this->Html->css(['css'])?>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($fechasPropuestas as $fechasPropuesta): ?>
+            <?php foreach ($fechasPropuestas as $fechasPropuesta):
+                if($fechasPropuesta->creador == $dniUser){
+                ?>
             <tr>
                 <td><?= $this->Number->format($fechasPropuesta->id) ?></td>
                 <td><?= $this->Number->format($fechasPropuesta->enfrentamiento_id) ?></td>
@@ -89,34 +90,59 @@ $this->Html->css(['css'])?>
                         'url' => array('action' => 'edit',  $fechasPropuesta->id),
                         "class" => "icono"
                     )); ?>
+
+                    <?php echo $this->Form->postLink(
+                        $this->Html->image(
+                            "borrar.png",
+                            ["alt" => __('Delete')]
+                        ),
+                        ['action' => 'delete',   $fechasPropuesta->id],
+                        ['escape' => false, 'confirm' => __('¿Quieres eliminar la fecha {0}?',  $fechasPropuesta->id)]
+                    )?>
+                </td>
+            </tr>
+            <?php }
+                endforeach; ?>
+        </tbody>
+    </table>
+
+
+    <h2><?= __('Fechas Propuestas por tu rival') ?></h2>
+    <table cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('enfrentamiento_id') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('creador') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
+            <th scope="col" class="actions"><?= __('Acciones') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($fechasPropuestas as $fechasPropuesta):
+            if($fechasPropuesta->creador != $dniUser){?>
+            <tr>
+                <td><?= $this->Number->format($fechasPropuesta->id) ?></td>
+                <td><?= $this->Number->format($fechasPropuesta->enfrentamiento_id) ?></td>
+                <td><?= h($fechasPropuesta->creador) ?></td>
+                <td><?= h(date('H:i', strtotime($fechasPropuesta->hora))) ?></td>
+                <td><?= h($fechasPropuesta->fecha) ?></td>
+                <td class="actions">
+
                     <?php echo $this->Html->image("aceptar.png", array(
                         "src" => "Aceptar",
                         "alt" => "aceptar",
                         'url' => array('action' => 'acept', $fechasPropuesta->id),
                         "class" => "icono"
                     )); ?>
-                    <?php echo $this->Form->postLink(
-                        $this->Html->image(
-                            "borrar.png", 
-                            ["alt" => __('Delete')]
-                        ), 
-                        ['action' => 'delete',   $fechasPropuesta->id],
-                        ['escape' => false, 'confirm' => __('¿Quieres eliminar la fecha {0}?',  $fechasPropuesta->id)]
-                    )?>
+
                 </td>
             </tr>
-            <?php endforeach; ?>
+        <?php
+            } endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
+
 </div>
 </div>

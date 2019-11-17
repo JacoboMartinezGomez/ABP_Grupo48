@@ -25,6 +25,7 @@ class ReservasController extends AppController
         $query = $this->Reservas->find('all')
                                 ->where(['id_usuario' => $this->Auth->user('dni')]);
 
+        $this->set('horas', $this->getHorasPistaEntero());
         $this->set('reservas', $this->paginate($query));
     }
 
