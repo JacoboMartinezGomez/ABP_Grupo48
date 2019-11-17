@@ -54,6 +54,16 @@ class PistasController extends AppController
             if($pista->tipo == 'PIEDRA' | $pista->tipo == 'MOQUETA'){
                 if($pista->lugar == 'EXTERIOR' | $pista->lugar == 'INTERIOR') {
                     if ($this->Pistas->save($pista)) {
+                        $this->loadModel('Horarios');
+
+                        $horarios = $this->Horarios->find('all')->select(['hora_inicio'])->distinct()->toArray();
+
+                        foreach ($horarios as $hora){
+                            $horario = $this->Horarios->newEntity();
+                            $horario->pista_id = $pista->num_pista;
+                            $horario->hora_inicio = date($hora['hora_inicio']->format('H:i:s'));
+                            $this->Horarios->save($horario);
+                        }
                         $this->Flash->success(__('La pista ha sido guardada.'));
 
                         return $this->redirect(['action' => 'index']);
