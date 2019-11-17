@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Campeonato $campeonato
  */
 
-use App\Controller\CampeonatosController;
+//use App\Controller\CampeonatosController;
 use Cake\I18n\Time;
 $this->Html->css(['css'])
 ?>
@@ -114,7 +114,7 @@ $this->Html->css(['css'])
                         <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
                         
                         <?php /*if($id){ */ ?>
-                            <?php echo $this->CampeonatosController::playOffGenerado($campeonato->id_campeonato); ?>
+                           <?php //echo $this->CampeonatosController::playOffGenerado($campeonato->id_campeonato); ?>
                             <?php echo $this->Html->image("dado.png", array(
                                 "src" => "GenerarPlayOf",
                                 "alt" => "generarplayoff",
