@@ -18,6 +18,6 @@ Añadir un boton de atras a todas las vistas
 Probar todo --Todos
 
 Errores:
-	- Crear partido promociando falla. El controller es PartidoController no PromocionarPartidoController.
 	- En acordar fecha y hora hace falta mostrar otra tabla con las horas propuestas del rival
+	- Iconos en partidos
 	
