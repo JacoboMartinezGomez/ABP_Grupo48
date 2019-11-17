@@ -47,6 +47,10 @@ class PistasController extends AppController
      */
     public function add()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $pista = $this->Pistas->newEntity();
         if ($this->request->is('post')) {
             $pista = $this->Pistas->patchEntity($pista, $this->request->getData());
@@ -124,4 +128,5 @@ class PistasController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

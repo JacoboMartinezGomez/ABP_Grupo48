@@ -77,8 +77,6 @@ $this->Html->css(['css'])
         </thead>
         <tbody>
             <?php foreach ($campeonatos as $campeonato): ?>
-
-
             <tr>
                 <td><?= $this->Number->format($campeonato->id_campeonato) ?></td>
                 <td><?= h($campeonato->fecha_inicio) ?></td>
@@ -114,7 +112,7 @@ $this->Html->css(['css'])
                             ));} ?>
 
                         <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
-                        <?php if(!$campeonato['gruposGenerados']){ ?>
+                        <?php if(!$campeonato['playoffsGenerados']){ ?>
                             <?php echo $this->Html->image("dado.png", array(
                                 "src" => "GenerarPlayOf",
                                 "alt" => "generarplayoff",
@@ -139,6 +137,6 @@ $this->Html->css(['css'])
             </tbody>
         </table>
 
-      
+
     </div>
 </div>
