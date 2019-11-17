@@ -273,13 +273,61 @@ class CampeonatosController extends AppController
         $this->loadModel('ParejasDisputanEnfrentamiento');
         $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
         $grupos = $query->all()->toArray();
+
+        $numeroGrupos = count($grupos);
+        $parejasPorGrupo = round(8 / $numeroGrupos);
+        $contadorParejas = 0;
+        $parejasSeleccionadas[0] = "";
         foreach($grupos as $grupo){
             $query = $this->Parejas->find('all')->where(['grupo_id =' => $grupo['id_grupo'],
                                                         'campeonato_id =' => $grupo['campeonato_id'],
-                                                        'categoria_id =' => $grupo['categoria_id']])->order(['puntuacion' => 'DESC']);
-            debug($query);
-            die;
+                                                        'categoria_id =' => $grupo['categoria_id']])->order(['puntuacion' => 'DESC'])->limit($parejasPorGrupo);
+            $parejas = $query->all()->toArray();
+            $numeroParejas = count($parejas);
+            for($i = 0; $i<$numeroParejas; $i++){
+                $parejasSeleccionadas[$contadorParejas] = $parejas[$i];
+                $contadorParejas++;
+            }
         }
+        foreach ($parejasSeleccionadas as $key => $row) {
+            $aux[$key] = $row['puntuacion'];
+        }
+        array_multisort($aux, SORT_DESC, $parejasSeleccionadas);
+        $numeroParejasSeleccionadas = count($parejasSeleccionadas);
+        if($numeroParejasSeleccionadas > 8){
+            $parejasSeleccionadas = array_slice($parejasSeleccionadas, 0, 8);
+        }
+        $contadorPareja2 = 7;
+
+        for($i = 0; $i < 4; $i++){            
+            $enfrentamiento = $this->Enfrentamientos->newEntity();
+            $enfrentamiento = $this->Enfrentamientos->patchEntity($enfrentamiento, ['grupo_id' => $parejasSeleccionadas[$i]['grupo_id'],
+                'fase' => 2]);
+            $id = $this->Enfrentamientos->save($enfrentamiento)['id_enfrentamiento'];
+            $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
+            $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($parejasDisputanEnfrentamiento, [
+                                                                                                                                'id_pareja1' => $parejasSeleccionadas[$i]['id'],
+                                                                                                                                'id_pareja2' => $parejasSeleccionadas[$contadorPareja2-$i]['id'],
+                                                                                                                                'enfrentamiento_id' => $id
+                                                                                                                                ]);
+            $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
+           
+
+        }
+        $this->Flash->success(__('PlayOff generado correctamente'));
+        return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
     }
 
+    public function playOffGenerado($idCampeonato){
+        $this->loadModel('Grupos');
+        $this->loadModel('Enfrentamientos');
+        $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
+        $grupos = $query->all()->toArray();
+
+        $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
+                                                              ['fase =' => '2']]);
+        $enfrentamientos = $query2->all()->toArray();
+
+        debug(empty($enfrentamientos));
+    }
 }

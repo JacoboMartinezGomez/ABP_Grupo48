@@ -13,7 +13,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Padel48';
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,6 +24,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <?= $this->Html->meta('icon') ?>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -59,6 +60,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <div class="container clearfix">
         <?= $this->fetch('content') ?>
     </div>
-    
+
 </body>
 </html>

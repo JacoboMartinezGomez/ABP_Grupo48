@@ -3,6 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Campeonato $campeonato
  */
+
+//use App\Controller\CampeonatosController;
 use Cake\I18n\Time;
 $this->Html->css(['css'])
 ?>
@@ -52,7 +54,7 @@ $this->Html->css(['css'])
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
                 <ul>
-                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
@@ -60,6 +62,7 @@ $this->Html->css(['css'])
                     <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
                 </ul>
             </li>
+            <li><?= $this->Html->link(__('Cerrar sesión'), ['controller' => 'Usuarios', 'action' => 'logout']) ?></li>
         </ul>
     </nav>
     <div class="showVista" id="campeonatos">
@@ -75,6 +78,8 @@ $this->Html->css(['css'])
         </thead>
         <tbody>
             <?php foreach ($campeonatos as $campeonato): ?>
+               
+
             <tr>
                 <td><?= $this->Number->format($campeonato->id_campeonato) ?></td>
                 <td><?= h($campeonato->fecha_inicio) ?></td>
@@ -106,6 +111,21 @@ $this->Html->css(['css'])
                             'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
                             "class" => "icono"
                         )); ?>
+                        
+                        <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
+                        
+                        <?php /*if($id){ */ ?>
+                           <?php //echo $this->CampeonatosController::playOffGenerado($campeonato->id_campeonato); ?>
+                            <?php echo $this->Html->image("dado.png", array(
+                                "src" => "GenerarPlayOf",
+                                "alt" => "generarplayoff",
+                                'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
+                                "class" => "icono"
+                            )); ?>
+                         <?php
+                        //};
+                        ?>
+
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
                                 "src" => "Inscribirse",

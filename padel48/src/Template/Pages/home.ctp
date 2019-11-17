@@ -1,6 +1,7 @@
 <?php
     include 'header.ctp';
     include 'menu.ctp';
+    $this->assign('title','Portada');
 ?>
 <head>
     <meta charset="utf-8">

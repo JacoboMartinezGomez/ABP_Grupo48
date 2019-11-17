@@ -235,7 +235,7 @@ CREATE TABLE `grupos` (
 --
 DROP TABLE IF EXISTS `horarios`;
 CREATE TABLE `horarios` (
-  `id_horario` int(2) NOT NULL,
+  `id_horario` int(2) NOT NULL AUTO_INCREMENT,
   `pista_id` int(2) NOT NULL,
   `hora_inicio` time NOT NULL,
   PRIMARY KEY (`id_horario`),

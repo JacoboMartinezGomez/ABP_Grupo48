@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\Time;
 
 /**
  * Partidos Controller
@@ -20,13 +21,7 @@ class PartidosController extends AppController
     public function index()
     {
 
-        $query = $this->Partidos->find()
-                                ->where(['OR' =>
-                                    ['usuario_id' => $this->Auth->user('dni')],
-                                    ['usuario_id2' => $this->Auth->user('dni')],
-                                    ['usuario_id3' => $this->Auth->user('dni')],
-                                    ['usuario_id4' => $this->Auth->user('dni')]
-                                ]);
+        $query = $this->Partidos->find('all');
 
         $this->set('partidos', $this->paginate($query));
     }
@@ -54,15 +49,25 @@ class PartidosController extends AppController
      */
     public function add()
     {
+        $this->set('hora_inicio', $this->getHorasPista());
         $partido = $this->Partidos->newEntity();
         if ($this->request->is('post')) {
             $partido = $this->Partidos->patchEntity($partido, $this->request->getData());
-            if ($this->Partidos->save($partido)) {
-                $this->Flash->success(__('El partido ha sido guardado.'));
+            $fecha = $partido->fecha;
 
-                return $this->redirect(['action' => 'index']);
+            $fechaLimite = Time::now()->modify('+7 days');
+
+            if ($fecha <= $fechaLimite && $fecha >= Time::now()) {
+                if ($this->Partidos->save($partido)) {
+                    $this->Flash->success(__('El partido ha sido guardado.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }else{
+                    $this->Flash->error(__('El partido no se ha podido guardar. Por favor intentelo de nuevo.'));
+                }
+            }else{
+                $this->Flash->error(__('La fecha propuesta excede el limite de una semana.'));
             }
-            $this->Flash->error(__('El partido no se ha podido guardar. Por favor intentelo de nuevo.'));
 
         }
         $usuarios = $this->Partidos->Usuarios->find('list', ['limit' => 200]);
@@ -131,7 +136,7 @@ class PartidosController extends AppController
                         $this->getRequest()->getSession()->write(['Reservas.hora' => $aux[$horaInt]]);
                         $this->getRequest()->getSession()->write(['Reservas.dni' => 'admin']);
                         $reservasController->add();
-                        //$this->Partidos->delete($partido); Se elimina el partido?
+                        $this->Partidos->delete($partido);
                     }
                     else{
                         $this->Partidos->delete($partido);

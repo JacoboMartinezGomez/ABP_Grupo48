@@ -50,7 +50,7 @@ $this->Html->css(['css'])?>
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
                 <ul>
-                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
@@ -85,7 +85,7 @@ $this->Html->css(['css'])?>
                                 "borrar.png",
                                 ["alt" => __('Delete')]
                             ),
-                            ['action' => 'delete',   $reserva->id_usuario],
+                            ['action' => 'delete', '?' => ['id_usuario' => $reserva->id_usuario, 'pista' => $reserva->pista_id, 'hora' => $reserva->hora, 'fecha' => $reserva->fecha]],
                             ['escape' => false, 'confirm' => __('¿Quieres eliminar la reserva del usuario {0}?',  $reserva->id_usuario)]
                         )?>
                 </td>
