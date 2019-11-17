@@ -21,7 +21,7 @@ $this->Html->css(['css'])?>
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -50,7 +50,7 @@ $this->Html->css(['css'])?>
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
                 <ul>
-                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
@@ -87,9 +87,9 @@ $this->Html->css(['css'])?>
                     )); ?>
                     <?php echo $this->Form->postLink(
                             $this->Html->image(
-                                "borrar.png", 
+                                "borrar.png",
                                 ["alt" => __('Delete')]
-                            ), 
+                            ),
                             ['action' => 'delete',   $pista->num_pista],
                             ['escape' => false, 'confirm' => __('¿Quieres eliminar la pista número {0}?',  $pista->num_pista)]
                     )?>

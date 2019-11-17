@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -44,7 +44,7 @@
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
                 <ul>
-                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
@@ -65,17 +65,19 @@
                 <th scope="col"><?= $this->Paginator->sort('usuario_id3') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('usuario_id4') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($partidos as $partido): ?>
             <tr>
-                <td><?= $partido->has('usuario') ? $this->Html->link($partido->usuario->dni, ['controller' => 'Usuarios', 'action' => 'view', $partido->usuario->dni]) : '' ?></td>
+                <td><?= h($partido->usuario_id) ?></td>
                 <td><?= h($partido->usuario_id2) ?></td>
                 <td><?= h($partido->usuario_id3) ?></td>
                 <td><?= h($partido->usuario_id4) ?></td>
-                <td><?= h($partido->hora) ?></td>
+                <td><?= h($partido->hora->format('H:i')) ?></td>
+                <td><?= h($partido->fecha) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $partido->usuario_id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partido->usuario_id], ['confirm' => __('Are you sure you want to delete # {0}?', $partido->usuario_id)]) ?>

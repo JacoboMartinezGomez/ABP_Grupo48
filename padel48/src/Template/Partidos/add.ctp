@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -44,7 +44,7 @@
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
                 <ul>
-                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
@@ -61,7 +61,8 @@
     <fieldset>
         <legend><?= __('Add Partido') ?></legend>
         <?php
-            echo $this->Form->control('hora');
+            echo $this->Form->control('hora', ['options' => $hora_inicio]);
+            echo $this->Form->control('fecha', ['minYear' => date('Y'), 'maxYear' => date('Y')]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

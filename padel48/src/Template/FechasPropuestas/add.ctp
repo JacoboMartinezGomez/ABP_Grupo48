@@ -23,7 +23,7 @@ $this->Html->css(['css'])?>
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -52,7 +52,7 @@ $this->Html->css(['css'])?>
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
                 <ul>
-                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
