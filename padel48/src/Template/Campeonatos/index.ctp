@@ -60,6 +60,7 @@ $this->Html->css(['css'])
                     <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
                 </ul>
             </li>
+            <li><?= $this->Html->link(__('Cerrar sesión'), ['controller' => 'Usuarios', 'action' => 'logout']) ?></li>
         </ul>
     </nav>
     <div class="showVista" id="campeonatos">

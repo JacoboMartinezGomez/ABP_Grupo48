@@ -29,7 +29,9 @@ class UsuariosController extends AppController
             $usuario = $this->Auth->identify();
             if ($usuario) {
                 $this->Auth->setUser($usuario);
-                return $this->redirect($this->Auth->redirectUrl());
+                //return $this->redirect($this->Auth->redirectUrl());
+                return $this->redirect(array("controller" => "Campeonatos", 
+                      "action" => "index",));
             }
             $this->Flash->error('El dni o la contraseña son incorrectos');
         }
@@ -37,8 +39,10 @@ class UsuariosController extends AppController
 
     public function logout()
     {
-        $this->Flash->success('You are now logged out.');
-        return $this->redirect($this->Auth->logout());
+        $this->Flash->success('Has cerrado sesión.');
+        //return $this->redirect($this->Auth->logout());
+        return $this->redirect(array("controller" => "Index", 
+        "action" => "index",));
     }
 
     /**

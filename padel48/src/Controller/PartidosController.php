@@ -113,7 +113,7 @@ class PartidosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-
+  
     public function inscribirse($id_partido){
         if (!$this->estaInscrito($id_partido)){
 
