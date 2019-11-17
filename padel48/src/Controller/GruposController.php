@@ -36,6 +36,7 @@ class GruposController extends AppController
 
         $query = $this->Grupos->find('all')->where(['campeonato_id' => $campeonato_id]);
         $this->set('grupos', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

@@ -28,6 +28,7 @@ class ParejasController extends AppController
 
 
         $this->set(compact('parejas'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

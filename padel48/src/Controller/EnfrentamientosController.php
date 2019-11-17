@@ -50,6 +50,7 @@ class EnfrentamientosController extends AppController
 //            ['p.id_capitan2' => $this->Auth->user('dni')]] ]
 
         $this->set('enfrentamientos', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -152,7 +153,7 @@ class EnfrentamientosController extends AppController
             $enfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($enfrentamiento, $this->ParejasDisputanEnfrentamiento->find('all')->where(['enfrentamiento_id =' => $id])->first()->toArray());
             $enfrentamiento->resultado = $this->request->getData()['resultado'];
 
-            debug($enfrentamiento);
+            //debug($enfrentamiento);
             //debug($this->Parejas->find('all')->where(['id =' => $enfrentamiento['id_pareja1']])->all()->toArray());
 
             //$this->ParejasDisputanEnfrentamiento->save($enfrentamiento);

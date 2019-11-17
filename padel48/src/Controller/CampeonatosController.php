@@ -25,6 +25,7 @@ class CampeonatosController extends AppController
             $campeonato['gruposGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 1);
             $campeonato['playoffsGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 2);
         }
+        $this->set('user', $this->Auth->user());
         $this->set(compact('campeonatos'));
     }
 

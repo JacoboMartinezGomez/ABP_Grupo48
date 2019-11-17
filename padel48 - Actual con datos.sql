@@ -351,7 +351,7 @@ INSERT INTO `usuarios` (`dni`, `password`, `nombre`, `apellido`, `email`, `sexo`
 ('54868519H', '$2y$10$gW3NuLxQMedESrRx3hx5uujLgKaVa8rKqpnK8ikxkFIE7AsnjTfvG', 'Fernando', 'Rodriguez', 'ferrod@hotmail.com', 'MASC', 654789654, 'DEPORTISTA', 0),
 ('68658023X', '$2y$10$C2QPhV4Yf0EpgGAXSak0/eJYDqlHvGbc8prHzajPUvg.icWZJTtDO', 'David', 'Vila', 'davidvila@hotmail.co', 'MASC', 654123654, 'DEPORTISTA', 0),
 ('87012353H', '$2y$10$KQqlYlx1KcnX4TRSkBbyKexLePxTuQMpgjp8vkBULGCgZkX7FGhD.', 'Iria', 'Fernandez', 'ifer@hotmail.com', 'FEM', 547854785, 'DEPORTISTA', 0),
-('admin', '$2y$10$6idiWmDBiDAugd1agodgd.deDp3gOB/isEDcESMnu7WYbbn4oTPUC', 'Admin', 'Admin', 'esei@esei.es', 'MASC', 123456789, 'DEPORTISTA', 0);
+('admin', '$2y$10$6idiWmDBiDAugd1agodgd.deDp3gOB/isEDcESMnu7WYbbn4oTPUC', 'Admin', 'Admin', 'esei@esei.es', 'MASC', 123456789, 'ADMIN', 0);
 
 
 --

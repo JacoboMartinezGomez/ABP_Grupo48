@@ -27,6 +27,7 @@ class ReservasController extends AppController
 
         $this->set('horas', $this->getHorasPistaEntero());
         $this->set('reservas', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -131,7 +132,7 @@ class ReservasController extends AppController
         $hora = $this->request->getQuery('hora');
         $fecha = $this->request->getQuery('fecha');
         $reservaEliminar = $this->Reservas->find('all')->where(['id_usuario ='=>$id_usuario, 'pista_id ='=>$pista_id, 'hora ='=>$hora, 'fecha ='=>$fecha['date']])->first();
-        debug($reservaEliminar);
+        //debug($reservaEliminar);
 
 //        $res = $this->Reservas->find('all')
 //                                ->where([

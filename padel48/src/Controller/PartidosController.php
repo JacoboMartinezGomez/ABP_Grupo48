@@ -24,6 +24,7 @@ class PartidosController extends AppController
         $query = $this->Partidos->find('all');
 
         $this->set('partidos', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -50,6 +51,8 @@ class PartidosController extends AppController
     public function add()
     {
         if(!$this->isAuthorized($this->Auth->user())){
+            //debug($this->Auth->user());
+            die;
             $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
             return $this->redirect(['action' => 'index']);
         }
@@ -130,7 +133,7 @@ class PartidosController extends AppController
                 $partido = $this->Partidos->get($id_partido);
                 $reservasController = new ReservasController();
                 $horaInt = date('H:i:s', strtotime($partido->hora));
-                debug($partido);
+                //debug($partido);
                 $aux = $this->getHorasPistaInverso();
                 if($partido->usuario_id != null && $partido->usuario_id2 != null && $partido->usuario_id3 != null && $partido->usuario_id4 != null){
                     if($reservasController->hayPistaDisponible($partido->fecha, $aux[$horaInt])){
@@ -201,12 +204,5 @@ class PartidosController extends AppController
         return is_null($query);*/
     }
 
-    public function isAuthorized($user)
-    {
-        if (in_array($this->request->getParam('action'), ['add', 'edit', 'delete'])) {
-            return false;
-        }
 
-        return parent::isAuthorized($user);
-    }
 }

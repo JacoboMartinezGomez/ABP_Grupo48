@@ -21,6 +21,7 @@ class PromocionarPartidoController extends AppController
         $promocionarPartido = $this->paginate($this->PromocionarPartido);
 
         $this->set(compact('promocionarPartido'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
