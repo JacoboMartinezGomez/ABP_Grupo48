@@ -76,6 +76,11 @@ class HorariosController extends AppController
      */
     public function edit()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $horario = $this->Horarios->newEntity();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $horario = $this->Horarios->patchEntity($horario, $this->request->getData());

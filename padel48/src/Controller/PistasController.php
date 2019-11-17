@@ -90,6 +90,11 @@ class PistasController extends AppController
      */
     public function edit($id = null)
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $pista = $this->Pistas->get($id, [
             'contain' => []
         ]);
@@ -118,6 +123,11 @@ class PistasController extends AppController
      */
     public function delete($id = null)
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $this->request->allowMethod(['post', 'delete']);
         $pista = $this->Pistas->get($id);
         if ($this->Pistas->delete($pista)) {

@@ -50,6 +50,8 @@ class PartidosController extends AppController
     public function add()
     {
         if(!$this->isAuthorized($this->Auth->user())){
+            debug($this->Auth->user());
+            die;
             $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
             return $this->redirect(['action' => 'index']);
         }
@@ -201,12 +203,5 @@ class PartidosController extends AppController
         return is_null($query);*/
     }
 
-    public function isAuthorized($user)
-    {
-        if (in_array($this->request->getParam('action'), ['add', 'edit', 'delete'])) {
-            return false;
-        }
 
-        return parent::isAuthorized($user);
-    }
 }

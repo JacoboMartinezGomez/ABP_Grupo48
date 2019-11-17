@@ -30,7 +30,7 @@ class UsuariosController extends AppController
             if ($usuario) {
                 $this->Auth->setUser($usuario);
                 //return $this->redirect($this->Auth->redirectUrl());
-                return $this->redirect(array("controller" => "Reservas", 
+                return $this->redirect(array("controller" => "Reservas",
                       "action" => "index",));
             }
             $this->Flash->error('El dni o la contraseña son incorrectos');
@@ -41,7 +41,7 @@ class UsuariosController extends AppController
     {
         $this->Flash->success('Has cerrado sesión.');
         //return $this->redirect($this->Auth->logout());
-        return $this->redirect(array("controller" => "Index", 
+        return $this->redirect(array("controller" => "Index",
         "action" => "index",));
     }
 
@@ -103,6 +103,10 @@ class UsuariosController extends AppController
      */
     public function edit($id = null)
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $usuario = $this->Usuarios->get($id, [
             'contain' => []
         ]);
