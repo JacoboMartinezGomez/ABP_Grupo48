@@ -64,7 +64,7 @@
     <div class="showVista" id="anhadirCampeonato">
     <?= $this->Form->create($campeonato) ?>
     <fieldset>
-        <legend><?= __('Añadir ampeonato') ?></legend>
+        <legend><?= __('Añadir campeonato') ?></legend>
         <?php
             echo $this->Form->control('fecha_inicio');
             echo $this->Form->control('fecha_fin');

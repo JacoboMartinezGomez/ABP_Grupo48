@@ -23,7 +23,7 @@ $this->Html->css(['css'])?>
     </div>
 </header>
 <div class = "container">
-    <nav class="menu"><ul class = "nav">
+<nav class="menu"><ul class = "nav">
             <li class="heading"></li>
             <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
                 <ul>
@@ -58,6 +58,7 @@ $this->Html->css(['css'])?>
                     <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
                 </ul>
             </li>
+            <li><?= $this->Html->link(__('Cerrar sesión'), ['controller' => 'Usuarios', 'action' => 'logout']) ?></li>
         </ul>
     </nav>
     <div class="showVista" id="reservas">
