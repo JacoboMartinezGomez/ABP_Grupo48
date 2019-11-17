@@ -256,7 +256,7 @@ class CampeonatosController extends AppController
                                                                                                                                         'id_pareja2' => $parejas[$keys[$j]]['id'],
                                                                                                                                         'enfrentamiento_id' => $id
                                                                                                                                         ]);
-                    
+
                     $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
 
                 }
@@ -322,7 +322,7 @@ class CampeonatosController extends AppController
 
         if(!empty($grupos)){
             $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
-                ['fase >=' => $fase]]);
+                ['fase ==' => $fase]]);
             $enfrentamientos = $query2->all()->toArray();
 
             return !empty($enfrentamientos);
