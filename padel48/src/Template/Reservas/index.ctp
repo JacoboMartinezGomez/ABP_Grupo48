@@ -77,7 +77,7 @@ $this->Html->css(['css'])?>
             <tr>
                 <td><?= h($reserva->id_usuario) ?></td>
                 <td><?= $this->Number->format($reserva->pista_id) ?></td>
-                <td><?= $this->Number->format($reserva->hora) ?></td>
+                <td><?= date('H:i', strtotime($horas[$reserva->hora])) ?></td>
                 <td><?= h($reserva->fecha) ?></td>
                 <td class="actions">
                     <?php echo $this->Form->postLink(
