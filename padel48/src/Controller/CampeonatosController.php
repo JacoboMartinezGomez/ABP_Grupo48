@@ -20,8 +20,11 @@ class CampeonatosController extends AppController
      */
     public function index()
     {
-        $campeonatos = $this->paginate($this->Campeonatos);
-
+        $campeonatos = $this->Campeonatos->find('all')->all()->toArray();
+        foreach ($campeonatos as $campeonato){
+            $campeonato['gruposGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 1);
+            $campeonato['playoffsGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 2);
+        }
         $this->set(compact('campeonatos'));
     }
 
@@ -321,16 +324,20 @@ class CampeonatosController extends AppController
         return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
     }
 
-    public function playOffGenerado($idCampeonato){
+    public function faseGenerada($idCampeonato, $fase){
         $this->loadModel('Grupos');
         $this->loadModel('Enfrentamientos');
         $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
         $grupos = $query->all()->toArray();
 
-        $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
-                                                              ['fase =' => '2']]);
-        $enfrentamientos = $query2->all()->toArray();
+        if(!empty($grupos)){
+            $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
+                ['fase >=' => $fase]]);
+            $enfrentamientos = $query2->all()->toArray();
 
-        debug(empty($enfrentamientos));
+            return !empty($enfrentamientos);
+        }
+        return false;
+
     }
 }

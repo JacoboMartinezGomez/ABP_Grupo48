@@ -34,7 +34,6 @@ $this->Html->css(['css'])
                     <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
-            <li><?= $this->Html->link(__('Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
                 <ul>
@@ -78,7 +77,7 @@ $this->Html->css(['css'])
         </thead>
         <tbody>
             <?php foreach ($campeonatos as $campeonato): ?>
-               
+
 
             <tr>
                 <td><?= $this->Number->format($campeonato->id_campeonato) ?></td>
@@ -105,26 +104,24 @@ $this->Html->css(['css'])
                             ['action' => 'delete',  $campeonato->id_campeonato],
                             ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $campeonato->id_campeonato)]
                         )?>
-                        <?php echo $this->Html->image("generar.png", array(
-                            "src" => "Generar",
-                            "alt" => "generar",
-                            'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
-                            "class" => "icono"
-                        )); ?>
-                        
                         <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
-                        
-                        <?php /*if($id){ */ ?>
-                           <?php //echo $this->CampeonatosController::playOffGenerado($campeonato->id_campeonato); ?>
+                        <?php if(!$campeonato['gruposGenerados']){ ?>
+                            <?php echo $this->Html->image("generar.png", array(
+                                "src" => "Generar",
+                                "alt" => "generar",
+                                'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
+                                "class" => "icono"
+                            ));} ?>
+
+                        <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
+                        <?php if(!$campeonato['gruposGenerados']){ ?>
                             <?php echo $this->Html->image("dado.png", array(
                                 "src" => "GenerarPlayOf",
                                 "alt" => "generarplayoff",
                                 'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
                                 "class" => "icono"
-                            )); ?>
-                         <?php
-                        //};
-                        ?>
+                            ));} ?>
+
 
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
@@ -141,15 +138,6 @@ $this->Html->css(['css'])
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <div class="paginator">
-            <ul class="pagination">
-                <?= $this->Paginator->first('<< ' . __('first')) ?>
-                <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                <?= $this->Paginator->numbers() ?>
-                <?= $this->Paginator->next(__('next') . ' >') ?>
-                <?= $this->Paginator->last(__('last') . ' >>') ?>
-            </ul>
-            <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-        </div>
+
     </div>
 </div>
