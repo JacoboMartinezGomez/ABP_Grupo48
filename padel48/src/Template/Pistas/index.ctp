@@ -26,7 +26,7 @@ $this->Html->css(['css'])?>
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
             <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
-            <?php if ($user['rol'] = 'ADMIN'){?>
+            <?php if ($user['rol'] == 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
                 </ul>
@@ -34,14 +34,14 @@ $this->Html->css(['css'])?>
             </li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
-            <?php if ($user['rol'] = 'ADMIN'){?>
+            <?php if ($user['rol'] == 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
                 </ul>
             <?php }; ?>
             </li>
+            <?php if ($user['rol'] == 'ADMIN'){?>
             <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
-            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
@@ -54,14 +54,14 @@ $this->Html->css(['css'])?>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
-            <?php if ($user['rol'] = 'ADMIN'){?>
+            <?php if ($user['rol'] == 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
             <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
-            <?php if ($user['rol'] = 'ADMIN'){?>
+            <?php if ($user['rol'] == 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
                 </ul>
@@ -78,7 +78,9 @@ $this->Html->css(['css'])?>
                 <th scope="col"><?= $this->Paginator->sort('num_pista') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('tipo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('lugar') ?></th>
-                <th scope="col" class="actions"><?= __('Acciones') ?></th>
+                <?php if ($user['rol'] == 'ADMIN'){?>
+                    <th scope="col" class="actions"><?= __('Acciones') ?></th>
+                <?php }; ?>
             </tr>
         </thead>
         <tbody>
@@ -87,22 +89,25 @@ $this->Html->css(['css'])?>
                 <td><?= $this->Number->format($pista->num_pista) ?></td>
                 <td><?= h($pista->tipo) ?></td>
                 <td><?= h($pista->lugar) ?></td>
-                <td class="actions">
-                    <?php echo $this->Html->image("editar.png", array(
-                        "src" => "Editar",
-                        "alt" => "editar",
-                        'url' => array('action' => 'edit', $pista->num_pista),
-                        "class" => "icono"
-                    )); ?>
-                    <?php echo $this->Form->postLink(
-                            $this->Html->image(
-                                "borrar.png",
-                                ["alt" => __('Delete')]
-                            ),
-                            ['action' => 'delete',   $pista->num_pista],
-                            ['escape' => false, 'confirm' => __('¿Quieres eliminar la pista número {0}?',  $pista->num_pista)]
-                    )?>
-                </td>
+                <?php if ($user['rol'] == 'ADMIN'){?>   
+                    
+                    <td class="actions">
+                        <?php echo $this->Html->image("editar.png", array(
+                            "src" => "Editar",
+                            "alt" => "editar",
+                            'url' => array('action' => 'edit', $pista->num_pista),
+                            "class" => "icono"
+                        )); ?>
+                        <?php echo $this->Form->postLink(
+                                $this->Html->image(
+                                    "borrar.png",
+                                    ["alt" => __('Delete')]
+                                ),
+                                ['action' => 'delete',   $pista->num_pista],
+                                ['escape' => false, 'confirm' => __('¿Quieres eliminar la pista número {0}?',  $pista->num_pista)]
+                        )?>
+                    </td>
+                <?php }; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>

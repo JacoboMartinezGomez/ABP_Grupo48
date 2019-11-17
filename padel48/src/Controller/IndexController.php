@@ -7,7 +7,7 @@
     {
         public function index()
         {
-            header("Location: index.ctp");
+            header("Location: ../Pages/index.ctp");
         }
     }
 ?>
