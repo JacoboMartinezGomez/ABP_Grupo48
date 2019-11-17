@@ -4,13 +4,13 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 /**
- * ParejasDisputanEnfrentamiento Controller
+ * Parejasdisputanenfrentamiento Controller
  *
- * @property \App\Model\Table\ParejasDisputanEnfrentamientoTable $ParejasDisputanEnfrentamiento
+ * @property \App\Model\Table\ParejasdisputanenfrentamientoTable $Parejasdisputanenfrentamiento
  *
- * @method \App\Model\Entity\ParejasDisputanEnfrentamiento[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Parejasdisputanenfrentamiento[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class ParejasDisputanEnfrentamientoController extends AppController
+class ParejasdisputanenfrentamientoController extends AppController
 {
     /**
      * Index method
@@ -20,27 +20,27 @@ class ParejasDisputanEnfrentamientoController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Campeonatos']
+            'contain' => ['Enfrentamientos']
         ];
-        $parejasDisputanEnfrentamiento = $this->paginate($this->ParejasDisputanEnfrentamiento);
+        $parejasdisputanenfrentamiento = $this->paginate($this->Parejasdisputanenfrentamiento);
 
-        $this->set(compact('parejasDisputanEnfrentamiento'));
+        $this->set(compact('parejasdisputanenfrentamiento'));
     }
 
     /**
      * View method
      *
-     * @param string|null $id Parejas Disputan Enfrentamiento id.
+     * @param string|null $id Parejasdisputanenfrentamiento id.
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->get($id, [
-            'contain' => ['Campeonatos']
+        $parejasdisputanenfrentamiento = $this->Parejasdisputanenfrentamiento->get($id, [
+            'contain' => ['Enfrentamientos']
         ]);
 
-        $this->set('parejasDisputanEnfrentamiento', $parejasDisputanEnfrentamiento);
+        $this->set('parejasdisputanenfrentamiento', $parejasdisputanenfrentamiento);
     }
 
     /**
@@ -50,60 +50,60 @@ class ParejasDisputanEnfrentamientoController extends AppController
      */
     public function add()
     {
-        $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
+        $parejasdisputanenfrentamiento = $this->Parejasdisputanenfrentamiento->newEntity();
         if ($this->request->is('post')) {
-            $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($parejasDisputanEnfrentamiento, $this->request->getData());
-            if ($this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento)) {
-                $this->Flash->success(__('The parejas disputan enfrentamiento has been saved.'));
+            $parejasdisputanenfrentamiento = $this->Parejasdisputanenfrentamiento->patchEntity($parejasdisputanenfrentamiento, $this->request->getData());
+            if ($this->Parejasdisputanenfrentamiento->save($parejasdisputanenfrentamiento)) {
+                $this->Flash->success(__('The parejasdisputanenfrentamiento has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The parejas disputan enfrentamiento could not be saved. Please, try again.'));
+            $this->Flash->error(__('The parejasdisputanenfrentamiento could not be saved. Please, try again.'));
         }
-        $campeonatos = $this->ParejasDisputanEnfrentamiento->Campeonatos->find('list', ['limit' => 200]);
-        $this->set(compact('parejasDisputanEnfrentamiento', 'campeonatos'));
+        $enfrentamientos = $this->Parejasdisputanenfrentamiento->Enfrentamientos->find('list', ['limit' => 200]);
+        $this->set(compact('parejasdisputanenfrentamiento', 'enfrentamientos'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Parejas Disputan Enfrentamiento id.
+     * @param string|null $id Parejasdisputanenfrentamiento id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->get($id, [
+        $parejasdisputanenfrentamiento = $this->Parejasdisputanenfrentamiento->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($parejasDisputanEnfrentamiento, $this->request->getData());
-            if ($this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento)) {
-                $this->Flash->success(__('The parejas disputan enfrentamiento has been saved.'));
+            $parejasdisputanenfrentamiento = $this->Parejasdisputanenfrentamiento->patchEntity($parejasdisputanenfrentamiento, $this->request->getData());
+            if ($this->Parejasdisputanenfrentamiento->save($parejasdisputanenfrentamiento)) {
+                $this->Flash->success(__('The parejasdisputanenfrentamiento has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The parejas disputan enfrentamiento could not be saved. Please, try again.'));
+            $this->Flash->error(__('The parejasdisputanenfrentamiento could not be saved. Please, try again.'));
         }
-        $campeonatos = $this->ParejasDisputanEnfrentamiento->Campeonatos->find('list', ['limit' => 200]);
-        $this->set(compact('parejasDisputanEnfrentamiento', 'campeonatos'));
+        $enfrentamientos = $this->Parejasdisputanenfrentamiento->Enfrentamientos->find('list', ['limit' => 200]);
+        $this->set(compact('parejasdisputanenfrentamiento', 'enfrentamientos'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Parejas Disputan Enfrentamiento id.
+     * @param string|null $id Parejasdisputanenfrentamiento id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->get($id);
-        if ($this->ParejasDisputanEnfrentamiento->delete($parejasDisputanEnfrentamiento)) {
-            $this->Flash->success(__('The parejas disputan enfrentamiento has been deleted.'));
+        $parejasdisputanenfrentamiento = $this->Parejasdisputanenfrentamiento->get($id);
+        if ($this->Parejasdisputanenfrentamiento->delete($parejasdisputanenfrentamiento)) {
+            $this->Flash->success(__('The parejasdisputanenfrentamiento has been deleted.'));
         } else {
-            $this->Flash->error(__('The parejas disputan enfrentamiento could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The parejasdisputanenfrentamiento could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
