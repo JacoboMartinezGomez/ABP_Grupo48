@@ -20,9 +20,12 @@ class ReservasController extends AppController
      */
     public function index()
     {
-        $reservas = $this->paginate($this->Reservas);
+        //$reservas = $this->paginate($this->Reservas);
 
-        $this->set(compact('reservas'));
+        $query = $this->Reservas->find('all')
+                                ->where(['id_usuario' => $this->Auth->user('dni')]);
+
+        $this->set('reservas', $this->paginate($query));
     }
 
     /**
@@ -116,12 +119,27 @@ class ReservasController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete()
     {
         $this->loadModel('Usuarios');
 
         $this->request->allowMethod(['post', 'delete']);
-        $reserva = $this->Reservas->get($id);
+        $reserva = $this->Reservas->newEntity();
+
+        $reserva->id_usuario = $this->request->getQuery('id_usuario');
+        $reserva->pista_id = $this->request->getQuery('pista');
+        $reserva->hora = $this->request->getQuery('hora');
+        $reserva->fecha = $this->request->getQuery('fecha');
+        
+
+//        $res = $this->Reservas->find('all')
+//                                ->where([
+//                                    'id_usuario' => $reserva->id_usuario,
+//                                    'pista_id' => $reserva->pista_id,
+//                                    'hora' => $reserva->hora,
+//                                    'fecha' => $reserva->fecha,
+//                                    ]);
+
         if ($this->Reservas->delete($reserva)) {
             $usuario = $this->Usuarios->find('all')->where(['dni' => $reserva->id_usuario])->first();
             $usuario->numero_pistas = $usuario->numero_pistas - 1;
