@@ -55,6 +55,7 @@ class UsuariosController extends AppController
         $usuarios = $this->paginate($this->Usuarios);
 
         $this->set(compact('usuarios'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

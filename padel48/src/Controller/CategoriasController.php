@@ -23,8 +23,8 @@ class CategoriasController extends AppController
             'contain' => ['Campeonatos']
         ];
         $categorias = $this->paginate($this->Categorias);
-
         $this->set(compact('categorias'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

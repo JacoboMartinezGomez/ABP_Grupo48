@@ -21,6 +21,7 @@ class InscribirPartidoPromocionadoController extends AppController
         $inscribirPartidoPromocionado = $this->paginate($this->InscribirPartidoPromocionado);
 
         $this->set(compact('inscribirPartidoPromocionado'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

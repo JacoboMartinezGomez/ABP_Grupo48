@@ -25,6 +25,7 @@ class NoticiasController extends AppController
 
         $noticias = $this->paginate($this->Noticias);
         $this->set(compact('noticias'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

@@ -26,20 +26,26 @@
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
             <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
@@ -48,14 +54,18 @@
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Cerrar sesión'), ['controller' => 'Usuarios', 'action' => 'logout']) ?></li>
         </ul>
@@ -63,7 +73,7 @@
     <div class="showVista" id="anhadirCampeonato">
     <?= $this->Form->create($campeonato) ?>
     <fieldset>
-        <legend><?= __('Añadir ampeonato') ?></legend>
+        <legend><?= __('Añadir campeonato') ?></legend>
         <?php
             echo $this->Form->control('fecha_inicio');
             echo $this->Form->control('fecha_fin');

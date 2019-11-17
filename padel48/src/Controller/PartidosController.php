@@ -24,6 +24,7 @@ class PartidosController extends AppController
         $query = $this->Partidos->find('all');
 
         $this->set('partidos', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

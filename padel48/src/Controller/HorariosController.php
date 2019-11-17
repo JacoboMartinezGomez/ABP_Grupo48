@@ -27,6 +27,7 @@ class HorariosController extends AppController
 
         $query = $this->Horarios->find('all')->select(['hora_inicio'])->distinct();
         $this->set('horarios', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
 
     }
 
