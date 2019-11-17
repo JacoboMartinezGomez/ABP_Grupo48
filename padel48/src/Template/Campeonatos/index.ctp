@@ -77,8 +77,6 @@ $this->Html->css(['css'])
         </thead>
         <tbody>
             <?php foreach ($campeonatos as $campeonato): ?>
-
-
             <tr>
                 <td><?= $this->Number->format($campeonato->id_campeonato) ?></td>
                 <td><?= h($campeonato->fecha_inicio) ?></td>
@@ -139,6 +137,6 @@ $this->Html->css(['css'])
             </tbody>
         </table>
 
-      
+
     </div>
 </div>
