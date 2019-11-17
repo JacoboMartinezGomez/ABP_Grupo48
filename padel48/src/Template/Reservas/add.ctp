@@ -43,7 +43,7 @@ $this->Html->css(['css'])?>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
-            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
                 </ul>
@@ -58,6 +58,7 @@ $this->Html->css(['css'])?>
                     <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
                 </ul>
             </li>
+            <li><?= $this->Html->link(__('Cerrar sesión'), ['controller' => 'Usuarios', 'action' => 'logout']) ?></li>
         </ul>
     </nav>
     <div class="showVista" id="anhadirReserva">
@@ -65,9 +66,17 @@ $this->Html->css(['css'])?>
     <fieldset>
         <legend><?= __('Añadir reserva') ?></legend>
         <?php
+            echo $this->Form->control('fecha',['type'=>'text', 'class'=>'datepicker']);
+            echo $this->Form->control('hora', ['type'=>'select', 'options' => $hora_inicio]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Enviar')) ?>
-    <?= $this->Form->end() ?>
+    <?= $this->Form->button(__('Reservar')) ?>
+    <?= $this->Form->end()?>
 </div>
-</div>
+
+ <script>
+  $( function() {
+    $( ".datepicker" ).datepicker({'dateFormat':'yy-mm-dd',minDate: 0, maxDate: "+7D" });
+  } );
+  </script>
+

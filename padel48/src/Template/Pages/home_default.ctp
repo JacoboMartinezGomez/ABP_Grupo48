@@ -186,7 +186,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
 <div class="row">
     <div class="columns large-12 text-center">
-        <h3 class="more">More about Cake</h2>
+        <h2 class="more">More about Cake</h2>
         <p>
             CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Front Controller and MVC.<br />
             Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.

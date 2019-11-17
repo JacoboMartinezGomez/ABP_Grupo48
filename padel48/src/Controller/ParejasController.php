@@ -89,7 +89,7 @@ class ParejasController extends AppController
             $parejaQuery = $this->Usuarios->find('all')->where(['dni ='=>$pareja->id_pareja]);
             if($parejaQuery->all()->count()==0){
                 $this->Flash->error(__('No existe ningun deportista con ese DNI'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'campeonatos','action' => 'index']);
             }
 
 

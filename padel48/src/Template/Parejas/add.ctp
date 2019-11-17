@@ -21,7 +21,7 @@ $this->Html->css(['css'])?>
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -43,7 +43,7 @@ $this->Html->css(['css'])?>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
-            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
                 </ul>
@@ -66,7 +66,7 @@ $this->Html->css(['css'])?>
         <legend><?= __('Añadir pareja') ?></legend>
         <?php
             echo $this->Form->control('id_pareja', ['type' => 'text']);
-            echo $this->Form->control('nivel');
+            echo $this->Form->control('nivel', ['options' => $niveles]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Enviar')) ?>
