@@ -77,8 +77,6 @@ $this->Html->css(['css'])
         </thead>
         <tbody>
             <?php foreach ($campeonatos as $campeonato): ?>
-
-
             <tr>
                 <td><?= $this->Number->format($campeonato->id_campeonato) ?></td>
                 <td><?= h($campeonato->fecha_inicio) ?></td>
@@ -123,17 +121,13 @@ $this->Html->css(['css'])
                                 "class" => "icono"
                             ));} ?>
 
-
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
                                 "src" => "Inscribirse",
                                 "alt" => "inscribirse",
                                 'url' => array('action' => '../parejas/add', $campeonato->id_campeonato),
                                 "class" => "icono"
-                            )); ?>
-                        <?php
-                        };
-                        ?>
+                            ));} ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

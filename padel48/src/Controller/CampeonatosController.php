@@ -20,16 +20,12 @@ class CampeonatosController extends AppController
      */
     public function index()
     {
-<<<<<<< HEAD
-        $campeonatos = $this->paginate($this->Campeonatos);
-        $this->set('user', $this->Auth->user());
-=======
         $campeonatos = $this->Campeonatos->find('all')->all()->toArray();
         foreach ($campeonatos as $campeonato){
             $campeonato['gruposGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 1);
             $campeonato['playoffsGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 2);
         }
->>>>>>> fe4d271261b189df5cbf64f7592163a29902ba31
+        $this->set('user', $this->Auth->user());
         $this->set(compact('campeonatos'));
     }
 
