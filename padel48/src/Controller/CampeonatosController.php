@@ -190,10 +190,7 @@ class CampeonatosController extends AppController
                     }
                     $this->Flash->error(__('Se eliminaran '.$numParejasEliminar.' parejas para poder realizar grupos correctamente'));
                 }
-
                 $parejasInscritas = $query->all()->toArray();
-
-
                 $gruposController = new GruposController();
                 for($x = 1; $x <= $numGrupos; $x++){
                     $gruposController->add($x, $idCampeonato, $i);
@@ -219,10 +216,8 @@ class CampeonatosController extends AppController
                     $this->Parejas->save($pareja);
                 }
             }
-
         }
         $this->generarPartidos($idCampeonato);
-
         return $this->redirect(['controller' => 'grupos', 'action' => 'index', $idCampeonato]);
     }
 
@@ -245,21 +240,17 @@ class CampeonatosController extends AppController
             for($i = 0; $i<$numElementos; $i++){
 
                 for($j = $i+1; $j<$numElementos; $j++){
-                    //debug($parejas[$keys[$i]]['id']);
-
                     $enfrentamiento = $this->Enfrentamientos->newEntity();
                     $enfrentamiento = $this->Enfrentamientos->patchEntity($enfrentamiento, ['grupo_id' => $parejas[$keys[$i]]['grupo_id'],
                         'fase' => 1]);
                     $id = $this->Enfrentamientos->save($enfrentamiento)['id_enfrentamiento'];
                     $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
-                    //debug($parejasDisputanEnfrentamiento);
-                    //die;
                     $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($parejasDisputanEnfrentamiento, [
                                                                                                                                         'id_pareja1' => $parejas[$keys[$i]]['id'],
                                                                                                                                         'id_pareja2' => $parejas[$keys[$j]]['id'],
                                                                                                                                         'enfrentamiento_id' => $id
                                                                                                                                         ]);
-                    //debug($parejasDisputanEnfrentamiento);
+                    
                     $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
 
                 }
@@ -312,7 +303,6 @@ class CampeonatosController extends AppController
                                                                                                                                 ]);
             $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
            
-
         }
         $this->Flash->success(__('PlayOff generado correctamente'));
         return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
