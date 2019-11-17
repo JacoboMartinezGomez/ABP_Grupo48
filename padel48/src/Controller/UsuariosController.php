@@ -30,7 +30,7 @@ class UsuariosController extends AppController
             if ($usuario) {
                 $this->Auth->setUser($usuario);
                 //return $this->redirect($this->Auth->redirectUrl());
-                return $this->redirect(array("controller" => "Campeonatos", 
+                return $this->redirect(array("controller" => "Reservas", 
                       "action" => "index",));
             }
             $this->Flash->error('El dni o la contraseña son incorrectos');
