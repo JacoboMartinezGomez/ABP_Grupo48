@@ -80,4 +80,14 @@ class PartidosTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
+
+    /**
+     * Test addDeportista method
+     *
+     * @return void
+     */
+    public function testAddDeportista()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
 }

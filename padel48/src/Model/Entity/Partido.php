@@ -6,10 +6,12 @@ use Cake\ORM\Entity;
 /**
  * Partido Entity
  *
- * @property string $usuario_id
- * @property string $usuario_id2
- * @property string $usuario_id3
- * @property string $usuario_id4
+ * @property int $id_partido
+ * @property string|null $usuario_id
+ * @property string|null $usuario_id2
+ * @property string|null $usuario_id3
+ * @property string|null $usuario_id4
+ * @property \Cake\I18n\FrozenDate $fecha
  * @property \Cake\I18n\FrozenTime $hora
  *
  * @property \App\Model\Entity\Usuario $usuario
@@ -26,6 +28,11 @@ class Partido extends Entity
      * @var array
      */
     protected $_accessible = [
+        'usuario_id' => true,
+        'usuario_id2' => true,
+        'usuario_id3' => true,
+        'usuario_id4' => true,
+        'fecha' => true,
         'hora' => true,
         'usuario' => true
     ];
