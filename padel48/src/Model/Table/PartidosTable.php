@@ -98,19 +98,19 @@ class PartidosTable extends Table
     public function addDeportista($id_partido, $dni){
         $partido = $this->get($id_partido);
 
-        if($partido->usuario_id != null){
+        if($partido->usuario_id == null){
             $partido->usuario_id = $dni;
             $this->save($partido);
             return true;
-        }else if($partido->usuario_id2 != null){
+        }else if($partido->usuario_id2 == null){
             $partido->usuario_id2 = $dni;
             $this->save($partido);
             return true;
-        }else if($partido->usuario_id3 != null){
+        }else if($partido->usuario_id3 == null){
             $partido->usuario_id3 = $dni;
             $this->save($partido);
             return true;
-        }else if($partido->usuario_id4 != null){
+        }else if($partido->usuario_id4 == null){
             $partido->usuario_id4 = $dni;
             $this->save($partido);
             return true;
