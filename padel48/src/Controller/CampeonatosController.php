@@ -195,15 +195,18 @@ class CampeonatosController extends AppController
                 for($x = 1; $x <= $numGrupos; $x++){
                     $gruposController->add($x, $idCampeonato, $i);
                 }
+                $cont8 = 0;
+                $contGruposRellenadosMinimo = 1;
+                $contGrupoRellenarMas = 1;
+
                 foreach ($parejasInscritas as $pareja){
-                    $cont8 = 0;
-                    $contGruposRellenadosMinimo = 1;
-                    $contGrupoRellenarMas = 1;
+
                     if($contGruposRellenadosMinimo <= $numGrupos){
                         $pareja->grupo_id = $contGruposRellenadosMinimo;
                         $cont8++;
                         if($cont8 == 8){
                             $contGruposRellenadosMinimo++;
+                            $cont8 = 0;
                         }
                     }
                     else{
@@ -290,7 +293,7 @@ class CampeonatosController extends AppController
         }
         $contadorPareja2 = 7;
 
-        for($i = 0; $i < 4; $i++){            
+        for($i = 0; $i < 4; $i++){
             $enfrentamiento = $this->Enfrentamientos->newEntity();
             $enfrentamiento = $this->Enfrentamientos->patchEntity($enfrentamiento, ['grupo_id' => $parejasSeleccionadas[$i]['grupo_id'],
                 'fase' => 2]);
@@ -302,7 +305,7 @@ class CampeonatosController extends AppController
                                                                                                                                 'enfrentamiento_id' => $id
                                                                                                                                 ]);
             $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
-           
+
         }
         $this->Flash->success(__('PlayOff generado correctamente'));
         return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
