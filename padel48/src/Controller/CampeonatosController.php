@@ -21,7 +21,7 @@ class CampeonatosController extends AppController
     public function index()
     {
         $campeonatos = $this->paginate($this->Campeonatos);
-
+        $this->set('user', $this->Auth->user());
         $this->set(compact('campeonatos'));
     }
 

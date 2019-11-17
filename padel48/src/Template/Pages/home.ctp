@@ -14,7 +14,6 @@
         <?php echo $this->Html->image('pistas2.jpg', ['alt' => 'pista']);?>
     </div>
     <div id="noticias">
-        <?php $this->Element('../Noticias/index');?>
     </div>
     <div id="nosotros">
 

@@ -78,8 +78,6 @@ $this->Html->css(['css'])
         </thead>
         <tbody>
             <?php foreach ($campeonatos as $campeonato): ?>
-               
-
             <tr>
                 <td><?= $this->Number->format($campeonato->id_campeonato) ?></td>
                 <td><?= h($campeonato->fecha_inicio) ?></td>
@@ -91,6 +89,7 @@ $this->Html->css(['css'])
                             'url' => array('controller' => 'Grupos','action' => 'index', $campeonato->id_campeonato),
                             "class" => "icono"
                         )); ?>
+                        <?php if ($user['rol'] = 'ADMIN'){?>
                         <?php echo $this->Html->image("editar.png", array(
                             "src" => "Editar",
                             "alt" => "editar",
@@ -125,7 +124,7 @@ $this->Html->css(['css'])
                          <?php
                         //};
                         ?>
-
+                    
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
                                 "src" => "Inscribirse",
