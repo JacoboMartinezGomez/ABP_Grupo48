@@ -311,10 +311,23 @@ class CampeonatosController extends AppController
                                                                                                                                 'enfrentamiento_id' => $id
                                                                                                                                 ]);
             $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
-            $this->Flash->success(__('PlayOff generado correctamente'));
+           
 
         }
+        $this->Flash->success(__('PlayOff generado correctamente'));
         return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
     }
 
+    public function playOffGenerado($idCampeonato){
+        $this->loadModel('Grupos');
+        $this->loadModel('Enfrentamientos');
+        $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
+        $grupos = $query->all()->toArray();
+
+        $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
+                                                              ['fase =' => '2']]);
+        $enfrentamientos = $query2->all()->toArray();
+
+        debug(empty($enfrentamientos));
+    }
 }

@@ -3,6 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Campeonato $campeonato
  */
+
+use App\Controller\CampeonatosController;
 use Cake\I18n\Time;
 $this->Html->css(['css'])
 ?>
@@ -75,6 +77,8 @@ $this->Html->css(['css'])
         </thead>
         <tbody>
             <?php foreach ($campeonatos as $campeonato): ?>
+               
+
             <tr>
                 <td><?= $this->Number->format($campeonato->id_campeonato) ?></td>
                 <td><?= h($campeonato->fecha_inicio) ?></td>
@@ -107,12 +111,20 @@ $this->Html->css(['css'])
                             "class" => "icono"
                         )); ?>
                         
-                        <?php echo $this->Html->image("dado.png", array(
-                            "src" => "GenerarPlayOf",
-                            "alt" => "generarplayoff",
-                            'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
-                            "class" => "icono"
-                        )); ?>
+                        <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
+                        
+                        <?php /*if($id){ */ ?>
+                            <?php echo $this->CampeonatosController::playOffGenerado($campeonato->id_campeonato); ?>
+                            <?php echo $this->Html->image("dado.png", array(
+                                "src" => "GenerarPlayOf",
+                                "alt" => "generarplayoff",
+                                'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
+                                "class" => "icono"
+                            )); ?>
+                         <?php
+                        //};
+                        ?>
+
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
                                 "src" => "Inscribirse",
