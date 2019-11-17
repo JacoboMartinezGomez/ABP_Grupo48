@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-</header>
+</header> 
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -44,7 +44,7 @@
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
                 <ul>
-                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
@@ -65,23 +65,38 @@
                 <th scope="col"><?= $this->Paginator->sort('usuario_id3') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('usuario_id4') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="col" class="actions"><?= __('Acciones') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($partidos as $partido): ?>
             <tr>
-                <td><?= h($partido->usuario_id) ?></td>
+                <td><?= $partido->has('usuario') ? $this->Html->link($partido->usuario->dni, ['controller' => 'Usuarios', 'action' => 'view', $partido->usuario->dni]) : '' ?></td>
                 <td><?= h($partido->usuario_id2) ?></td>
                 <td><?= h($partido->usuario_id3) ?></td>
                 <td><?= h($partido->usuario_id4) ?></td>
-                <td><?= h($partido->hora->format('H:i')) ?></td>
-                <td><?= h($partido->fecha) ?></td>
+                <td><?= h($partido->hora) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Inscribirse'), ['action' => 'inscribirse', $partido->usuario_id])?>
-                    <?= $this->Html->link(__('Desinscribirse'), ['action' => 'desinscribirse', $partido->usuario_id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partido->usuario_id], ['confirm' => __('Are you sure you want to delete # {0}?', $partido->usuario_id)]) ?>
+                    <?php echo $this->Html->image("ver.png", array(
+                        "src" => "Ver",
+                        "alt" => "ver",
+                        'url' => array('controller' => 'Partidos','action' => 'view', $partido->usuario_id),
+                        "class" => "icono"
+                    )); ?>
+                    <?php echo $this->Html->image("inscribir.png", array(
+                        "src" => "Inscribirse",
+                        "alt" => "inscribirse",
+                        'url' => array('action' => 'inscribirse', $partido->id_partido),
+                        "class" => "icono"
+                    )); ?>
+                    <?php echo $this->Form->postLink(
+                        $this->Html->image(
+                            "borrar.png",
+                            ["alt" => __('Delete')]
+                        ),
+                        ['action' => 'delete',  $partido->usuario_id],
+                        ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $partido->usuario_id)]
+                    )?>
                 </td>
             </tr>
             <?php endforeach; ?>
