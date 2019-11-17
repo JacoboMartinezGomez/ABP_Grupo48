@@ -112,7 +112,7 @@ class ParejasController extends AppController
             $query = $this->Parejas->find('all')->where(['campeonato_id =' => $campeonato_id, 'categoria_id =' => $categoria]);
             if($query->all()->count()==96){
                 $this->Flash->error(__('Esta categoría y nivel para este campeonato ya está llena.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
             }
 
             //Comprobacion de que el capitan no este ya inscrito
@@ -126,7 +126,7 @@ class ParejasController extends AppController
 
             if($query->all()->count()!=0){
                 $this->Flash->error(__('Ya estás inscrito en el campeonato'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
             }
 
 
