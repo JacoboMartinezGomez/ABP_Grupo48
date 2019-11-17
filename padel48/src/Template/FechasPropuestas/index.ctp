@@ -105,7 +105,13 @@ $this->Html->css(['css'])?>
                 endforeach; ?>
         </tbody>
     </table>
-
+    <div >
+    <?php echo $this->Html->image("round-add-button.png", array(
+                        "src" => "Proponer Hora",
+                        "alt" => "Proponer Hora",
+                        'url' => array('controller' => 'FechasPropuestas', 'action' => 'add', $enfrentamiento_id),
+                    )); ?>
+    </div>
 
     <h2><?= __('Fechas Propuestas por tu rival') ?></h2>
     <table cellpadding="0" cellspacing="0">
@@ -143,6 +149,5 @@ $this->Html->css(['css'])?>
             } endforeach; ?>
         </tbody>
     </table>
-
 </div>
 </div>
