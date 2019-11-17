@@ -107,7 +107,7 @@ $this->Html->css(['css'])
                             "class" => "icono"
                         )); ?>
                         
-                        <?php echo $this->Html->image("dados.png", array(
+                        <?php echo $this->Html->image("dado.png", array(
                             "src" => "GenerarPlayOf",
                             "alt" => "generarplayoff",
                             'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),

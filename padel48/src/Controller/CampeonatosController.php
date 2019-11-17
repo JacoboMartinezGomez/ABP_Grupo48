@@ -311,6 +311,7 @@ class CampeonatosController extends AppController
                                                                                                                                 'enfrentamiento_id' => $id
                                                                                                                                 ]);
             $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
+            $this->Flash->success(__('PlayOff generado correctamente'));
 
         }
         return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
