@@ -273,13 +273,40 @@ class CampeonatosController extends AppController
         $this->loadModel('ParejasDisputanEnfrentamiento');
         $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
         $grupos = $query->all()->toArray();
+
+        $numeroGrupos = count($grupos);
+        $parejasPorGrupo = round(8 / $numeroGrupos);
+        $contadorParejas = 0;
+        $parejasSeleccionadas = null;
         foreach($grupos as $grupo){
             $query = $this->Parejas->find('all')->where(['grupo_id =' => $grupo['id_grupo'],
                                                         'campeonato_id =' => $grupo['campeonato_id'],
-                                                        'categoria_id =' => $grupo['categoria_id']])->order(['puntuacion' => 'DESC']);
-            debug($query);
-            die;
+                                                        'categoria_id =' => $grupo['categoria_id']])->order(['puntuacion' => 'DESC'])->limit($parejasPorGrupo);
+            $parejas = $query->all()->toArray();
+            debug($parejas);
+            $numeroParejas = count($parejas);
+            for($i = 0; $i<$numeroParejas; $i++){
+                $parejasSeleccionadas[$contadorParejas] = $parejas[$i];
+                $contadorParejas++;
+            }
         }
+        debug($parejasSeleccionadas);
+
+
+//parejas de cada grupo ordenadas por puntuacion
+//playoff 8 parejas
+
+//hacer un count de grupos , una vez tengo numero de grupos, saber cuantas personas pasan de cada grupo
+//si los grupos son impares cojo doble del primero
+
+//si tengo mas de 8 grupos-> join grupos de una categoria ordenarlos por puntuacion y coger los 8 mejores
+
+
+
+
+
+
+
     }
 
 }

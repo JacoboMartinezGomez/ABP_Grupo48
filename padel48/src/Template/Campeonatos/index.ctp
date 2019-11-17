@@ -106,6 +106,13 @@ $this->Html->css(['css'])
                             'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
                             "class" => "icono"
                         )); ?>
+                        
+                        <?php echo $this->Html->image("dados.png", array(
+                            "src" => "GenerarPlayOf",
+                            "alt" => "generarplayoff",
+                            'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
+                            "class" => "icono"
+                        )); ?>
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
                                 "src" => "Inscribirse",
