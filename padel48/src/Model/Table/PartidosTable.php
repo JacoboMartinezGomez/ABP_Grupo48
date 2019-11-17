@@ -34,11 +34,10 @@ class PartidosTable extends Table
 
         $this->setTable('partidos');
         $this->setDisplayField('usuario_id');
-        $this->setPrimaryKey(['id_partido']);
+        $this->setPrimaryKey('id_partido');
 
         $this->belongsTo('Usuarios', [
-            'foreignKey' => 'usuario_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'usuario_id'
         ]);
     }
 
@@ -51,19 +50,28 @@ class PartidosTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
+            ->integer('id_partido')
+            ->allowEmptyString('id_partido', null, 'create');
+
+        $validator
             ->scalar('usuario_id2')
             ->maxLength('usuario_id2', 9)
-            ->allowEmptyString('usuario_id2', null, 'create');
+            ->allowEmptyString('usuario_id2');
 
         $validator
             ->scalar('usuario_id3')
             ->maxLength('usuario_id3', 9)
-            ->allowEmptyString('usuario_id3', null, 'create');
+            ->allowEmptyString('usuario_id3');
 
         $validator
             ->scalar('usuario_id4')
             ->maxLength('usuario_id4', 9)
-            ->allowEmptyString('usuario_id4', null, 'create');
+            ->allowEmptyString('usuario_id4');
+
+        $validator
+            ->date('fecha')
+            ->requirePresence('fecha', 'create')
+            ->notEmptyDate('fecha');
 
         $validator
             ->time('hora')
@@ -87,14 +95,6 @@ class PartidosTable extends Table
         return $rules;
     }
 
-    /**
-     * Returns Falso si el partido esta cerrado, es decir, tiene ya 4 inscritos y verdadero
-     * si tiene algun hueco libre y ha podido añadir al deportista
-     *
-     * @param $id_partido ID del partido a comprobar
-     * @param $dni dni del usuario a introducir
-     * @return bool
-     */
     public function addDeportista($id_partido, $dni){
         $partido = $this->get($id_partido);
 
@@ -135,3 +135,4 @@ class PartidosTable extends Table
 //            return false;
 //        }
 //    }
+
