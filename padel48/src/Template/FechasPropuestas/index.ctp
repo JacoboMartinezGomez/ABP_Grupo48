@@ -21,7 +21,7 @@ $this->Html->css(['css'])?>
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
@@ -30,7 +30,6 @@ $this->Html->css(['css'])?>
                     <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
                 </ul>
             </li>
-            <li><?= $this->Html->link(__('Categorias'), ['controller' => 'Categorias', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
                 <ul>
@@ -97,9 +96,9 @@ $this->Html->css(['css'])?>
                     )); ?>
                     <?php echo $this->Form->postLink(
                         $this->Html->image(
-                            "borrar.png", 
+                            "borrar.png",
                             ["alt" => __('Delete')]
-                        ), 
+                        ),
                         ['action' => 'delete',   $fechasPropuesta->id],
                         ['escape' => false, 'confirm' => __('¿Quieres eliminar la fecha {0}?',  $fechasPropuesta->id)]
                     )?>
