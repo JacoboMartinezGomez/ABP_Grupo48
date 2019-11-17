@@ -223,7 +223,7 @@ class CampeonatosController extends AppController
         }
         $this->generarPartidos($idCampeonato);
 
-        return $this->redirect(['controller' => 'grupos', 'action' => 'index']);
+        return $this->redirect(['controller' => 'grupos', 'action' => 'index', $idCampeonato]);
     }
 
     public function generarPartidos($idCampeonato){

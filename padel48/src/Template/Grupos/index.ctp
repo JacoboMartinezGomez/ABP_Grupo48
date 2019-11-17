@@ -70,7 +70,8 @@
             <?php foreach ($grupos as $grupo): ?>
             <tr>
                 <td><?= $this->Number->format($grupo->id_grupo) ?></td>
-                <td><?= $grupo->has('campeonato') ? $this->Html->link($grupo->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $grupo->campeonato->id_campeonato]) : '' ?></td>
+                <td><?= $this->Number->format($grupo->campeonato_id) ?></td>
+                <!--<td><?= $grupo->has('campeonato_id') ? $this->Html->link($grupo->campeonato_id, ['controller' => 'Campeonatos', 'action' => 'view', $grupo->campeonato_id]) : '' ?></td>-->
                 <td><?= $this->Number->format($grupo->categoria_id) ?></td>
                 <td class="actions">
                     <?php echo $this->Html->image("ver.png", array(
