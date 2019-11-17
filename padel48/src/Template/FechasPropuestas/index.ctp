@@ -108,6 +108,13 @@ $this->Html->css(['css'])?>
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <div >
+
+    <?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?>
+
+    </div>
+
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('primero')) ?>
