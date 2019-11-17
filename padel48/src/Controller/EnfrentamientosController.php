@@ -67,6 +67,7 @@ class EnfrentamientosController extends AppController
         ]);
 
         $this->set('enfrentamiento', $enfrentamiento);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -87,6 +88,7 @@ class EnfrentamientosController extends AppController
             $this->Flash->error(__('The enfrentamiento could not be saved. Please, try again.'));
         }
         $this->set(compact('enfrentamiento'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -111,6 +113,7 @@ class EnfrentamientosController extends AppController
             $this->Flash->error(__('The enfrentamiento could not be saved. Please, try again.'));
         }
         $this->set(compact('enfrentamiento'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -129,6 +132,7 @@ class EnfrentamientosController extends AppController
         } else {
             $this->Flash->error(__('The enfrentamiento could not be deleted. Please, try again.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

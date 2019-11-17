@@ -106,14 +106,6 @@ $this->Html->css(['css'])
                                 'url' => array('action' => 'edit', $campeonato->id_campeonato),
                                 "class" => "icono"
                             )); ?>
-                            <?php echo $this->Form->postLink(
-                                $this->Html->image(
-                                    "borrar.png",
-                                    ["alt" => __('Delete')]
-                                ),
-                                ['action' => 'delete',  $campeonato->id_campeonato],
-                                ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $campeonato->id_campeonato)]
-                            )?>
                             <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
                             <?php if(!$campeonato['gruposGenerados'] && !$campeonato['playoffsGenerados']){ ?>
                                 <?php echo $this->Html->image("generar.png", array(

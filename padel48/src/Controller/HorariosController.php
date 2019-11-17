@@ -45,6 +45,7 @@ class HorariosController extends AppController
         ]);
 
         $this->set('horario', $horario);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -96,6 +97,7 @@ class HorariosController extends AppController
         }
         $pistas = $this->Horarios->Pistas->find('list', ['limit' => 200]);
         $this->set(compact('horario', 'pistas'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

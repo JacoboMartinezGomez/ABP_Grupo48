@@ -43,6 +43,7 @@ class CampeonatosController extends AppController
         ]);
 
         $this->set('campeonato', $campeonato);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -86,6 +87,7 @@ class CampeonatosController extends AppController
             }
         }
         $this->set(compact('campeonato'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -110,6 +112,7 @@ class CampeonatosController extends AppController
             $this->Flash->error(__('The campeonato could not be saved. Please, try again.'));
         }
         $this->set(compact('campeonato'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -128,6 +131,7 @@ class CampeonatosController extends AppController
         } else {
             $this->Flash->error(__('The campeonato could not be deleted. Please, try again.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

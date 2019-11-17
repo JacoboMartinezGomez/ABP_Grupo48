@@ -56,7 +56,7 @@
     list-style-type:none;
     position:relative;
     }
-              
+
 .menu li a {
     color: white;
     text-align: center;
@@ -72,14 +72,14 @@
     color:#000;
     background-color:#79DB56;
 }
-    
+
 .nav li ul{
     display:none;
     position:absolute;
     top:0px;
     left:138px;
 }
-            
+
 .nav li:hover ul{
     display:block;
 }
@@ -97,6 +97,11 @@
     width: 80%;
     float: left;
     margin: 25px;
+}
+
+.showVista button{
+    float: right;
+    margin-right: 20px;
 }
 
 .container{
@@ -127,7 +132,7 @@
 #menuInicio  li {
     float: left;
 }
-  
+
 #menuInicio li a {
     display: block;
     color: white;
@@ -135,7 +140,7 @@
     padding: 14px 16px;
     text-decoration: none;
 }
-  
+
 #menuInicio li a:hover {
     background-color: #79DB56;
 }

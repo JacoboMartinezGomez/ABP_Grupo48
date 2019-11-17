@@ -68,12 +68,12 @@
 
     <?= $this->Form->create($partido) ?>
     <fieldset>
-        <legend><?= __('Add Partido') ?></legend>
+        <legend><?= __('Añadir partido') ?></legend>
         <?php
             echo $this->Form->control('hora', ['options' => $hora_inicio]);
             echo $this->Form->control('fecha', ['minYear' => date('Y'), 'maxYear' => date('Y')]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Enviar')) ?>
     <?= $this->Form->end() ?>
 </div>

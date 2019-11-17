@@ -77,6 +77,7 @@ class UsuariosController extends AppController
         ]);
 
         $this->set('usuario', $usuario);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -98,6 +99,7 @@ class UsuariosController extends AppController
             $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
         }
         $this->set(compact('usuario'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -126,6 +128,7 @@ class UsuariosController extends AppController
             $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
         }
         $this->set(compact('usuario'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -149,6 +152,7 @@ class UsuariosController extends AppController
             $this->Flash->error(__('The usuario could not be deleted. Please, try again.'));
         }
 
+        $this->set('user', $this->Auth->user());
         return $this->redirect(['action' => 'index']);
     }
 

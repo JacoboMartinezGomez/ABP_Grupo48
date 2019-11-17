@@ -80,20 +80,12 @@
         <tbody>
             <?php foreach ($partidos as $partido): ?>
             <tr>
-                <td><?= $partido->has('usuario') ? $this->Html->link($partido->usuario->dni, ['controller' => 'Usuarios', 'action' => 'view', $partido->usuario->dni]) : '' ?></td>
+                <td><?= h($partido->usuario_id) ?></td>
                 <td><?= h($partido->usuario_id2) ?></td>
                 <td><?= h($partido->usuario_id3) ?></td>
                 <td><?= h($partido->usuario_id4) ?></td>
                 <td><?= h($partido->hora) ?></td>
                 <td class="actions">
-                <?php if ($user['rol'] == 'ADMIN'){?>
-                    <?php echo $this->Html->image("ver.png", array(
-                        "src" => "Ver",
-                        "alt" => "ver",
-                        'url' => array('controller' => 'Partidos','action' => 'view', $partido->usuario_id),
-                        "class" => "icono"
-                    )); ?>
-                <?php }; ?>
                 <?php echo $this->Html->image("inscribir.png", array(
                     "src" => "Inscribirse",
                     "alt" => "inscribirse",

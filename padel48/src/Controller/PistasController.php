@@ -39,6 +39,7 @@ class PistasController extends AppController
         ]);
 
         $this->set('pista', $pista);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -80,6 +81,7 @@ class PistasController extends AppController
             $this->Flash->error(__('No se ha podido guardar la pista. Intentelo de nuevo'));
         }
         $this->set(compact('pista'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -113,6 +115,7 @@ class PistasController extends AppController
             }
         }
         $this->set(compact('pista'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -136,6 +139,7 @@ class PistasController extends AppController
         } else {
             $this->Flash->error(__('No se ha podido borrar la pista. Intentelo de nuevo.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }
