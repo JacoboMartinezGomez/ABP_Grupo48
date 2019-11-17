@@ -124,13 +124,13 @@ class ReservasController extends AppController
         $this->loadModel('Usuarios');
 
         $this->request->allowMethod(['post', 'delete']);
-        $reserva = $this->Reservas->newEntity();
 
-        $reserva->id_usuario = $this->request->getQuery('id_usuario');
-        $reserva->pista_id = $this->request->getQuery('pista');
-        $reserva->hora = $this->request->getQuery('hora');
-        $reserva->fecha = $this->request->getQuery('fecha');
-        
+        $id_usuario = $this->request->getQuery('id_usuario');
+        $pista_id = $this->request->getQuery('pista');
+        $hora = $this->request->getQuery('hora');
+        $fecha = $this->request->getQuery('fecha');
+        $reservaEliminar = $this->Reservas->find('all')->where(['id_usuario ='=>$id_usuario, 'pista_id ='=>$pista_id, 'hora ='=>$hora, 'fecha ='=>$fecha['date']])->first();
+        debug($reservaEliminar);
 
 //        $res = $this->Reservas->find('all')
 //                                ->where([
@@ -140,8 +140,8 @@ class ReservasController extends AppController
 //                                    'fecha' => $reserva->fecha,
 //                                    ]);
 
-        if ($this->Reservas->delete($reserva)) {
-            $usuario = $this->Usuarios->find('all')->where(['dni' => $reserva->id_usuario])->first();
+        if ($this->Reservas->delete($reservaEliminar)) {
+            $usuario = $this->Usuarios->find('all')->where(['dni' => $id_usuario])->first();
             $usuario->numero_pistas = $usuario->numero_pistas - 1;
             $this->Usuarios->save($usuario);
             $this->Flash->success(__('La reserva fue eliminada.'));
