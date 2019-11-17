@@ -131,7 +131,7 @@ class ReservasController extends AppController
         $hora = $this->request->getQuery('hora');
         $fecha = $this->request->getQuery('fecha');
         $reservaEliminar = $this->Reservas->find('all')->where(['id_usuario ='=>$id_usuario, 'pista_id ='=>$pista_id, 'hora ='=>$hora, 'fecha ='=>$fecha['date']])->first();
-        debug($reservaEliminar);
+        //debug($reservaEliminar);
 
 //        $res = $this->Reservas->find('all')
 //                                ->where([

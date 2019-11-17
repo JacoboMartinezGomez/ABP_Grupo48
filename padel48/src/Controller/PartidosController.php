@@ -50,7 +50,7 @@ class PartidosController extends AppController
     public function add()
     {
         if(!$this->isAuthorized($this->Auth->user())){
-            debug($this->Auth->user());
+            //debug($this->Auth->user());
             die;
             $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
             return $this->redirect(['action' => 'index']);
@@ -132,7 +132,7 @@ class PartidosController extends AppController
                 $partido = $this->Partidos->get($id_partido);
                 $reservasController = new ReservasController();
                 $horaInt = date('H:i:s', strtotime($partido->hora));
-                debug($partido);
+                //debug($partido);
                 $aux = $this->getHorasPistaInverso();
                 if($partido->usuario_id != null && $partido->usuario_id2 != null && $partido->usuario_id3 != null && $partido->usuario_id4 != null){
                     if($reservasController->hayPistaDisponible($partido->fecha, $aux[$horaInt])){
