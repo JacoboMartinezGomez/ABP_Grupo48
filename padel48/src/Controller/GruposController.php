@@ -19,7 +19,8 @@ class GruposController extends AppController
      */
     public function index($campeonato_id)
     {
-        $query = $this->Grupos->find()
+
+        /*$query = $this->Grupos->find()
                         ->join(['table' => 'parejas',
                                 'type' => 'INNER',
                                 'alias' => 'p',
@@ -31,7 +32,9 @@ class GruposController extends AppController
                                                     ['p.id_pareja' =>$this->Auth->user('dni')]
                                                 ]]
                             ]);
+*/
 
+        $query = $this->Grupos->find('all')->where(['campeonato_id' => $campeonato_id]);
         $this->set('grupos', $this->paginate($query));
     }
 

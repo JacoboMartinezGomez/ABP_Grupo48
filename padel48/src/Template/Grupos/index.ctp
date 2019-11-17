@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-</header> 
+</header>
 <div class = "container">
     <nav class="menu">
         <ul class = "nav">
@@ -37,7 +37,7 @@
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
-            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?> 
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
                 </ul>
@@ -69,7 +69,8 @@
             <?php foreach ($grupos as $grupo): ?>
             <tr>
                 <td><?= $this->Number->format($grupo->id_grupo) ?></td>
-                <td><?= $grupo->has('campeonato') ? $this->Html->link($grupo->campeonato->id_campeonato, ['controller' => 'Campeonatos', 'action' => 'view', $grupo->campeonato->id_campeonato]) : '' ?></td>
+                <td><?= $this->Number->format($grupo->campeonato_id) ?></td>
+                <!--<td><?= $grupo->has('campeonato_id') ? $this->Html->link($grupo->campeonato_id, ['controller' => 'Campeonatos', 'action' => 'view', $grupo->campeonato_id]) : '' ?></td>-->
                 <td><?= $this->Number->format($grupo->categoria_id) ?></td>
                 <td class="actions">
                     <?php echo $this->Html->image("ver.png", array(
