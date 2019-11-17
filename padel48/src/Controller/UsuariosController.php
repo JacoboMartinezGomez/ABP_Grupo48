@@ -52,6 +52,11 @@ class UsuariosController extends AppController
      */
     public function index()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $usuarios = $this->paginate($this->Usuarios);
 
         $this->set(compact('usuarios'));
@@ -132,6 +137,10 @@ class UsuariosController extends AppController
      */
     public function delete($id = null)
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->request->allowMethod(['post', 'delete']);
         $usuario = $this->Usuarios->get($id);
         if ($this->Usuarios->delete($usuario)) {
