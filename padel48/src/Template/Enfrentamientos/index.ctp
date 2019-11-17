@@ -41,8 +41,8 @@ $this->Html->css(['css'])?>
                 </ul>
             <?php }; ?>
             </li>
-            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
             <?php if ($user['rol'] == 'ADMIN'){?>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
@@ -101,20 +101,23 @@ $this->Html->css(['css'])?>
                         'url' => array('controller' => 'FechasPropuestas', 'action' => 'index', $enfrentamiento->enfrentamientos['id_enfrentamiento']),
                         "class" => "icono"
                     )); ?>
-                    <?php echo $this->Html->image("marcador.png", array(
-                        "src" => "Añadir Resultado",
-                        "alt" => "anhadirResultado",
-                        'url' => array('controller' => 'Enfrentamientos', 'action' => 'introducirResultado', $enfrentamiento->enfrentamientos['id_enfrentamiento']),
-                        "class" => "icono"
-                    )); ?>
-                    <?php echo $this->Form->postLink(
-                            $this->Html->image(
-                                "borrar.png",
-                                ["alt" => __('Delete')]
-                            ),
-                            ['action' => 'delete',   $enfrentamiento->id_enfrentamiento],
-                            ['escape' => false, 'confirm' => __('¿Quieres eliminar el enfrentamiento {0}?',  $enfrentamiento->enfrentamientos['id_enfrentamiento'])]
-                    )?>
+                    
+                    <?php if ($user['rol'] == 'ADMIN'){?>
+                        <?php echo $this->Html->image("marcador.png", array(
+                            "src" => "Añadir Resultado",
+                            "alt" => "anhadirResultado",
+                            'url' => array('controller' => 'Enfrentamientos', 'action' => 'introducirResultado', $enfrentamiento->enfrentamientos['id_enfrentamiento']),
+                            "class" => "icono"
+                        )); ?>
+                        <?php echo $this->Form->postLink(
+                                $this->Html->image(
+                                    "borrar.png",
+                                    ["alt" => __('Delete')]
+                                ),
+                                ['action' => 'delete',   $enfrentamiento->id_enfrentamiento],
+                                ['escape' => false, 'confirm' => __('¿Quieres eliminar el enfrentamiento {0}?',  $enfrentamiento->enfrentamientos['id_enfrentamiento'])]
+                        )?>
+                    <?php }; ?>
                 </td>
             </tr>
             <?php endforeach; ?>

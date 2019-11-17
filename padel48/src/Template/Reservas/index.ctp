@@ -40,8 +40,8 @@ $this->Html->css(['css'])?>
                 </ul>
             <?php }; ?>
             </li>
-            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
             <?php if ($user['rol'] == 'ADMIN'){?>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
@@ -79,7 +79,9 @@ $this->Html->css(['css'])?>
                 <th scope="col"><?= $this->Paginator->sort('id_pista') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
-                <th scope="col" class="actions"><?= __('Acciones') ?></th>
+                <?php if ($user['rol'] == 'ADMIN'){?>
+                    <th scope="col" class="actions"><?= __('Acciones') ?></th>
+                <?php }; ?>
             </tr>
         </thead>
         <tbody>
@@ -89,16 +91,18 @@ $this->Html->css(['css'])?>
                 <td><?= $this->Number->format($reserva->pista_id) ?></td>
                 <td><?= date('H:i', strtotime($horas[$reserva->hora])) ?></td>
                 <td><?= h($reserva->fecha) ?></td>
-                <td class="actions">
-                    <?php echo $this->Form->postLink(
-                            $this->Html->image(
-                                "borrar.png",
-                                ["alt" => __('Delete')]
-                            ),
-                            ['action' => 'delete', '?' => ['id_usuario' => $reserva->id_usuario, 'pista' => $reserva->pista_id, 'hora' => $reserva->hora, 'fecha' => $reserva->fecha]],
-                            ['escape' => false, 'confirm' => __('¿Quieres eliminar la reserva del usuario {0}?',  $reserva->id_usuario)]
-                        )?>
-                </td>
+                <?php if ($user['rol'] == 'ADMIN'){?>
+                    <td class="actions">
+                        <?php echo $this->Form->postLink(
+                                $this->Html->image(
+                                    "borrar.png",
+                                    ["alt" => __('Delete')]
+                                ),
+                                ['action' => 'delete', '?' => ['id_usuario' => $reserva->id_usuario, 'pista' => $reserva->pista_id, 'hora' => $reserva->hora, 'fecha' => $reserva->fecha]],
+                                ['escape' => false, 'confirm' => __('¿Quieres eliminar la reserva del usuario {0}?',  $reserva->id_usuario)]
+                            )?>
+                    </td>
+                <?php }; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>

@@ -40,8 +40,8 @@ $this->Html->css(['css'])?>
                 </ul>
             <?php }; ?>
             </li>
-            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
             <?php if ($user['rol'] == 'ADMIN'){?>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
@@ -73,14 +73,16 @@ $this->Html->css(['css'])?>
     <div class="showVista" id="horarios">
     <div id="cabeceraHorario">
         <h2><?= __('Horarios') ?> </h2>
-        <div id="iconoHorario">
-            <?php echo $this->Html->image("editar.png", array(
-                "src" => "Editar",
-                "alt" => "editar",
-                'url' => array('action' => 'edit'),
-                "class" => "icono"
-            )); ?>
-        </div>
+        <?php if ($user['rol'] == 'ADMIN'){?>
+            <div id="iconoHorario">
+                <?php echo $this->Html->image("editar.png", array(
+                    "src" => "Editar",
+                    "alt" => "editar",
+                    'url' => array('action' => 'edit'),
+                    "class" => "icono"
+                )); ?>
+            </div>
+        <?php }; ?>
     </div>
     <table cellpadding="0" cellspacing="0">
         <thead>

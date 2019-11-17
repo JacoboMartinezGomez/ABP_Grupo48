@@ -40,8 +40,8 @@ $this->Html->css(['css'])?>
                 </ul>
             <?php }; ?>
             </li>
-            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
             <?php if ($user['rol'] == 'ADMIN'){?>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
@@ -78,7 +78,9 @@ $this->Html->css(['css'])?>
                 <th scope="col"><?= $this->Paginator->sort('num_pista') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('tipo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('lugar') ?></th>
-                <th scope="col" class="actions"><?= __('Acciones') ?></th>
+                <?php if ($user['rol'] == 'ADMIN'){?>
+                    <th scope="col" class="actions"><?= __('Acciones') ?></th>
+                <?php }; ?>
             </tr>
         </thead>
         <tbody>
@@ -87,22 +89,25 @@ $this->Html->css(['css'])?>
                 <td><?= $this->Number->format($pista->num_pista) ?></td>
                 <td><?= h($pista->tipo) ?></td>
                 <td><?= h($pista->lugar) ?></td>
-                <td class="actions">
-                    <?php echo $this->Html->image("editar.png", array(
-                        "src" => "Editar",
-                        "alt" => "editar",
-                        'url' => array('action' => 'edit', $pista->num_pista),
-                        "class" => "icono"
-                    )); ?>
-                    <?php echo $this->Form->postLink(
-                            $this->Html->image(
-                                "borrar.png",
-                                ["alt" => __('Delete')]
-                            ),
-                            ['action' => 'delete',   $pista->num_pista],
-                            ['escape' => false, 'confirm' => __('¿Quieres eliminar la pista número {0}?',  $pista->num_pista)]
-                    )?>
-                </td>
+                <?php if ($user['rol'] == 'ADMIN'){?>   
+                    
+                    <td class="actions">
+                        <?php echo $this->Html->image("editar.png", array(
+                            "src" => "Editar",
+                            "alt" => "editar",
+                            'url' => array('action' => 'edit', $pista->num_pista),
+                            "class" => "icono"
+                        )); ?>
+                        <?php echo $this->Form->postLink(
+                                $this->Html->image(
+                                    "borrar.png",
+                                    ["alt" => __('Delete')]
+                                ),
+                                ['action' => 'delete',   $pista->num_pista],
+                                ['escape' => false, 'confirm' => __('¿Quieres eliminar la pista número {0}?',  $pista->num_pista)]
+                        )?>
+                    </td>
+                <?php }; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>

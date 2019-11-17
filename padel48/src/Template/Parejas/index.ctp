@@ -40,8 +40,8 @@ $this->Html->css(['css'])?>
                 </ul>
             <?php }; ?>
             </li>
-            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
             <?php if ($user['rol'] == 'ADMIN'){?>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
@@ -83,7 +83,9 @@ $this->Html->css(['css'])?>
                 <th scope="col"><?= $this->Paginator->sort('categoria_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('puntuacion') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('clasificado') ?></th>
-                <th scope="col" class="actions"><?= __('Acciones') ?></th>
+                <?php if ($user['rol'] == 'ADMIN'){?>
+                    <th scope="col" class="actions"><?= __('Acciones') ?></th>
+                <?php }; ?>
             </tr>
         </thead>
         <tbody>
@@ -97,16 +99,18 @@ $this->Html->css(['css'])?>
                 <td><?= $pareja->has('categoria') ? $this->Html->link($pareja->categoria->campeonato_id, ['controller' => 'Categorias', 'action' => 'view', $pareja->categoria->campeonato_id]) : '' ?></td>
                 <td><?= $this->Number->format($pareja->puntuacion) ?></td>
                 <td><?= h($pareja->clasificado) ?></td>
-                <td class="actions">
-                    <?php echo $this->Form->postLink(
-                            $this->Html->image(
-                                "borrar.png",
-                                ["alt" => __('Delete')]
-                            ),
-                            ['action' => 'delete',   $pareja->id_capitan],
-                            ['escape' => false, 'confirm' => __('¿Quieres eliminar la pareja {0}?',  $pareja->id_capitan)]
-                        )?>
-                </td>
+                <?php if ($user['rol'] == 'ADMIN'){?>
+                    <td class="actions">
+                        <?php echo $this->Form->postLink(
+                                $this->Html->image(
+                                    "borrar.png",
+                                    ["alt" => __('Delete')]
+                                ),
+                                ['action' => 'delete',   $pareja->id_capitan],
+                                ['escape' => false, 'confirm' => __('¿Quieres eliminar la pareja {0}?',  $pareja->id_capitan)]
+                            )?>
+                    </td>
+                <?php }; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>

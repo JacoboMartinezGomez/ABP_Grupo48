@@ -40,8 +40,8 @@ $this->Html->css(['css'])?>
                 </ul>
             <?php }; ?>
             </li>
-            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
             <?php if ($user['rol'] == 'ADMIN'){?>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
@@ -96,6 +96,8 @@ $this->Html->css(['css'])?>
                         'url' => array('action' => 'view', $noticia->id_noticia),
                         "class" => "icono"
                     )); ?>
+                    
+                <?php if ($user['rol'] == 'ADMIN'){?>
                     <?php echo $this->Html->image("editar.png", array(
                         "src" => "editar",
                         "alt" => "editar",
@@ -110,6 +112,7 @@ $this->Html->css(['css'])?>
                         ['action' => 'delete',   $noticia->id_noticia],
                         ['escape' => false, 'confirm' => __('¿Quieres eliminar la noticia {0}?',  $noticia->id_noticia)]
                     )?>
+                <?php }; ?>
                 </td>
             </tr>
             <?php endforeach; ?>
