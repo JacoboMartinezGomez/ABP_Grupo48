@@ -27,6 +27,7 @@ class ReservasController extends AppController
 
         $this->set('horas', $this->getHorasPistaEntero());
         $this->set('reservas', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

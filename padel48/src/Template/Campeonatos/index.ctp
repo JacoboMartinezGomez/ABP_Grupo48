@@ -30,20 +30,26 @@ $this->Html->css(['css'])
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
             <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
@@ -52,14 +58,18 @@ $this->Html->css(['css'])
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
+            <?php if ($user['rol'] = 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Cerrar sesión'), ['controller' => 'Usuarios', 'action' => 'logout']) ?></li>
         </ul>
@@ -88,38 +98,40 @@ $this->Html->css(['css'])
                             'url' => array('controller' => 'Grupos','action' => 'index', $campeonato->id_campeonato),
                             "class" => "icono"
                         )); ?>
-                        <?php if ($user['rol'] = 'ADMIN'){?>
-                        <?php echo $this->Html->image("editar.png", array(
-                            "src" => "Editar",
-                            "alt" => "editar",
-                            'url' => array('action' => 'edit', $campeonato->id_campeonato),
-                            "class" => "icono"
-                        )); ?>
-                        <?php echo $this->Form->postLink(
-                            $this->Html->image(
-                                "borrar.png",
-                                ["alt" => __('Delete')]
-                            ),
-                            ['action' => 'delete',  $campeonato->id_campeonato],
-                            ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $campeonato->id_campeonato)]
-                        )?>
-                        <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
-                        <?php if(!$campeonato['gruposGenerados']){ ?>
-                            <?php echo $this->Html->image("generar.png", array(
-                                "src" => "Generar",
-                                "alt" => "generar",
-                                'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
-                                "class" => "icono"
-                            ));} ?>
 
-                        <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
-                        <?php if(!$campeonato['gruposGenerados']){ ?>
-                            <?php echo $this->Html->image("dado.png", array(
-                                "src" => "GenerarPlayOf",
-                                "alt" => "generarplayoff",
-                                'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
+                        <?php if ($user['rol'] = 'ADMIN'){?>
+                            <?php echo $this->Html->image("editar.png", array(
+                                "src" => "Editar",
+                                "alt" => "editar",
+                                'url' => array('action' => 'edit', $campeonato->id_campeonato),
                                 "class" => "icono"
-                            ));} ?>
+                            )); ?>
+                            <?php echo $this->Form->postLink(
+                                $this->Html->image(
+                                    "borrar.png",
+                                    ["alt" => __('Delete')]
+                                ),
+                                ['action' => 'delete',  $campeonato->id_campeonato],
+                                ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $campeonato->id_campeonato)]
+                            )?>
+                            <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
+                            <?php if(!$campeonato['gruposGenerados']){ ?>
+                                <?php echo $this->Html->image("generar.png", array(
+                                    "src" => "Generar",
+                                    "alt" => "generar",
+                                    'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
+                                    "class" => "icono"
+                                ));} ?>
+
+                            <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
+                            <?php if(!$campeonato['playoffsGenerados']){ ?>
+                                <?php echo $this->Html->image("dado.png", array(
+                                    "src" => "GenerarPlayOf",
+                                    "alt" => "generarplayoff",
+                                    'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
+                                    "class" => "icono"
+                                ));} ?>
+                        <?php }; ?>
 
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
@@ -127,13 +139,14 @@ $this->Html->css(['css'])
                                 "alt" => "inscribirse",
                                 'url' => array('action' => '../parejas/add', $campeonato->id_campeonato),
                                 "class" => "icono"
-                            ));} ?>
+                            )); ?>
+                        <?php
+                        };
+                        ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-
-
     </div>
 </div>

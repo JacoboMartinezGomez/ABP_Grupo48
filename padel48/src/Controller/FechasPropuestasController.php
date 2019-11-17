@@ -31,6 +31,7 @@ class FechasPropuestasController extends AppController
         $this->set('fechasPropuestas', $this->paginate($query));
         $this->set('dniUser', $this->Auth->user('dni'));
         $this->set('enfrentamiento_id', $id);
+        $this->set('user', $this->Auth->user());
     }
 
     /**

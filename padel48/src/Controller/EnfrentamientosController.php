@@ -50,6 +50,7 @@ class EnfrentamientosController extends AppController
 //            ['p.id_capitan2' => $this->Auth->user('dni')]] ]
 
         $this->set('enfrentamientos', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

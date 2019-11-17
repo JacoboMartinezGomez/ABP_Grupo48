@@ -22,6 +22,7 @@ class PistasController extends AppController
         $pistas = $this->paginate($this->Pistas);
 
         $this->set(compact('pistas'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
