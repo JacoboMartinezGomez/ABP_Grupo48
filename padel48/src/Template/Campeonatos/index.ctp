@@ -114,7 +114,7 @@ $this->Html->css(['css'])
                             ));} ?>
 
                         <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
-                        <?php if(!$campeonato['gruposGenerados']){ ?>
+                        <?php if(!$campeonato['playoffsGenerados']){ ?>
                             <?php echo $this->Html->image("dado.png", array(
                                 "src" => "GenerarPlayOf",
                                 "alt" => "generarplayoff",
