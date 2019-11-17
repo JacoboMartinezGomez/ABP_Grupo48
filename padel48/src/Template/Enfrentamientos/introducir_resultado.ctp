@@ -4,19 +4,57 @@
  * @var \App\Model\Entity\Enfrentamiento $enfrentamiento
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Enfrentamientos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Grupos'), ['controller' => 'Grupos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Grupo'), ['controller' => 'Grupos', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Fechas Propuestas'), ['controller' => 'FechasPropuestas', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Fechas Propuesta'), ['controller' => 'FechasPropuestas', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Parejas Disputan Enfrentamiento'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Parejas Disputan Enfrentamiento'), ['controller' => 'Parejasdisputanenfrentamiento', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="enfrentamientos form large-9 medium-8 columns content">
+
+<header>
+    <div id="head">
+        <div id="logoWeb">
+            <?php echo $this->Html->image('padel.png', ['alt' => 'palaPadel']);?>
+            <div id="nombreWeb">
+                <div class="letrasLogo">ádel</div>
+                <div class="numeroLogo">48</div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class = "container">
+    <nav class="menu"><ul class = "nav">
+            <li class="heading"></li>
+            <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Reservar pista'), ['controller' => 'Reservas','action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
+                <ul>
+                    <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
+                </ul>
+            </li>
+            <li><?= $this->Html->link(__('Cerrar sesión'), ['controller' => 'Usuarios', 'action' => 'logout']) ?></li>
+        </ul>
+    </nav>
+    <div class="showVista" id="introducirResultados">
     <?= $this->Form->create() ?>
     <fieldset>
         <legend><?= __('Introduce resultado') ?></legend>
@@ -24,6 +62,7 @@
         echo $this->Form->control('resultado');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Enviar')) ?>
     <?= $this->Form->end() ?>
+    </div>
 </div>
