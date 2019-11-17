@@ -50,6 +50,10 @@ class NoticiasController extends AppController
      */
     public function add()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         //Obtener el usuario actual
         $currentUser = null;
         $this->set('userId', $this->Auth->user('dni'));

@@ -48,6 +48,11 @@ class CampeonatosController extends AppController
      */
     public function add()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+        
         $campeonato = $this->Campeonatos->newEntity();
         if ($this->request->is('post')) {
             $campeonato = $this->Campeonatos->patchEntity($campeonato, $this->request->getData());
@@ -253,7 +258,7 @@ class CampeonatosController extends AppController
                                                                                                                                         'id_pareja2' => $parejas[$keys[$j]]['id'],
                                                                                                                                         'enfrentamiento_id' => $id
                                                                                                                                         ]);
-                    
+
                     $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
 
                 }
