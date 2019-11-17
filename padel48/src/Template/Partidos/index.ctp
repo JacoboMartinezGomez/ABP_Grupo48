@@ -79,7 +79,8 @@
                 <td><?= h($partido->hora->format('H:i')) ?></td>
                 <td><?= h($partido->fecha) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $partido->usuario_id]) ?>
+                    <?= $this->Html->link(__('Inscribirse'), ['action' => 'inscribirse', $partido->usuario_id])?>
+                    <?= $this->Html->link(__('Desinscribirse'), ['action' => 'desinscribirse', $partido->usuario_id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $partido->usuario_id], ['confirm' => __('Are you sure you want to delete # {0}?', $partido->usuario_id)]) ?>
                 </td>
             </tr>
