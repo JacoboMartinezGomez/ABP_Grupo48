@@ -277,36 +277,43 @@ class CampeonatosController extends AppController
         $numeroGrupos = count($grupos);
         $parejasPorGrupo = round(8 / $numeroGrupos);
         $contadorParejas = 0;
-        $parejasSeleccionadas = null;
+        $parejasSeleccionadas[0] = "";
         foreach($grupos as $grupo){
             $query = $this->Parejas->find('all')->where(['grupo_id =' => $grupo['id_grupo'],
                                                         'campeonato_id =' => $grupo['campeonato_id'],
                                                         'categoria_id =' => $grupo['categoria_id']])->order(['puntuacion' => 'DESC'])->limit($parejasPorGrupo);
             $parejas = $query->all()->toArray();
-            debug($parejas);
             $numeroParejas = count($parejas);
             for($i = 0; $i<$numeroParejas; $i++){
                 $parejasSeleccionadas[$contadorParejas] = $parejas[$i];
                 $contadorParejas++;
             }
         }
-        debug($parejasSeleccionadas);
+        foreach ($parejasSeleccionadas as $key => $row) {
+            $aux[$key] = $row['puntuacion'];
+        }
+        array_multisort($aux, SORT_DESC, $parejasSeleccionadas);
+        $numeroParejasSeleccionadas = count($parejasSeleccionadas);
+        if($numeroParejasSeleccionadas > 8){
+            $parejasSeleccionadas = array_slice($parejasSeleccionadas, 0, 8);
+        }
+        $contadorPareja2 = 7;
 
+        for($i = 0; $i < 4; $i++){            
+            $enfrentamiento = $this->Enfrentamientos->newEntity();
+            $enfrentamiento = $this->Enfrentamientos->patchEntity($enfrentamiento, ['grupo_id' => $parejasSeleccionadas[$i]['grupo_id'],
+                'fase' => 2]);
+            $id = $this->Enfrentamientos->save($enfrentamiento)['id_enfrentamiento'];
+            $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
+            $parejasDisputanEnfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($parejasDisputanEnfrentamiento, [
+                                                                                                                                'id_pareja1' => $parejasSeleccionadas[$i]['id'],
+                                                                                                                                'id_pareja2' => $parejasSeleccionadas[$contadorPareja2-$i]['id'],
+                                                                                                                                'enfrentamiento_id' => $id
+                                                                                                                                ]);
+            $this->ParejasDisputanEnfrentamiento->save($parejasDisputanEnfrentamiento);
 
-//parejas de cada grupo ordenadas por puntuacion
-//playoff 8 parejas
-
-//hacer un count de grupos , una vez tengo numero de grupos, saber cuantas personas pasan de cada grupo
-//si los grupos son impares cojo doble del primero
-
-//si tengo mas de 8 grupos-> join grupos de una categoria ordenarlos por puntuacion y coger los 8 mejores
-
-
-
-
-
-
-
+        }
+        return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
     }
 
 }
