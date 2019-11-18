@@ -74,15 +74,14 @@ class NoticiasController extends AppController
                     'className' => 'Smtp'
                 ]);
 
-                $correos = $this->Usuarios->find()->extract('email');
+                /*$correos = $this->Usuarios->find()->extract('email');
                 $array = [];
                 foreach($correos as $correo){
                     $array[$correo] = $correo;
-                }
+                }*/
                 $email = new Email('default');
                 $email->setFrom(['abppadel48@gmail.com'])
-                    ->setTo('ferodrigueza1998@gmail.com')
-                    ->addBcc($array)
+                    ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
                     ->setSubject($noticia->titulo)
                     ->setTransport('gmail')
                     ->send($noticia->contenido);
