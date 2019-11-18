@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Mailer\Email;
+use Cake\Mailer\TransportFactory;
 
 /**
  * Noticias Controller
@@ -50,6 +52,12 @@ class NoticiasController extends AppController
      */
     public function add()
     {
+
+        $this->loadModel('Usuarios');
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         //Obtener el usuario actual
         $currentUser = null;
         $this->set('userId', $this->Auth->user('dni'));
@@ -57,6 +65,27 @@ class NoticiasController extends AppController
         if ($this->request->is('post')) {
             $noticia = $this->Noticias->patchEntity($noticia, $this->request->getData());
             if ($this->Noticias->save($noticia)) {
+                // Sample SMTP configuration.
+                TransportFactory::setConfig('gmail', [
+                    'host' => 'ssl://smtp.gmail.com',
+                    'port' => 465,
+                    'username' => 'abppadel48@gmail.com',
+                    'password' => 'wgfnullmyiffvuzi',
+                    'className' => 'Smtp'
+                ]);
+
+                $correos = $this->Usuarios->find()->extract('email');
+                $array = [];
+                foreach($correos as $correo){
+                    $array[$correo] = $correo;
+                }
+                $email = new Email('default');
+                $email->setFrom(['abppadel48@gmail.com'])
+                    ->setTo('ferodrigueza1998@gmail.com')
+                    ->addBcc($array)
+                    ->setSubject($noticia->titulo)
+                    ->setTransport('gmail')
+                    ->send($noticia->contenido);
                 $this->Flash->success(__('La noticia ha sido publicada.'));
 
                 return $this->redirect(['action' => 'index']);
