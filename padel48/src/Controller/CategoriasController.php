@@ -23,8 +23,8 @@ class CategoriasController extends AppController
             'contain' => ['Campeonatos']
         ];
         $categorias = $this->paginate($this->Categorias);
-
         $this->set(compact('categorias'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -41,6 +41,7 @@ class CategoriasController extends AppController
         ]);
 
         $this->set('categoria', $categoria);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -62,6 +63,7 @@ class CategoriasController extends AppController
         }
         $campeonatos = $this->Categorias->Campeonatos->find('list', ['limit' => 200]);
         $this->set(compact('categoria', 'campeonatos'));
+        $this->set('user', $this->Auth->user());
     }
 
     public function anhadir($campeonato_id,$tipo,$nivel,$id_categoria){
@@ -73,6 +75,7 @@ class CategoriasController extends AppController
         $categoria->id_categoria=$id_categoria;
 
         $this->Categorias->save($categoria);
+        $this->set('user', $this->Auth->user());
     }
 
 
@@ -100,6 +103,7 @@ class CategoriasController extends AppController
         }
         $campeonatos = $this->Categorias->Campeonatos->find('list', ['limit' => 200]);
         $this->set(compact('categoria', 'campeonatos'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -118,6 +122,7 @@ class CategoriasController extends AppController
         } else {
             $this->Flash->error(__('The categoria could not be deleted. Please, try again.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

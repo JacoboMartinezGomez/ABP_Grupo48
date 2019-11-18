@@ -27,6 +27,7 @@ class HorariosController extends AppController
 
         $query = $this->Horarios->find('all')->select(['hora_inicio'])->distinct();
         $this->set('horarios', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
 
     }
 
@@ -44,6 +45,7 @@ class HorariosController extends AppController
         ]);
 
         $this->set('horario', $horario);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -76,6 +78,11 @@ class HorariosController extends AppController
      */
     public function edit()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $horario = $this->Horarios->newEntity();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $horario = $this->Horarios->patchEntity($horario, $this->request->getData());
@@ -90,6 +97,7 @@ class HorariosController extends AppController
         }
         $pistas = $this->Horarios->Pistas->find('list', ['limit' => 200]);
         $this->set(compact('horario', 'pistas'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

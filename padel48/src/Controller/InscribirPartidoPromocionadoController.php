@@ -21,6 +21,7 @@ class InscribirPartidoPromocionadoController extends AppController
         $inscribirPartidoPromocionado = $this->paginate($this->InscribirPartidoPromocionado);
 
         $this->set(compact('inscribirPartidoPromocionado'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -37,6 +38,7 @@ class InscribirPartidoPromocionadoController extends AppController
         ]);
 
         $this->set('inscribirPartidoPromocionado', $inscribirPartidoPromocionado);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -57,6 +59,7 @@ class InscribirPartidoPromocionadoController extends AppController
             $this->Flash->error(__('The inscribir partido promocionado could not be saved. Please, try again.'));
         }
         $this->set(compact('inscribirPartidoPromocionado'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -81,6 +84,7 @@ class InscribirPartidoPromocionadoController extends AppController
             $this->Flash->error(__('The inscribir partido promocionado could not be saved. Please, try again.'));
         }
         $this->set(compact('inscribirPartidoPromocionado'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -99,6 +103,7 @@ class InscribirPartidoPromocionadoController extends AppController
         } else {
             $this->Flash->error(__('The inscribir partido promocionado could not be deleted. Please, try again.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

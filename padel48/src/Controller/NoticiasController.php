@@ -27,6 +27,7 @@ class NoticiasController extends AppController
 
         $noticias = $this->paginate($this->Noticias);
         $this->set(compact('noticias'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -43,6 +44,7 @@ class NoticiasController extends AppController
         ]);
 
         $this->set('noticia', $noticia);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -52,7 +54,6 @@ class NoticiasController extends AppController
      */
     public function add()
     {
-
         $this->loadModel('Usuarios');
         if(!$this->isAuthorized($this->Auth->user())){
             $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
@@ -93,6 +94,7 @@ class NoticiasController extends AppController
         }
         $usuarios = $this->Noticias->Usuarios->find('list', ['limit' => 200]);
         $this->set(compact('noticia', 'usuarios'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -136,6 +138,7 @@ class NoticiasController extends AppController
         } else {
             $this->Flash->error(__('No se ha podido eliminar la noticia. Intentelo de nuevo.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

@@ -30,7 +30,7 @@ class UsuariosController extends AppController
             if ($usuario) {
                 $this->Auth->setUser($usuario);
                 //return $this->redirect($this->Auth->redirectUrl());
-                return $this->redirect(array("controller" => "Reservas", 
+                return $this->redirect(array("controller" => "Reservas",
                       "action" => "index",));
             }
             $this->Flash->error('El dni o la contraseña son incorrectos');
@@ -41,8 +41,8 @@ class UsuariosController extends AppController
     {
         $this->Flash->success('Has cerrado sesión.');
         //return $this->redirect($this->Auth->logout());
-        return $this->redirect(array("controller" => "Index", 
-        "action" => "index",));
+        return $this->redirect(array("controller" => "Pages",
+        "action" => "display",));
     }
 
     /**
@@ -52,9 +52,15 @@ class UsuariosController extends AppController
      */
     public function index()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $usuarios = $this->paginate($this->Usuarios);
 
         $this->set(compact('usuarios'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -71,6 +77,7 @@ class UsuariosController extends AppController
         ]);
 
         $this->set('usuario', $usuario);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -92,6 +99,7 @@ class UsuariosController extends AppController
             $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
         }
         $this->set(compact('usuario'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -103,6 +111,10 @@ class UsuariosController extends AppController
      */
     public function edit($id = null)
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $usuario = $this->Usuarios->get($id, [
             'contain' => []
         ]);
@@ -116,6 +128,7 @@ class UsuariosController extends AppController
             $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
         }
         $this->set(compact('usuario'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -127,6 +140,10 @@ class UsuariosController extends AppController
      */
     public function delete($id = null)
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->request->allowMethod(['post', 'delete']);
         $usuario = $this->Usuarios->get($id);
         if ($this->Usuarios->delete($usuario)) {
@@ -135,6 +152,7 @@ class UsuariosController extends AppController
             $this->Flash->error(__('The usuario could not be deleted. Please, try again.'));
         }
 
+        $this->set('user', $this->Auth->user());
         return $this->redirect(['action' => 'index']);
     }
 

@@ -17,23 +17,29 @@
     </div>
 </header>
 <div class = "container">
-    <nav class="menu"><ul class = "nav">
+<nav class="menu"><ul class = "nav">
             <li class="heading"></li>
             <li><?= $this->Html->link(__('Campeonatos'), ['controller' => 'Campeonatos', 'action' => 'index']) ?>
+            <?php if ($user['rol'] == 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Nuevo campeonato'), ['controller' => 'Campeonatos', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
+            <?php if ($user['rol'] == 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir pista'), ['controller' => 'Pistas', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
+            <?php if ($user['rol'] == 'ADMIN'){?>
             <li><?= $this->Html->link(__('Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?> </li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Horarios'), ['controller' => 'Horarios', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Reservas'), ['controller' => 'Reservas', 'action' => 'index']) ?>
@@ -42,20 +48,24 @@
                 </ul>
             </li>
             <li><?= $this->Html->link(__('Partidos'), ['controller' => 'Partidos', 'action' => 'index']) ?>
+            <?php if ($user['rol'] == 'ADMIN'){?>
                 <ul>
-                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'PromocionarPartido', 'action' => 'add']) ?></li>
+                    <li><?= $this->Html->link(__('Crear partido promocionado'), ['controller' => 'Partidos', 'action' => 'add']) ?></li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Noticias'), ['controller' => 'Noticias', 'action' => 'index']) ?>
+            <?php if ($user['rol'] == 'ADMIN'){?>
                 <ul>
                     <li><?= $this->Html->link(__('Añadir noticia'), ['controller' => 'Noticias','action' => 'add']) ?> </li>
                 </ul>
+            <?php }; ?>
             </li>
             <li><?= $this->Html->link(__('Cerrar sesión'), ['controller' => 'Usuarios', 'action' => 'logout']) ?></li>
         </ul>
     </nav>
     <div class="showVista" id="partidos">
-    <h2><?= __('Partidos') ?></h2>
+    <h2><?= __('Partidos promocionados') ?></h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -70,24 +80,19 @@
         <tbody>
             <?php foreach ($partidos as $partido): ?>
             <tr>
-                <td><?= $partido->has('usuario') ? $this->Html->link($partido->usuario->dni, ['controller' => 'Usuarios', 'action' => 'view', $partido->usuario->dni]) : '' ?></td>
+                <td><?= h($partido->usuario_id) ?></td>
                 <td><?= h($partido->usuario_id2) ?></td>
                 <td><?= h($partido->usuario_id3) ?></td>
                 <td><?= h($partido->usuario_id4) ?></td>
                 <td><?= h($partido->hora) ?></td>
                 <td class="actions">
-                    <?php echo $this->Html->image("ver.png", array(
-                        "src" => "Ver",
-                        "alt" => "ver",
-                        'url' => array('controller' => 'Partidos','action' => 'view', $partido->usuario_id),
-                        "class" => "icono"
-                    )); ?>
-                    <?php echo $this->Html->image("inscribir.png", array(
-                        "src" => "Inscribirse",
-                        "alt" => "inscribirse",
-                        'url' => array('action' => 'inscribirse', $partido->id_partido),
-                        "class" => "icono"
-                    )); ?>
+                <?php echo $this->Html->image("inscribir.png", array(
+                    "src" => "Inscribirse",
+                    "alt" => "inscribirse",
+                    'url' => array('action' => 'inscribirse', $partido->id_partido),
+                    "class" => "icono"
+                )); ?>
+                <?php if ($user['rol'] == 'ADMIN'){?>
                     <?php echo $this->Form->postLink(
                         $this->Html->image(
                             "borrar.png",
@@ -96,6 +101,7 @@
                         ['action' => 'delete',  $partido->usuario_id],
                         ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $partido->usuario_id)]
                     )?>
+                <?php }; ?>
                 </td>
             </tr>
             <?php endforeach; ?>

@@ -28,6 +28,7 @@ class ParejasController extends AppController
 
 
         $this->set(compact('parejas'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -44,6 +45,7 @@ class ParejasController extends AppController
         ]);
 
         $this->set('pareja', $pareja);
+        $this->set('user', $this->Auth->user());
     }
 
     public function add($campeonato_id)
@@ -111,7 +113,7 @@ class ParejasController extends AppController
             $query = $this->Parejas->find('all')->where(['campeonato_id =' => $campeonato_id, 'categoria_id =' => $categoria]);
             if($query->all()->count()==96){
                 $this->Flash->error(__('Esta categoría y nivel para este campeonato ya está llena.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
             }
 
             //Comprobacion de que el capitan no este ya inscrito
@@ -125,7 +127,7 @@ class ParejasController extends AppController
 
             if($query->all()->count()!=0){
                 $this->Flash->error(__('Ya estás inscrito en el campeonato'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
             }
 
 
@@ -155,6 +157,7 @@ class ParejasController extends AppController
         }
         $campeonatos = $this->Parejas->Campeonatos->find('list', ['limit' => 200]);
         $this->set(compact('pareja', 'campeonatos'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -182,6 +185,7 @@ class ParejasController extends AppController
         $grupos = $this->Parejas->Grupos->find('list', ['limit' => 200]);
         $categorias = $this->Parejas->Categorias->find('list', ['limit' => 200]);
         $this->set(compact('pareja', 'campeonatos', 'grupos', 'categorias'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -200,6 +204,7 @@ class ParejasController extends AppController
         } else {
             $this->Flash->error(__('The pareja could not be deleted. Please, try again.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

@@ -25,6 +25,7 @@ class CampeonatosController extends AppController
             $campeonato['gruposGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 1);
             $campeonato['playoffsGenerados'] = $this->faseGenerada($campeonato->id_campeonato, 2);
         }
+        $this->set('user', $this->Auth->user());
         $this->set(compact('campeonatos'));
     }
 
@@ -42,6 +43,7 @@ class CampeonatosController extends AppController
         ]);
 
         $this->set('campeonato', $campeonato);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -51,6 +53,11 @@ class CampeonatosController extends AppController
      */
     public function add()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $campeonato = $this->Campeonatos->newEntity();
         if ($this->request->is('post')) {
             $campeonato = $this->Campeonatos->patchEntity($campeonato, $this->request->getData());
@@ -80,6 +87,7 @@ class CampeonatosController extends AppController
             }
         }
         $this->set(compact('campeonato'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -104,6 +112,7 @@ class CampeonatosController extends AppController
             $this->Flash->error(__('The campeonato could not be saved. Please, try again.'));
         }
         $this->set(compact('campeonato'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -122,6 +131,7 @@ class CampeonatosController extends AppController
         } else {
             $this->Flash->error(__('The campeonato could not be deleted. Please, try again.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }
@@ -322,7 +332,7 @@ class CampeonatosController extends AppController
 
         if(!empty($grupos)){
             $query2 = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupos[0]['id_grupo'],
-                ['fase ==' => $fase]]);
+                ['fase >=' => $fase]]);
             $enfrentamientos = $query2->all()->toArray();
 
             return !empty($enfrentamientos);

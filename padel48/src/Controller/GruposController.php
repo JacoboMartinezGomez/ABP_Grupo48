@@ -36,6 +36,7 @@ class GruposController extends AppController
 
         $query = $this->Grupos->find('all')->where(['campeonato_id' => $campeonato_id]);
         $this->set('grupos', $this->paginate($query));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -54,9 +55,10 @@ class GruposController extends AppController
         $this->loadModel('Parejas');
         $parejas = $this->Parejas->find('all')
                                 ->where(['grupo_id' => $id])
-                                ->order(['puntuacion' => 'ASC']);
+                                ->order(['puntuacion' => 'DESC']);
 
         $this->set('parejas', $parejas);
+        $this->set('user', $this->Auth->user());
     }
 
     public function add($id_grupo, $campeonato_id, $categoria_id)
@@ -72,6 +74,7 @@ class GruposController extends AppController
         $this->Flash->error(__('El grupo no pudo ser guardado'));
         //$campeonatos = $this->Grupos->Campeonatos->find('list', ['limit' => 200]);
         //$this->set(compact('grupo', 'campeonatos'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -97,6 +100,7 @@ class GruposController extends AppController
         }
         $campeonatos = $this->Grupos->Campeonatos->find('list', ['limit' => 200]);
         $this->set(compact('grupo', 'campeonatos'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -115,6 +119,7 @@ class GruposController extends AppController
         } else {
             $this->Flash->error(__('The grupo could not be deleted. Please, try again.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

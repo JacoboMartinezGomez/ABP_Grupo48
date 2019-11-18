@@ -22,6 +22,7 @@ class PistasController extends AppController
         $pistas = $this->paginate($this->Pistas);
 
         $this->set(compact('pistas'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -38,6 +39,7 @@ class PistasController extends AppController
         ]);
 
         $this->set('pista', $pista);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -47,6 +49,10 @@ class PistasController extends AppController
      */
     public function add()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $pista = $this->Pistas->newEntity();
         if ($this->request->is('post')) {
             $pista = $this->Pistas->patchEntity($pista, $this->request->getData());
@@ -75,6 +81,7 @@ class PistasController extends AppController
             $this->Flash->error(__('No se ha podido guardar la pista. Intentelo de nuevo'));
         }
         $this->set(compact('pista'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -86,6 +93,11 @@ class PistasController extends AppController
      */
     public function edit($id = null)
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $pista = $this->Pistas->get($id, [
             'contain' => []
         ]);
@@ -103,6 +115,7 @@ class PistasController extends AppController
             }
         }
         $this->set(compact('pista'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -114,6 +127,11 @@ class PistasController extends AppController
      */
     public function delete($id = null)
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $this->request->allowMethod(['post', 'delete']);
         $pista = $this->Pistas->get($id);
         if ($this->Pistas->delete($pista)) {
@@ -121,7 +139,9 @@ class PistasController extends AppController
         } else {
             $this->Flash->error(__('No se ha podido borrar la pista. Intentelo de nuevo.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
