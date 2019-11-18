@@ -98,12 +98,29 @@ $this->Html->css(['css'])
                             'url' => array('controller' => 'Grupos','action' => 'index', $campeonato->id_campeonato),
                             "class" => "icono"
                         )); ?>
+                        <?php echo $this->Form->postLink(
+                            $this->Html->image(
+                                "borrar.png",
+                                ["alt" => __('Delete')]
+                            ),
+                            ['action' => 'delete',  $campeonato->id_campeonato],
+                            ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $campeonato->id_campeonato)]
+                        )?>
+                        <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
+                        <?php if(!$campeonato['gruposGenerados'] && $campeonato->fecha_inicio >= Time::now()){ ?>
+                            <?php echo $this->Html->image("generar.png", array(
+                                "src" => "Generar",
+                                "alt" => "generar",
+                                'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
+                                "class" => "icono"
+                            ));} ?>
 
-                        <?php if ($user['rol'] == 'ADMIN'){?>
-                            <?php echo $this->Html->image("editar.png", array(
-                                "src" => "Editar",
-                                "alt" => "editar",
-                                'url' => array('action' => 'edit', $campeonato->id_campeonato),
+                        <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
+                        <?php if(!$campeonato['gruposGenerados'] && $campeonato->fecha_inicio >= Time::now()){ ?>
+                            <?php echo $this->Html->image("dado.png", array(
+                                "src" => "GenerarPlayOf",
+                                "alt" => "generarplayoff",
+                                'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
                                 "class" => "icono"
                             )); ?>
                             <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
