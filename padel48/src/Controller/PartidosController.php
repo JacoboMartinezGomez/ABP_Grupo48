@@ -34,14 +34,6 @@ class PartidosController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
-        $partido = $this->Partidos->get($id, [
-            'contain' => ['Usuarios']
-        ]);
-
-        $this->set('partido', $partido);
-    }
 
     /**
      * Add method
@@ -73,12 +65,13 @@ class PartidosController extends AppController
                     $this->Flash->error(__('El partido no se ha podido guardar. Por favor intentelo de nuevo.'));
                 }
             }else{
-                $this->Flash->error(__('La fecha propuesta excede el limite de una semana.'));
+                $this->Flash->error(__('La fecha es incorrecta.'));
             }
 
         }
         $usuarios = $this->Partidos->Usuarios->find('list', ['limit' => 200]);
         $this->set(compact('partido', 'usuarios'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -122,6 +115,7 @@ class PartidosController extends AppController
         } else {
             $this->Flash->error(__('El partido no se ha podido borrar. Intentelo de nuevo'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }
@@ -150,7 +144,7 @@ class PartidosController extends AppController
                         $this->Flash->error(__('No hay pistas disponibles para realizar este partido'));
                     }
                 }
-                return $this->redirect(['action' => 'view', $id_partido]);
+                return $this->redirect(['action' => 'index', $id_partido]);
             }
             else{
                 $this->Flash->error(__('No se ha podido inscribir en el partido. El partido esta completo.'));
@@ -178,11 +172,11 @@ class PartidosController extends AppController
             $this->Partidos->save($partido);
 
             $this->Flash->success(__('Se ha desinscrito en el partido correctamente.'));
-            return $this->redirect(['action' => 'view', $id_partido]);
+            return $this->redirect(['action' => 'index', $id_partido]);
 
         }else{
             $this->Flash->success(__('No se ha podido desinscribir en el partido. Usted no esta inscrito.'));
-            return $this->redirect(['action' => 'view', $id_partido]);
+            return $this->redirect(['action' => 'index', $id_partido]);
         }
     }
 

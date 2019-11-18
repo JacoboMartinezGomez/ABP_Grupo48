@@ -45,6 +45,7 @@ class ParejasController extends AppController
         ]);
 
         $this->set('pareja', $pareja);
+        $this->set('user', $this->Auth->user());
     }
 
     public function add($campeonato_id)
@@ -156,6 +157,7 @@ class ParejasController extends AppController
         }
         $campeonatos = $this->Parejas->Campeonatos->find('list', ['limit' => 200]);
         $this->set(compact('pareja', 'campeonatos'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -183,6 +185,7 @@ class ParejasController extends AppController
         $grupos = $this->Parejas->Grupos->find('list', ['limit' => 200]);
         $categorias = $this->Parejas->Categorias->find('list', ['limit' => 200]);
         $this->set(compact('pareja', 'campeonatos', 'grupos', 'categorias'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -201,6 +204,7 @@ class ParejasController extends AppController
         } else {
             $this->Flash->error(__('The pareja could not be deleted. Please, try again.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

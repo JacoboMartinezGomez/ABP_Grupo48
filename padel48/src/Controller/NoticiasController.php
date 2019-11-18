@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Mailer\Email;
+use Cake\Mailer\TransportFactory;
 
 /**
  * Noticias Controller
@@ -42,6 +44,7 @@ class NoticiasController extends AppController
         ]);
 
         $this->set('noticia', $noticia);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -51,6 +54,7 @@ class NoticiasController extends AppController
      */
     public function add()
     {
+        $this->loadModel('Usuarios');
         if(!$this->isAuthorized($this->Auth->user())){
             $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
             return $this->redirect(['action' => 'index']);
@@ -62,6 +66,26 @@ class NoticiasController extends AppController
         if ($this->request->is('post')) {
             $noticia = $this->Noticias->patchEntity($noticia, $this->request->getData());
             if ($this->Noticias->save($noticia)) {
+                // Sample SMTP configuration.
+                TransportFactory::setConfig('gmail', [
+                    'host' => 'ssl://smtp.gmail.com',
+                    'port' => 465,
+                    'username' => 'abppadel48@gmail.com',
+                    'password' => 'wgfnullmyiffvuzi',
+                    'className' => 'Smtp'
+                ]);
+
+                /*$correos = $this->Usuarios->find()->extract('email');
+                $array = [];
+                foreach($correos as $correo){
+                    $array[$correo] = $correo;
+                }*/
+                $email = new Email('default');
+                $email->setFrom(['abppadel48@gmail.com'])
+                    ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
+                    ->setSubject($noticia->titulo)
+                    ->setTransport('gmail')
+                    ->send($noticia->contenido);
                 $this->Flash->success(__('La noticia ha sido publicada.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -70,6 +94,7 @@ class NoticiasController extends AppController
         }
         $usuarios = $this->Noticias->Usuarios->find('list', ['limit' => 200]);
         $this->set(compact('noticia', 'usuarios'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -113,6 +138,7 @@ class NoticiasController extends AppController
         } else {
             $this->Flash->error(__('No se ha podido eliminar la noticia. Intentelo de nuevo.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index']);
     }

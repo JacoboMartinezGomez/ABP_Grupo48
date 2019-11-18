@@ -46,6 +46,7 @@ class ReservasController extends AppController
         ]);
 
         $this->set('reserva', $reserva);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -99,6 +100,7 @@ class ReservasController extends AppController
             }
         }
         $this->set(compact('reserva'));
+        $this->set('user', $this->Auth->user());
     }
 
     public function hayPistaDisponible($fecha, $hora){
@@ -151,6 +153,7 @@ class ReservasController extends AppController
             $this->Flash->error(__('La reserva no pudo ser eliminada.'));
         }
         return $this->redirect(['action' => 'index']);
+        $this->set('user', $this->Auth->user());
     }
 
     public function borrarReservasPasadas(){

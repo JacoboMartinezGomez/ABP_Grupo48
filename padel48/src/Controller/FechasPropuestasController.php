@@ -97,6 +97,7 @@ class FechasPropuestasController extends AppController
 
         $enfrentamientos = $this->FechasPropuestas->Enfrentamientos->find('list', ['limit' => 200]);
         $this->set(compact('fechasPropuesta', 'enfrentamientos'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -132,6 +133,7 @@ class FechasPropuestasController extends AppController
         }
         $enfrentamientos = $this->FechasPropuestas->Enfrentamientos->find('list', ['limit' => 200]);
         $this->set(compact('fechasPropuesta', 'enfrentamientos'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -153,6 +155,7 @@ class FechasPropuestasController extends AppController
         } else {
             $this->Flash->error(__('La fechas propuesta no ha podido ser eliminada. Intentelo de nuevo.'));
         }
+        $this->set('user', $this->Auth->user());
 
         return $this->redirect(['action' => 'index', $enfrenamtiento_id]);
     }
