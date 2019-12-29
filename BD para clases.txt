@@ -1,0 +1,22 @@
+Añadir a la tabla:
+	- fecha_proxima_clase : Almacena la fecha de la reserva
+	- id_pista: id_pista de la reserva
+
+Reservas:
+	- id_usuario de la reserva es el id del profesor. Otra opcion es crear un usuario con el id de la clase...
+	- la hora de la reserva es la hora de la clase. Mejor seria crear otro campo hora, para diferenciar la hora de la clase
+	de la hora de la reserva para el caso de los aplazamientos
+	- Cada vez que se crea un reserva, en general, se debe revisar que todas las clases tienen ya una pista reservada para la
+	semana siguiente (+7 dias de la fecha_inicio)
+
+
+Crear clase:
+	- Al crear una clase se reserva automaticamente una pista con la fecha y hora de la clase	
+
+Aplazar una clase:
+	- Modificar la reserva de la semana? Problema: Luego como calculamos la reserva con la fecha_inicio 
+	(Posible solucion: un for que sume +7dias hasta la fecha actual y luego sumamos otros 7 para volver a lo establecido al crear la clase)
+	- Enviar un correo a los inscritos
+
+Borrar clase:
+	-Enviar correo a los usuarios
