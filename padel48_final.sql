@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-12-2019 a las 17:29:15
--- Versión del servidor: 10.4.8-MariaDB
--- Versión de PHP: 7.3.10
+-- Tiempo de generación: 29-12-2019 a las 19:59:41
+-- Versión del servidor: 10.4.6-MariaDB
+-- Versión de PHP: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -31,13 +31,12 @@ USE `padel48`;
 --
 
 DROP TABLE IF EXISTS `campeonatos`;
-CREATE TABLE IF NOT EXISTS `campeonatos` (
-  `id_campeonato` int(4) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `campeonatos` (
+  `id_campeonato` int(4) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
-  `precio` int(3) NOT NULL,
-  PRIMARY KEY (`id_campeonato`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+  `precio` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `campeonatos`
@@ -82,13 +81,11 @@ INSERT INTO `campeonatos` (`id_campeonato`, `fecha_inicio`, `fecha_fin`, `precio
 --
 
 DROP TABLE IF EXISTS `categorias`;
-CREATE TABLE IF NOT EXISTS `categorias` (
+CREATE TABLE `categorias` (
   `id_categoria` int(4) NOT NULL,
   `campeonato_id` int(4) NOT NULL,
   `tipo` enum('MASC','FEM','MIXTO') NOT NULL,
-  `nivel` int(2) NOT NULL,
-  PRIMARY KEY (`id_categoria`,`campeonato_id`),
-  KEY `campeonato_id` (`campeonato_id`)
+  `nivel` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -235,41 +232,42 @@ INSERT INTO `categorias` (`id_categoria`, `campeonato_id`, `tipo`, `nivel`) VALU
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `clases`
+-- Estructura de tabla para la tabla `clases_grupales`
 --
 
-DROP TABLE IF EXISTS `clases`;
-CREATE TABLE IF NOT EXISTS `clases` (
-  `id_clase_grupal` int(4) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `clases_grupales`;
+CREATE TABLE `clases_grupales` (
+  `id_claseGrupal` int(4) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `hora` time NOT NULL,
-  `profesor` varchar(9) CHARACTER SET utf8 NOT NULL,
+  `usuario_id` varchar(9) CHARACTER SET utf8 NOT NULL,
   `num_max_apuntados` int(2) NOT NULL,
   `num_actual_apuntados` int(2) NOT NULL,
   `precio` int(3) NOT NULL,
-  PRIMARY KEY (`id_clase_grupal`),
-  KEY `clases_ibfk_1` (`profesor`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+  `pista_reserva` int(2) NOT NULL,
+  `hora_reserva` int(2) NOT NULL,
+  `fecha_reserva` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `clases`
+-- Volcado de datos para la tabla `clases_grupales`
 --
 
-INSERT INTO `clases` (`id_clase_grupal`, `fecha_inicio`, `hora`, `profesor`, `num_max_apuntados`, `num_actual_apuntados`, `precio`) VALUES
-(2, '2019-08-20', '23:32:00', '771211924', 20, 10, 22),
-(3, '2019-01-23', '10:11:00', '495027049', 12, 14, 10),
-(4, '2019-03-17', '21:12:00', '386710740', 19, 8, 23),
-(5, '2019-10-17', '21:31:00', '977339140', 13, 1, 14),
-(6, '2019-09-14', '15:25:00', '946761391', 15, 8, 11),
-(7, '2019-09-28', '07:13:00', '715278884', 17, 2, 19),
-(8, '2018-12-21', '21:54:00', '724200532', 18, 8, 15),
-(9, '2018-12-18', '11:20:00', '907083843', 19, 13, 19),
-(10, '2019-01-20', '12:07:00', '349464848', 13, 2, 16),
-(11, '2019-01-11', '12:35:00', '786154245', 11, 10, 9),
-(12, '2019-06-26', '23:35:00', '606445047', 17, 9, 9),
-(13, '2019-09-13', '02:43:00', '195762015', 12, 3, 23),
-(14, '2019-01-03', '00:19:00', '948343774', 20, 13, 6),
-(15, '2019-04-06', '13:25:00', '937893966', 13, 9, 24);
+INSERT INTO `clases_grupales` (`id_claseGrupal`, `fecha_inicio`, `hora`, `usuario_id`, `num_max_apuntados`, `num_actual_apuntados`, `precio`, `pista_reserva`, `hora_reserva`, `fecha_reserva`) VALUES
+(2, '2019-08-20', '23:32:00', '771211924', 20, 10, 22, 0, 0, '0000-00-00'),
+(3, '2019-01-23', '10:11:00', '495027049', 12, 14, 10, 0, 0, '0000-00-00'),
+(4, '2019-03-17', '21:12:00', '386710740', 19, 8, 23, 0, 0, '0000-00-00'),
+(5, '2019-10-17', '21:31:00', '977339140', 13, 1, 14, 0, 0, '0000-00-00'),
+(6, '2019-09-14', '15:25:00', '946761391', 15, 8, 11, 0, 0, '0000-00-00'),
+(7, '2019-09-28', '07:13:00', '715278884', 17, 2, 19, 0, 0, '0000-00-00'),
+(8, '2018-12-21', '21:54:00', '724200532', 18, 8, 15, 0, 0, '0000-00-00'),
+(9, '2018-12-18', '11:20:00', '907083843', 19, 13, 19, 0, 0, '0000-00-00'),
+(10, '2019-01-20', '12:07:00', '349464848', 13, 2, 16, 0, 0, '0000-00-00'),
+(11, '2019-01-11', '12:35:00', '786154245', 11, 10, 9, 0, 0, '0000-00-00'),
+(12, '2019-06-26', '23:35:00', '606445047', 17, 9, 9, 0, 0, '0000-00-00'),
+(13, '2019-09-13', '02:43:00', '195762015', 12, 3, 23, 0, 0, '0000-00-00'),
+(14, '2019-01-03', '00:19:00', '948343774', 20, 13, 6, 0, 0, '0000-00-00'),
+(15, '2019-04-06', '13:25:00', '937893966', 13, 9, 24, 0, 0, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -278,15 +276,13 @@ INSERT INTO `clases` (`id_clase_grupal`, `fecha_inicio`, `hora`, `profesor`, `nu
 --
 
 DROP TABLE IF EXISTS `enfrentamientos`;
-CREATE TABLE IF NOT EXISTS `enfrentamientos` (
-  `id_enfrentamiento` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `enfrentamientos` (
+  `id_enfrentamiento` int(6) NOT NULL,
   `grupo_id` int(4) NOT NULL,
   `hora` time DEFAULT NULL,
   `fecha` date DEFAULT NULL,
-  `fase` int(1) NOT NULL,
-  PRIMARY KEY (`id_enfrentamiento`),
-  KEY `grupo_id` (`grupo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+  `fase` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `enfrentamientos`
@@ -337,16 +333,13 @@ INSERT INTO `enfrentamientos` (`id_enfrentamiento`, `grupo_id`, `hora`, `fecha`,
 --
 
 DROP TABLE IF EXISTS `fechas_propuestas`;
-CREATE TABLE IF NOT EXISTS `fechas_propuestas` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `fechas_propuestas` (
+  `id` int(6) NOT NULL,
   `enfrentamiento_id` int(6) NOT NULL,
   `creador` varchar(9) NOT NULL,
   `hora` time NOT NULL,
-  `fecha` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `enfrentamiento_id` (`enfrentamiento_id`),
-  KEY `creador` (`creador`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `fechas_propuestas`
@@ -362,13 +355,10 @@ INSERT INTO `fechas_propuestas` (`id`, `enfrentamiento_id`, `creador`, `hora`, `
 --
 
 DROP TABLE IF EXISTS `grupos`;
-CREATE TABLE IF NOT EXISTS `grupos` (
+CREATE TABLE `grupos` (
   `id_grupo` int(4) NOT NULL,
   `campeonato_id` int(4) NOT NULL,
-  `categoria_id` int(4) NOT NULL,
-  PRIMARY KEY (`id_grupo`,`campeonato_id`,`categoria_id`),
-  KEY `campeonato_id` (`campeonato_id`),
-  KEY `categoria_id` (`categoria_id`)
+  `categoria_id` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -385,13 +375,11 @@ INSERT INTO `grupos` (`id_grupo`, `campeonato_id`, `categoria_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `horarios`;
-CREATE TABLE IF NOT EXISTS `horarios` (
-  `id_horario` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `horarios` (
+  `id_horario` int(2) NOT NULL,
   `pista_id` int(2) NOT NULL,
-  `hora_inicio` time NOT NULL,
-  PRIMARY KEY (`id_horario`),
-  KEY `pista_id` (`pista_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8;
+  `hora_inicio` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `horarios`
@@ -658,14 +646,12 @@ INSERT INTO `horarios` (`id_horario`, `pista_id`, `hora_inicio`) VALUES
 --
 
 DROP TABLE IF EXISTS `noticias`;
-CREATE TABLE IF NOT EXISTS `noticias` (
-  `id_noticia` int(100) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `noticias` (
+  `id_noticia` int(100) NOT NULL,
   `usuario_id` varchar(9) DEFAULT NULL,
   `titulo` varchar(150) CHARACTER SET utf8mb4 NOT NULL,
-  `contenido` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
-  PRIMARY KEY (`id_noticia`),
-  KEY `usuario_id` (`usuario_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+  `contenido` varchar(1000) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `noticias`
@@ -760,22 +746,16 @@ INSERT INTO `noticias` (`id_noticia`, `usuario_id`, `titulo`, `contenido`) VALUE
 --
 
 DROP TABLE IF EXISTS `parejas`;
-CREATE TABLE IF NOT EXISTS `parejas` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `parejas` (
+  `id` int(6) NOT NULL,
   `id_capitan` varchar(9) NOT NULL,
   `id_pareja` varchar(9) NOT NULL,
   `campeonato_id` int(4) NOT NULL,
   `grupo_id` int(4) DEFAULT NULL,
   `categoria_id` int(4) NOT NULL,
   `puntuacion` int(2) NOT NULL,
-  `clasificado` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_capitan` (`id_capitan`),
-  KEY `id_pareja` (`id_pareja`),
-  KEY `grupo_id` (`grupo_id`),
-  KEY `campeonato_id` (`campeonato_id`),
-  KEY `categoria_id` (`categoria_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
+  `clasificado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `parejas`
@@ -868,14 +848,11 @@ INSERT INTO `parejas` (`id`, `id_capitan`, `id_pareja`, `campeonato_id`, `grupo_
 --
 
 DROP TABLE IF EXISTS `parejas_disputan_enfrentamiento`;
-CREATE TABLE IF NOT EXISTS `parejas_disputan_enfrentamiento` (
+CREATE TABLE `parejas_disputan_enfrentamiento` (
   `id_pareja1` int(6) NOT NULL,
   `id_pareja2` int(6) NOT NULL,
   `enfrentamiento_id` int(6) NOT NULL,
-  `resultado` varchar(9) DEFAULT NULL,
-  PRIMARY KEY (`id_pareja1`,`id_pareja2`,`enfrentamiento_id`),
-  KEY `id_pareja2` (`id_pareja2`),
-  KEY `enfrentamiento_id` (`enfrentamiento_id`)
+  `resultado` varchar(9) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -927,20 +904,15 @@ INSERT INTO `parejas_disputan_enfrentamiento` (`id_pareja1`, `id_pareja2`, `enfr
 --
 
 DROP TABLE IF EXISTS `partidos`;
-CREATE TABLE IF NOT EXISTS `partidos` (
-  `id_partido` int(4) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `partidos` (
+  `id_partido` int(4) NOT NULL,
   `usuario_id` varchar(9) DEFAULT NULL,
   `usuario_id2` varchar(9) DEFAULT NULL,
   `usuario_id3` varchar(9) DEFAULT NULL,
   `usuario_id4` varchar(9) DEFAULT NULL,
   `fecha` date NOT NULL,
-  `hora` time NOT NULL,
-  PRIMARY KEY (`id_partido`),
-  KEY `usuario_id` (`usuario_id`),
-  KEY `usuario_id2` (`usuario_id2`),
-  KEY `usuario_id3` (`usuario_id3`),
-  KEY `usuario_id4` (`usuario_id4`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+  `hora` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `partidos`
@@ -1000,13 +972,12 @@ INSERT INTO `partidos` (`id_partido`, `usuario_id`, `usuario_id2`, `usuario_id3`
 --
 
 DROP TABLE IF EXISTS `pistas`;
-CREATE TABLE IF NOT EXISTS `pistas` (
-  `num_pista` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `pistas` (
+  `num_pista` int(2) NOT NULL,
   `tipo` enum('PIEDRA','MOQUETA') CHARACTER SET latin1 NOT NULL,
   `lugar` enum('EXTERIOR','INTERIOR') CHARACTER SET latin1 NOT NULL,
-  `precio` int(3) NOT NULL,
-  PRIMARY KEY (`num_pista`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+  `precio` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `pistas`
@@ -1049,13 +1020,11 @@ INSERT INTO `pistas` (`num_pista`, `tipo`, `lugar`, `precio`) VALUES
 --
 
 DROP TABLE IF EXISTS `reservas`;
-CREATE TABLE IF NOT EXISTS `reservas` (
+CREATE TABLE `reservas` (
   `id_usuario` varchar(9) NOT NULL,
   `pista_id` int(2) NOT NULL,
   `hora` int(2) NOT NULL,
-  `fecha` date NOT NULL,
-  PRIMARY KEY (`id_usuario`,`pista_id`,`hora`,`fecha`),
-  KEY `pista_id` (`pista_id`)
+  `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1076,7 +1045,7 @@ INSERT INTO `reservas` (`id_usuario`, `pista_id`, `hora`, `fecha`) VALUES
 --
 
 DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE IF NOT EXISTS `usuarios` (
+CREATE TABLE `usuarios` (
   `dni` varchar(9) NOT NULL,
   `password` varchar(255) NOT NULL,
   `nombre` varchar(10) NOT NULL,
@@ -1086,8 +1055,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `telefono` int(12) NOT NULL,
   `rol` enum('ADMIN','DEPORTISTA','PROFESOR') NOT NULL,
   `numero_pistas` int(1) NOT NULL DEFAULT 0,
-  `socio` tinyint(1) NOT NULL,
-  PRIMARY KEY (`dni`)
+  `socio` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1408,18 +1376,16 @@ INSERT INTO `usuarios` (`dni`, `password`, `nombre`, `apellido`, `email`, `sexo`
 --
 
 DROP TABLE IF EXISTS `usuarios_inscritos_clase`;
-CREATE TABLE IF NOT EXISTS `usuarios_inscritos_clase` (
-  `id_clase` int(4) NOT NULL,
-  `dni_usuario` varchar(9) CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`id_clase`,`dni_usuario`),
-  KEY `inscritos_ibfk_1` (`dni_usuario`)
+CREATE TABLE `usuarios_inscritos_clase` (
+  `claseGrupal_id` int(4) NOT NULL,
+  `usuario_id` varchar(9) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuarios_inscritos_clase`
 --
 
-INSERT INTO `usuarios_inscritos_clase` (`id_clase`, `dni_usuario`) VALUES
+INSERT INTO `usuarios_inscritos_clase` (`claseGrupal_id`, `usuario_id`) VALUES
 (3, '114129773'),
 (3, '523850357'),
 (3, '897274192'),
@@ -1437,6 +1403,180 @@ INSERT INTO `usuarios_inscritos_clase` (`id_clase`, `dni_usuario`) VALUES
 (15, '530361131');
 
 --
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `campeonatos`
+--
+ALTER TABLE `campeonatos`
+  ADD PRIMARY KEY (`id_campeonato`);
+
+--
+-- Indices de la tabla `categorias`
+--
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id_categoria`,`campeonato_id`),
+  ADD KEY `campeonato_id` (`campeonato_id`);
+
+--
+-- Indices de la tabla `clases_grupales`
+--
+ALTER TABLE `clases_grupales`
+  ADD PRIMARY KEY (`id_claseGrupal`),
+  ADD KEY `clases_ibfk_1` (`usuario_id`);
+
+--
+-- Indices de la tabla `enfrentamientos`
+--
+ALTER TABLE `enfrentamientos`
+  ADD PRIMARY KEY (`id_enfrentamiento`),
+  ADD KEY `grupo_id` (`grupo_id`);
+
+--
+-- Indices de la tabla `fechas_propuestas`
+--
+ALTER TABLE `fechas_propuestas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `enfrentamiento_id` (`enfrentamiento_id`),
+  ADD KEY `creador` (`creador`);
+
+--
+-- Indices de la tabla `grupos`
+--
+ALTER TABLE `grupos`
+  ADD PRIMARY KEY (`id_grupo`,`campeonato_id`,`categoria_id`),
+  ADD KEY `campeonato_id` (`campeonato_id`),
+  ADD KEY `categoria_id` (`categoria_id`);
+
+--
+-- Indices de la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  ADD PRIMARY KEY (`id_horario`),
+  ADD KEY `pista_id` (`pista_id`);
+
+--
+-- Indices de la tabla `noticias`
+--
+ALTER TABLE `noticias`
+  ADD PRIMARY KEY (`id_noticia`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Indices de la tabla `parejas`
+--
+ALTER TABLE `parejas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_capitan` (`id_capitan`),
+  ADD KEY `id_pareja` (`id_pareja`),
+  ADD KEY `grupo_id` (`grupo_id`),
+  ADD KEY `campeonato_id` (`campeonato_id`),
+  ADD KEY `categoria_id` (`categoria_id`);
+
+--
+-- Indices de la tabla `parejas_disputan_enfrentamiento`
+--
+ALTER TABLE `parejas_disputan_enfrentamiento`
+  ADD PRIMARY KEY (`id_pareja1`,`id_pareja2`,`enfrentamiento_id`),
+  ADD KEY `id_pareja2` (`id_pareja2`),
+  ADD KEY `enfrentamiento_id` (`enfrentamiento_id`);
+
+--
+-- Indices de la tabla `partidos`
+--
+ALTER TABLE `partidos`
+  ADD PRIMARY KEY (`id_partido`),
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `usuario_id2` (`usuario_id2`),
+  ADD KEY `usuario_id3` (`usuario_id3`),
+  ADD KEY `usuario_id4` (`usuario_id4`);
+
+--
+-- Indices de la tabla `pistas`
+--
+ALTER TABLE `pistas`
+  ADD PRIMARY KEY (`num_pista`);
+
+--
+-- Indices de la tabla `reservas`
+--
+ALTER TABLE `reservas`
+  ADD PRIMARY KEY (`id_usuario`,`pista_id`,`hora`,`fecha`),
+  ADD KEY `pista_id` (`pista_id`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`dni`);
+
+--
+-- Indices de la tabla `usuarios_inscritos_clase`
+--
+ALTER TABLE `usuarios_inscritos_clase`
+  ADD PRIMARY KEY (`claseGrupal_id`,`usuario_id`),
+  ADD KEY `inscritos_ibfk_1` (`usuario_id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `campeonatos`
+--
+ALTER TABLE `campeonatos`
+  MODIFY `id_campeonato` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT de la tabla `clases_grupales`
+--
+ALTER TABLE `clases_grupales`
+  MODIFY `id_claseGrupal` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `enfrentamientos`
+--
+ALTER TABLE `enfrentamientos`
+  MODIFY `id_enfrentamiento` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT de la tabla `fechas_propuestas`
+--
+ALTER TABLE `fechas_propuestas`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `horarios`
+--
+ALTER TABLE `horarios`
+  MODIFY `id_horario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
+
+--
+-- AUTO_INCREMENT de la tabla `noticias`
+--
+ALTER TABLE `noticias`
+  MODIFY `id_noticia` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+
+--
+-- AUTO_INCREMENT de la tabla `parejas`
+--
+ALTER TABLE `parejas`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+
+--
+-- AUTO_INCREMENT de la tabla `partidos`
+--
+ALTER TABLE `partidos`
+  MODIFY `id_partido` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
+--
+-- AUTO_INCREMENT de la tabla `pistas`
+--
+ALTER TABLE `pistas`
+  MODIFY `num_pista` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -1447,10 +1587,10 @@ ALTER TABLE `categorias`
   ADD CONSTRAINT `categorias_ibfk_1` FOREIGN KEY (`campeonato_id`) REFERENCES `campeonatos` (`id_campeonato`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `clases`
+-- Filtros para la tabla `clases_grupales`
 --
-ALTER TABLE `clases`
-  ADD CONSTRAINT `clases_ibfk_1` FOREIGN KEY (`profesor`) REFERENCES `usuarios` (`dni`) ON UPDATE CASCADE;
+ALTER TABLE `clases_grupales`
+  ADD CONSTRAINT `clases_grupales_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`dni`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `enfrentamientos`
@@ -1521,8 +1661,8 @@ ALTER TABLE `reservas`
 -- Filtros para la tabla `usuarios_inscritos_clase`
 --
 ALTER TABLE `usuarios_inscritos_clase`
-  ADD CONSTRAINT `inscritos_ibfk_1` FOREIGN KEY (`dni_usuario`) REFERENCES `usuarios` (`dni`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `inscritos_ibfk_2` FOREIGN KEY (`id_clase`) REFERENCES `clases` (`id_clase_grupal`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `inscritos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`dni`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `inscritos_ibfk_2` FOREIGN KEY (`claseGrupal_id`) REFERENCES `clases_grupales` (`id_claseGrupal`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
