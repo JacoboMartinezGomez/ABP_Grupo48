@@ -50,6 +50,11 @@ class ClasesGrupalesController extends AppController
      */
     public function add()
     {
+
+        $this->loadModel('Usuarios');
+
+        $this->set( 'profesores',$this->Usuarios->find('all')->where(['rol LIKE' => 'PROFESOR']));
+
         $clasesGrupale = $this->ClasesGrupales->newEntity();
         if ($this->request->is('post')) {
             $clasesGrupale = $this->ClasesGrupales->patchEntity($clasesGrupale, $this->request->getData());

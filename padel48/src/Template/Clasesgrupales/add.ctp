@@ -19,7 +19,7 @@
         <?php
             echo $this->Form->control('fecha_inicio');
             echo $this->Form->control('hora');
-            echo $this->Form->control('usuario_id', ['options' => $usuarios]);
+            echo $this->Form->control('usuario_id', ['options' => $profesores]);
             echo $this->Form->control('num_max_apuntados');
             echo $this->Form->control('num_actual_apuntados');
             echo $this->Form->control('precio');
