@@ -3,40 +3,32 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\ClasesGrupale[]|\Cake\Collection\CollectionInterface $clasesGrupales
  */
+
+$this->extend('/Pages/navbar');
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Clases Grupale'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Usuarios'), ['controller' => 'Usuarios', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Usuario'), ['controller' => 'Usuarios', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="clasesGrupales index large-9 medium-8 columns content">
+<div class="showVista"  id="clasesGrupales">
     <h2><?= __('Clases Grupales') ?></h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id_claseGrupal') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha_inicio') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('usuario_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('num_max_apuntados') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('num_actual_apuntados') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('usuario_id', 'Profesor') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('num_max_apuntados', 'Nº Max apuntados') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('num_actual_apuntados', 'Nº Apuntados actuales') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('precio') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('pista_reserva') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora_reserva') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha_reserva') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="col" class="actions"><?= __('Acciones') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($clasesGrupales as $clasesGrupale): ?>
             <tr>
-                <td><?= $this->Number->format($clasesGrupale->id_claseGrupal) ?></td>
                 <td><?= h($clasesGrupale->fecha_inicio) ?></td>
-                <td><?= h($clasesGrupale->hora) ?></td>
-                <td><?= $clasesGrupale->has('usuario') ? $this->Html->link($clasesGrupale->usuario->dni, ['controller' => 'Usuarios', 'action' => 'view', $clasesGrupale->usuario->dni]) : '' ?></td>
+                <td><?= date('H:i', strtotime($clasesGrupale->hora)) ?></td>
+                <td><?= $clasesGrupale->has('usuario') ? $this->Html->link($clasesGrupale->usuario->apellido.', '.$clasesGrupale->usuario->nombre, ['controller' => 'Usuarios', 'action' => 'view', $clasesGrupale->usuario->dni]) : '' ?></td>
                 <td><?= $this->Number->format($clasesGrupale->num_max_apuntados) ?></td>
                 <td><?= $this->Number->format($clasesGrupale->num_actual_apuntados) ?></td>
                 <td><?= $this->Number->format($clasesGrupale->precio) ?></td>
@@ -54,12 +46,12 @@
     </table>
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->first('<< ' . __('primero')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <?= $this->Paginator->next(__('siguiente') . ' >') ?>
+            <?= $this->Paginator->last(__('último') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+        <p><?= $this->Paginator->counter(['format' => __('Pagina {{page}} de {{pages}}, mostrando {{current}} registro(s) de {{count}} en total')]) ?></p>
     </div>
 </div>
