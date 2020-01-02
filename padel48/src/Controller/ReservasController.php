@@ -94,8 +94,10 @@ class ReservasController extends AppController
 
                     $usuario->numero_pistas = $usuario->numero_pistas+1;
                     $this->Usuarios->save($usuario);
-                    $this->Flash->success(__('Reserva guardada correctamente para la pista '. ($numReservas+1) ));
-                    return $this->redirect(['action' => 'index']);
+                    $this->Flash->success(__('Procediendo al pago '));
+                    //$this->Flash->success(__('Reserva guardada correctamente para la pista '. ($numReservas+1) ));
+                    //Redireccion a pasarela
+                    return $this->redirect(['action' => 'pasarela']);
                 }
             }
         }
@@ -177,4 +179,21 @@ class ReservasController extends AppController
             $this->Usuarios->save($usuarioAdmin);
         }
     }
+
+    //Pasarela
+    public function pasarela(){
+       // header("Location: ../Reservas/pasarela.ctp");
+
+        //$pasarelas = $this->paginate($this->Pasarela);
+       
+
+
+        $this->set(compact('pasarela'));
+        $this->set('user', $this->Auth->user());
+
+        
+        return $this->redirect(['action' => 'index']);
+    }
+
+
 }
