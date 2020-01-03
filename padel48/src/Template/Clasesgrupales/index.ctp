@@ -37,7 +37,7 @@ $this->extend('/Pages/navbar');
                 <td><?= h($clasesGrupale->fecha_reserva) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $clasesGrupale->id_claseGrupal]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $clasesGrupale->id_claseGrupal]) ?>
+                    <?= $this->Html->link(__('Aplazar'), ['action' => 'aplazar', $clasesGrupale->id_claseGrupal]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $clasesGrupale->id_claseGrupal], ['confirm' => __('Are you sure you want to delete # {0}?', $clasesGrupale->id_claseGrupal)]) ?>
                 </td>
             </tr>

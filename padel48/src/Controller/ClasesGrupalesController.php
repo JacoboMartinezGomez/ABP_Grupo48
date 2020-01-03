@@ -59,6 +59,7 @@ class ClasesGrupalesController extends AppController
         ]);
 
         $this->set('clasesGrupale', $clasesGrupale);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -68,8 +69,8 @@ class ClasesGrupalesController extends AppController
      */
     public function add()
     {
-
         $this->loadModel('Usuarios');
+        $this->loadModel('Reservas');
 
         $query = $this->Usuarios->find('list',
                                             ['keyField' => 'dni',
@@ -90,17 +91,24 @@ class ClasesGrupalesController extends AppController
 
             if($clasesGrupale->fecha_inicio >= Time::now()){
 
-//                Crear una reserva
-//                $clasesGrupale->fecha_reserva = ;
-//                $clasesGrupale->pista_reserva = ;
-//                $clasesGrupale->hora_reserva = ;
+                //Se crea una reserva
+                $reserva = $this->Reservas->reservarPista(
+                                                        $clasesGrupale->usuario->dni,
+                                                        $clasesGrupale->hora,
+                                                        $clasesGrupale->fecha_inicio);
 
-                if ($this->ClasesGrupales->save($clasesGrupale)) {
-                    $this->Flash->success(__('The clases grupale has been saved.'));
+                if($reserva != null){
+                    $clasesGrupale->fecha_reserva = $reserva->fecha;
+                    $clasesGrupale->pista_reserva = $reserva->hora;
+                    $clasesGrupale->hora_reserva = $reserva->pista_id;
 
-                    return $this->redirect(['action' => 'index']);
+                    if ($this->ClasesGrupales->save($clasesGrupale)) {
+                        $this->Flash->success(__('The clases grupale has been saved.'));
+
+                        return $this->redirect(['action' => 'index']);
+                    }
+                    $this->Flash->error(__('The clases grupale could not be saved. Please, try again.'));
                 }
-                $this->Flash->error(__('The clases grupale could not be saved. Please, try again.'));
             }
         }
 
@@ -110,29 +118,36 @@ class ClasesGrupalesController extends AppController
         $this->set('user', $this->Auth->user());
     }
 
+
     /**
-     * Edit method
-     *
-     * @param string|null $id Clases Grupale id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $clasesGrupale = $this->ClasesGrupales->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $clasesGrupale = $this->ClasesGrupales->patchEntity($clasesGrupale, $this->request->getData());
-            if ($this->ClasesGrupales->save($clasesGrupale)) {
-                $this->Flash->success(__('The clases grupale has been saved.'));
+     * @param integer|null $id
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * */
+    public function aplazar($id = null){
+        $this->loadModel('Reservas');
+
+        $clase = $this->ClasesGrupales->get($id);
+
+        $nuevaHora = $this->request->getData()['hora'];
+        $nuevaFecha = $this->request->getData()['fecha'];
+
+        $reserva = $this->Reservas->reservarPista($clase->usuario_id, $nuevaHora, $nuevaFecha);
+        if($reserva != null){
+            $clase->fecha_reserva = $reserva->fecha;
+            $clase->hora_reserva = $reserva->hora;
+            $clase->pista_reserva = $reserva->pista_id;
+
+            if($this->ClasesGrupales->save($clase)){
+                $this->Flash->success(__('La clase grupal ha sido aplazada con exito.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The clases grupale could not be saved. Please, try again.'));
+            $this->Flash->error(__('Ha ocurrido un error al intentar aplazar la clase'));
         }
-        $usuarios = $this->ClasesGrupales->Usuarios->find('list', ['limit' => 200]);
+        $this->Flash->error(__('No se ha podido reservar pista para esa fecha y hora'));
+
         $this->set(compact('clasesGrupale', 'usuarios'));
+        $this->set('user', $this->Auth->user());
     }
 
     /**

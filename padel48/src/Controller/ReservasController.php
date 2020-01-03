@@ -85,7 +85,7 @@ class ReservasController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
 
-            if(!$this->hayPistaDisponible($reserva->fecha, $reserva->hora)){
+            if(!$this->Reservas->hayPistaDisponible($reserva->fecha, $reserva->hora)){
                 $this->Flash->error(__('Las reservas están llenas para ese día y hora'));
             }
             else{
@@ -103,18 +103,22 @@ class ReservasController extends AppController
         $this->set('user', $this->Auth->user());
     }
 
-    public function hayPistaDisponible($fecha, $hora){
-        $this->loadModel('Pistas');
-        $numReservas = $this->Reservas->find('all')->where(['fecha' => $fecha, 'hora' => $hora])->all()->count();
-        $numeroPistas = $this->Pistas->find('all')->all()->count();
-        if($numReservas == $numeroPistas){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
+    /**
+     * @return \Cake\Http\Response|null
+     * @return \App\Model\Table\ReservasTable
+     * */
 
+//    public function hayPistaDisponible($fecha, $hora){
+//        $this->loadModel('Pistas');
+//        $numReservas = $this->Reservas->find('all')->where(['fecha' => $fecha, 'hora' => $hora])->all()->count();
+//        $numeroPistas = $this->Pistas->find('all')->all()->count();
+//        if($numReservas == $numeroPistas){
+//            return false;
+//        }
+//        else{
+//            return true;
+//        }
+//    }
 
     /**
      * Delete method
