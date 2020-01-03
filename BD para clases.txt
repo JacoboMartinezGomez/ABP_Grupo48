@@ -20,3 +20,5 @@ Aplazar una clase:
 
 Borrar clase:
 	-Enviar correo a los usuarios
+
+--Ver usuarios inscritos en la clase (Aprovechar view.ctp)
