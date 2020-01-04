@@ -79,48 +79,4 @@ class ReservasTable extends Table
 
         return $rules;
     }
-
-    public function hayPistaDisponible($fecha, $hora){
-        $this->loadModel('Pistas');
-        $numReservas = $this->find('all')->where(['fecha' => $fecha, 'hora' => $hora])->all()->count();
-        $numeroPistas = $this->Pistas->find('all')->all()->count();
-        if($numReservas == $numeroPistas){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-    /**
-     * @return \Cake\Http\Response|null
-     * @return \App\Model\Table\ReservasTable
-     * */
-    public function reservarPista($dniUser, $hora, $fecha){
-        $this->borrarReservasPasadas();
-        $this->loadModel('Usuarios');
-        $this->loadModel('Pistas');
-
-        $reserva = $this->Reservas->newEntity();
-
-        $reserva->id_usuario = $dniUser;
-        $reserva->hora = $hora;
-        $reserva->fecha = $fecha;
-
-//        $usuario = $this->Usuarios->find('all')->where(['dni' => $reserva->id_usuario])->first();
-        $numReservas = $this->find('all')->where(['fecha' => $reserva->fecha, 'hora' => $reserva->hora])->all()->count();
-
-        if(!$this->hayPistaDisponible($reserva->fecha, $reserva->hora)){
-            $this->Flash->error(__('No hay pistas disponibles'));
-            return null;
-        }
-        else{
-            $reserva->pista_id = $numReservas+1;
-            if($this->save($reserva)){
-                return $reserva;
-            }else{
-                return null;
-            }
-        }
-    }
 }

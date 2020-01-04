@@ -85,7 +85,7 @@ class ReservasController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
 
-            if(!$this->Reservas->hayPistaDisponible($reserva->fecha, $reserva->hora)){
+            if(!$this->hayPistaDisponible($reserva->fecha, $reserva->hora)){
                 $this->Flash->error(__('Las reservas están llenas para ese día y hora'));
             }
             else{
@@ -107,18 +107,52 @@ class ReservasController extends AppController
      * @return \Cake\Http\Response|null
      * @return \App\Model\Table\ReservasTable
      * */
+    public function reservarPista($dniUser, $hora, $fecha){
+        $this->borrarReservasPasadas();
+        $this->loadModel('Usuarios');
+        $this->loadModel('Pistas');
 
-//    public function hayPistaDisponible($fecha, $hora){
-//        $this->loadModel('Pistas');
-//        $numReservas = $this->Reservas->find('all')->where(['fecha' => $fecha, 'hora' => $hora])->all()->count();
-//        $numeroPistas = $this->Pistas->find('all')->all()->count();
-//        if($numReservas == $numeroPistas){
-//            return false;
-//        }
-//        else{
-//            return true;
-//        }
-//    }
+        $reserva = $this->Reservas->newEntity();
+
+        $reserva->id_usuario = $dniUser;
+        $reserva->fecha = $fecha;
+        $reserva->hora = $hora;
+
+//        $usuario = $this->Usuarios->find('all')->where(['dni' => $reserva->id_usuario])->first();
+        $numReservas = $this->Reservas->find('all')->where(['fecha' => $reserva->fecha, 'hora' => $reserva->hora])->all()->count();
+
+
+
+        if(!$this->hayPistaDisponible($reserva->fecha, $reserva->hora)){
+            $this->Flash->error(__('No hay pistas disponibles'));
+            return null;
+        }else{
+            $reserva->pista_id = $numReservas+1;
+
+            if($this->Reservas->save($reserva)){
+                return $reserva;
+            }else{
+                return null;
+            }
+        }
+    }
+
+    /**
+     * @return \Cake\Http\Response|null
+     * @return \App\Model\Table\ReservasTable
+     * */
+
+    public function hayPistaDisponible($fecha, $hora){
+        $this->loadModel('Pistas');
+        $numReservas = $this->Reservas->find('all')->where(['fecha' => $fecha, 'hora' => $hora])->all()->count();
+        $numeroPistas = $this->Pistas->find('all')->all()->count();
+        if($numReservas == $numeroPistas){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
     /**
      * Delete method

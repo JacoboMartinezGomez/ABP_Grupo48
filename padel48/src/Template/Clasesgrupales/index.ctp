@@ -27,13 +27,13 @@ $this->extend('/Pages/navbar');
             <?php foreach ($clasesGrupales as $clasesGrupale): ?>
             <tr>
                 <td><?= h($clasesGrupale->fecha_inicio) ?></td>
-                <td><?= date('H:i', strtotime($clasesGrupale->hora)) ?></td>
+                <td><?= h(date('H:i', strtotime($clasesGrupale->hora))) ?></td>
                 <td><?= $clasesGrupale->has('usuario') ? $this->Html->link($clasesGrupale->usuario->apellido.', '.$clasesGrupale->usuario->nombre, ['controller' => 'Usuarios', 'action' => 'view', $clasesGrupale->usuario->dni]) : '' ?></td>
                 <td><?= $this->Number->format($clasesGrupale->num_max_apuntados) ?></td>
                 <td><?= $this->Number->format($clasesGrupale->num_actual_apuntados) ?></td>
                 <td><?= $this->Number->format($clasesGrupale->precio) ?></td>
                 <td><?= $this->Number->format($clasesGrupale->pista_reserva) ?></td>
-                <td><?= $this->Number->format($clasesGrupale->hora_reserva) ?></td>
+                <td><?= h(date('H:i', strtotime($horas[$clasesGrupale->hora_reserva]))) ?></td>
                 <td><?= h($clasesGrupale->fecha_reserva) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $clasesGrupale->id_claseGrupal]) ?>
