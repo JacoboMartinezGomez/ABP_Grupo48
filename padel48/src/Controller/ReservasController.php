@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\ClasesGrupale;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Time;
 /**
@@ -40,6 +41,7 @@ class ReservasController extends AppController
     public function view($id = null)
     {
         $this->borrarReservasPasadas();
+        $this->reservarPistaClases();
 
         $reserva = $this->Reservas->get($id, [
             'contain' => []
@@ -58,6 +60,8 @@ class ReservasController extends AppController
     public function add()
     {
         $this->borrarReservasPasadas();
+        $this->reservarPistaClases();
+
         $this->loadModel('Usuarios');
         $this->loadModel('Pistas');
         $this->set('hora_inicio', $this->getHorasPistaEntero());
@@ -109,6 +113,7 @@ class ReservasController extends AppController
      * */
     public function reservarPista($dniUser, $hora, $fecha){
         $this->borrarReservasPasadas();
+
         $this->loadModel('Usuarios');
         $this->loadModel('Pistas');
 
@@ -213,6 +218,33 @@ class ReservasController extends AppController
             $usuarioAdmin->numero_pistas = $usuarioAdmin->numero_pistas - $numeroReservas;
             $reservasAdmin->delete()->execute();
             $this->Usuarios->save($usuarioAdmin);
+        }
+    }
+
+    public function reservarPistaClases(){
+        $this->loadModel('ClasesGrupales');
+
+        $clases = $this->ClasesGrupales->find('all')->toArray();
+
+        foreach($clases as $clase){
+            $fecha = $clase->fecha_inicio;
+
+            if($fecha < Time::now()){
+                while($fecha < Time::now()){
+                    $fecha = $fecha->modify('+7 days');
+                }
+
+                $reserva = $this->reservarPista($clase->usuario_id,
+                                                $this->getHorasPistaInverso()[$clase->hora->format('H:i:s')],
+                                                $fecha);
+
+                if($reserva != null){
+                    $clase->hora_reserva = $reserva->hora;
+                    $clase->fecha_reserva = $reserva->fecha;
+
+                    $this->ClasesGrupales->save($clase);
+                }
+            }
         }
     }
 }

@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\I18n\Time;
+use Cake\Mailer\Email;
+use Cake\Mailer\TransportFactory;
 
 /**
  * ClasesGrupales Controller
@@ -121,6 +123,11 @@ class ClasesGrupalesController extends AppController
      */
     public function add()
     {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $this->loadModel('Usuarios');
         $this->loadModel('Reservas');
 
@@ -147,18 +154,18 @@ class ClasesGrupalesController extends AppController
                 if($clasesGrupale->num_max_apuntados > 1){
                     if($clasesGrupale->precio >= 0){
 
-                        $idsHoras = $this->getHorasPistaEntero();
-                        for($i = 1; $i <= sizeof($idsHoras); $i++){
-                            if(date('H:i', strtotime($idsHoras[$i])) == $clasesGrupale->hora){
-                                $idHora = $i;
-                                break;
-                            }
-                        }
+//                        $idsHoras = $this->getHorasPistaEntero();
+//                        for($i = 1; $i <= sizeof($idsHoras); $i++){
+//                            if(date('H:i', strtotime($idsHoras[$i])) == $clasesGrupale->hora){
+//                                $idHora = $i;
+//                                break;
+//                            }
+//                        }
 
                         //Se crea una reserva
                         $reservasContr = new ReservasController();
                         $reserva = $reservasContr->reservarPista($clasesGrupale->usuario_id,
-                                                                $idHora,
+                                                                $this->getHorasPistaInverso()[date('H:i:s', strtotime($clasesGrupale->hora))],
                                                                 $clasesGrupale->fecha_inicio);
 
                         if($reserva != null){
@@ -168,11 +175,11 @@ class ClasesGrupalesController extends AppController
                             $clasesGrupale->num_actual_apuntados = 0;
 
                             if ($this->ClasesGrupales->save($clasesGrupale)) {
-                                $this->Flash->success(__('The clases grupale has been saved.'));
+                                $this->Flash->success(__('La clase grupal ha sido guardada con exito'));
 
                                 return $this->redirect(['action' => 'index']);
                             }
-                            $this->Flash->error(__('The clases grupale could not be saved. Please, try again.'));
+                            $this->Flash->error(__('La clase grupal no se ha podido guardar con exito'));
                         }
                     }else{
                         $this->Flash->error(__('El precio no puede ser negativo'));
@@ -197,11 +204,17 @@ class ClasesGrupalesController extends AppController
      * */
     public function aplazar($id = null){
         $this->loadModel('Reservas');
+        $this->loadModel('Usuarios');
 
         $this->set('hora_reserva', $this->getHorasPistaEntero());
         $this->set('hora_elegida', $this->ClasesGrupales->get($id)->hora_reserva);
 
         $clasesGrupale = $this->ClasesGrupales->get($id);
+
+        if(!$this->isAuthorized($this->Auth->user()) & $clasesGrupale->usuario_id != $this->Auth->user('dni')){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $clasesGrupale = $this->ClasesGrupales->patchEntity($clasesGrupale, $this->request->getData());
@@ -217,6 +230,35 @@ class ClasesGrupalesController extends AppController
                 $clasesGrupale->pista_reserva = $reserva->pista_id;
 
                 if ($this->ClasesGrupales->save($clasesGrupale)) {
+
+                    // Sample SMTP configuration.
+                    TransportFactory::setConfig('gmail', [
+                        'host' => 'ssl://smtp.gmail.com',
+                        'port' => 465,
+                        'username' => 'abppadel48@gmail.com',
+                        'password' => 'wgfnullmyiffvuzi',
+                        'className' => 'Smtp'
+                    ]);
+
+                    /*$correos = $this->Usuarios->find()->extract('email');
+                    $array = [];
+                    foreach($correos as $correo){
+                        $array[$correo] = $correo;
+                    }*/
+
+                    $profesor = $this->Usuarios->get($clasesGrupale->usuario_id);
+
+                    $email = new Email('default');
+                    $email->setFrom(['abppadel48@gmail.com'])
+//                        ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
+                        ->setTo(['dvfernandez@esei.uvigo.es'])
+                        ->setSubject('Clase grupal aplazada')
+                        ->setTransport('gmail')
+                        ->send('La clase grupal del profesor '.$profesor->apellido.', '.
+                            $profesor->nombre.' ha sido aplazada al '.$clasesGrupale->fecha_reserva.
+                            ' a las '.$this->getHorasPistaEntero()[$clasesGrupale->hora_reserva].' en la pista '.$clasesGrupale->pista_reserva);
+
+
                     $this->Flash->success(__('La clase grupal ha sido aplazada con exito.'));
                     return $this->redirect(['action' => 'index']);
                 }
@@ -240,12 +282,55 @@ class ClasesGrupalesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $clasesGrupale = $this->ClasesGrupales->get($id);
+
+        if(!$this->isAuthorized($this->Auth->user()) & $clasesGrupale->usuario_id != $this->Auth->user('dni')){
+            $this->Flash->error(__('No tiene permisos. Contacte con un administrador.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->ClasesGrupales->delete($clasesGrupale)) {
-            $this->Flash->success(__('The clases grupale has been deleted.'));
+            // Sample SMTP configuration.
+            TransportFactory::setConfig('gmail', [
+                'host' => 'ssl://smtp.gmail.com',
+                'port' => 465,
+                'username' => 'abppadel48@gmail.com',
+                'password' => 'wgfnullmyiffvuzi',
+                'className' => 'Smtp'
+            ]);
+
+            /*$correos = $this->Usuarios->find()->extract('email');
+            $array = [];
+            foreach($correos as $correo){
+                $array[$correo] = $correo;
+            }*/
+            $this->loadModel('Usuarios');
+            $profesor = $this->Usuarios->get($clasesGrupale->usuario_id);
+
+            $email = new Email('default');
+            $email->setFrom(['abppadel48@gmail.com'])
+//                        ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
+                ->setTo(['dvfernandez@esei.uvigo.es'])
+                ->setSubject('Clase grupal aplazada')
+                ->setTransport('gmail')
+                ->send('La clase grupal del profesor '.$profesor->apellido.', '.
+                    $profesor->nombre.' ha sido borrada. Para mas informacion pongase en contacto con el ' .
+                    'profesor o un administrador.');
+
+            $this->Flash->success(__('La clases grupal ha sido borrada.'));
         } else {
-            $this->Flash->error(__('The clases grupale could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La clase grupal no ha podido ser borrada'));
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function isAuthorized($user)
+    {
+        //El creador de la fecha propuesta no puede aceptarla
+        if ($user['rol'] == 'PROFESOR') {
+            return true;
+        }
+
+        return parent::isAuthorized($user);
     }
 }
