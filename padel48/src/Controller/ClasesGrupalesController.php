@@ -47,6 +47,42 @@ class ClasesGrupalesController extends AppController
     }
 
     /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function misClases()
+    {
+        $this->paginate = [
+            'contain' => ['Usuarios']
+        ];
+
+        if($this->Auth->user('rol') != 'PROFESOR'){
+            //Filtra las clases, mostrando solo en las que el usuario esta inscrito
+            $query = $this->ClasesGrupales->find('all')
+                                            ->join([
+                                                'u' => [
+                                                    'table' => 'usuarios_inscritos_clase',
+                                                    'type' => 'INNER',
+                                                    'conditions' =>[
+                                                        ['ClasesGrupales.id_claseGrupal = u.claseGrupal_id'],
+                                                        ['u.usuario_id' => $this->Auth->user('dni')]
+                                                        ]
+                                                ]]);
+        }else{
+            $query = $this->ClasesGrupales->find('all')
+                                            ->where(['usuario_id' => $this->Auth->user('dni')]);
+        }
+
+
+//        $query = $this->ClasesGrupales->find('all');
+
+        $this->set('horas', $this->getHorasPistaEntero());
+        $this->set('clasesGrupales',$this->paginate($query));
+        $this->set('user', $this->Auth->user());
+    }
+
+    /**
      * View method
      *
      * @param string|null $id Clases Grupale id.
@@ -55,10 +91,25 @@ class ClasesGrupalesController extends AppController
      */
     public function view($id = null)
     {
+        $this->loadModel('Usuarios');
+
         $clasesGrupale = $this->ClasesGrupales->get($id, [
             'contain' => ['Usuarios']
         ]);
 
+        $inscritos = $this->Usuarios->find('all')
+                                            ->join([
+                                                'i' => [
+                                                    'table' => 'usuarios_inscritos_clase',
+                                                    'type' => 'INNER',
+                                                    'conditions' =>[
+                                                        ['i.claseGrupal_id' => $id],
+                                                        ['i.usuario_id = usuarios.dni']
+                                                    ]
+                                                ]
+                                            ]);
+
+        $this->set('inscritos', $inscritos);
         $this->set('clasesGrupale', $clasesGrupale);
         $this->set('user', $this->Auth->user());
     }
