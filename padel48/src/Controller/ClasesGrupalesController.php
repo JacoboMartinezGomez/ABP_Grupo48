@@ -41,7 +41,7 @@ class ClasesGrupalesController extends AppController
 //                                            ]]
 //                                        ]);
 
-        $query = $this->ClasesGrupales->find('all');
+        $query = $this->ClasesGrupales->find('all')->where(['num_max_apuntados > num_actual_apuntados']);
 
         $this->set('horas', $this->getHorasPistaEntero());
         $this->set('clasesGrupales',$this->paginate($query));
@@ -219,54 +219,58 @@ class ClasesGrupalesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $clasesGrupale = $this->ClasesGrupales->patchEntity($clasesGrupale, $this->request->getData());
 
-            $reservasContr = new ReservasController();
-            $reserva = $reservasContr->reservarPista($clasesGrupale->usuario_id,
-                                                    $clasesGrupale->hora_reserva,
-                                                    $clasesGrupale->fecha_reserva);
+            $fechaLimite = Time::now()->modify('+7 days');
 
-            if ($reserva != null) {
-                $clasesGrupale->fecha_reserva = $reserva->fecha;
-                $clasesGrupale->hora_reserva = $reserva->hora;
-                $clasesGrupale->pista_reserva = $reserva->pista_id;
+            if ($clasesGrupale->fecha_reserva <= $fechaLimite && $clasesGrupale->fecha_reserva >= Time::now()) {
 
-                if ($this->ClasesGrupales->save($clasesGrupale)) {
+                $reservasContr = new ReservasController();
+                $reserva = $reservasContr->reservarPista($clasesGrupale->usuario_id,
+                    $clasesGrupale->hora_reserva,
+                    $clasesGrupale->fecha_reserva);
 
-                    // Sample SMTP configuration.
-                    TransportFactory::setConfig('gmail', [
-                        'host' => 'ssl://smtp.gmail.com',
-                        'port' => 465,
-                        'username' => 'abppadel48@gmail.com',
-                        'password' => 'wgfnullmyiffvuzi',
-                        'className' => 'Smtp'
-                    ]);
+                if ($reserva != null) {
+                    $clasesGrupale->fecha_reserva = $reserva->fecha;
+                    $clasesGrupale->hora_reserva = $reserva->hora;
+                    $clasesGrupale->pista_reserva = $reserva->pista_id;
 
-                    /*$correos = $this->Usuarios->find()->extract('email');
-                    $array = [];
-                    foreach($correos as $correo){
-                        $array[$correo] = $correo;
-                    }*/
+                    if ($this->ClasesGrupales->save($clasesGrupale)) {
 
-                    $profesor = $this->Usuarios->get($clasesGrupale->usuario_id);
+                        // Sample SMTP configuration.
+                        TransportFactory::setConfig('gmail', [
+                            'host' => 'ssl://smtp.gmail.com',
+                            'port' => 465,
+                            'username' => 'abppadel48@gmail.com',
+                            'password' => 'wgfnullmyiffvuzi',
+                            'className' => 'Smtp'
+                        ]);
 
-                    $email = new Email('default');
-                    $email->setFrom(['abppadel48@gmail.com'])
-//                        ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
-                        ->setTo(['dvfernandez@esei.uvigo.es'])
-                        ->setSubject('Clase grupal aplazada')
-                        ->setTransport('gmail')
-                        ->send('La clase grupal del profesor '.$profesor->apellido.', '.
-                            $profesor->nombre.' ha sido aplazada al '.$clasesGrupale->fecha_reserva.
-                            ' a las '.$this->getHorasPistaEntero()[$clasesGrupale->hora_reserva].' en la pista '.$clasesGrupale->pista_reserva);
+                        /*$correos = $this->Usuarios->find()->extract('email');
+                        $array = [];
+                        foreach($correos as $correo){
+                            $array[$correo] = $correo;
+                        }*/
+
+                        $profesor = $this->Usuarios->get($clasesGrupale->usuario_id);
+
+                        $email = new Email('default');
+                        $email->setFrom(['abppadel48@gmail.com'])
+                            ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
+                            ->setSubject('Clase grupal aplazada')
+                            ->setTransport('gmail')
+                            ->send('La clase grupal del profesor ' . $profesor->apellido . ', ' .
+                                $profesor->nombre . ' ha sido aplazada al ' . $clasesGrupale->fecha_reserva .
+                                ' a las ' . $this->getHorasPistaEntero()[$clasesGrupale->hora_reserva] . ' en la pista ' . $clasesGrupale->pista_reserva);
 
 
-                    $this->Flash->success(__('La clase grupal ha sido aplazada con exito.'));
-                    return $this->redirect(['action' => 'index']);
+                        $this->Flash->success(__('La clase grupal ha sido aplazada con exito.'));
+                        return $this->redirect(['action' => 'index']);
+                    }
+                    $this->Flash->error(__('Ha ocurrido un error al intentar aplazar la clase'));
                 }
-                $this->Flash->error(__('Ha ocurrido un error al intentar aplazar la clase'));
+                $this->Flash->error(__('No se ha podido reservar pista para esa fecha y hora'));
             }
-            $this->Flash->error(__('No se ha podido reservar pista para esa fecha y hora'));
+            $this->Flash->error(__('La fecha propuesta excede el limite de una semana.'));
         }
-
         $this->set(compact('clasesGrupale'));
         $this->set('user', $this->Auth->user());
     }
@@ -308,8 +312,7 @@ class ClasesGrupalesController extends AppController
 
             $email = new Email('default');
             $email->setFrom(['abppadel48@gmail.com'])
-//                        ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
-                ->setTo(['dvfernandez@esei.uvigo.es'])
+                ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
                 ->setSubject('Clase grupal aplazada')
                 ->setTransport('gmail')
                 ->send('La clase grupal del profesor '.$profesor->apellido.', '.

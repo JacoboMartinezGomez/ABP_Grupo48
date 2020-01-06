@@ -37,9 +37,32 @@ $this->extend('/Pages/navbar');
                     <td><?= h(date('H:i', strtotime($horas[$clasesGrupale->hora_reserva]))) ?></td>
                     <td><?= h($clasesGrupale->fecha_reserva) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $clasesGrupale->id_claseGrupal]) ?>
-                        <?= $this->Html->link(__('Aplazar'), ['action' => 'aplazar', $clasesGrupale->id_claseGrupal]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $clasesGrupale->id_claseGrupal], ['confirm' => __('Are you sure you want to delete # {0}?', $clasesGrupale->id_claseGrupal)]) ?>
+                        <?php echo $this->Html->image("ver.png", array(
+                            "src" => "Ver",
+                            "alt" => "ver",
+                            'url' => array('action' => 'view', $clasesGrupale->id_claseGrupal),
+                            "class" => "icono"
+                        )); ?>
+
+                        <?php if($user['rol'] == 'ADMIN' || $user['rol'] == 'PROFESOR'){
+                            echo $this->Html->image("calendario.png", array(
+                                "src" => "Aplazar",
+                                "alt" => "Aplazar",
+                                'url' => array('action' => 'aplazar', $clasesGrupale->id_claseGrupal),
+                                "class" => "icono"
+                            ));
+                        }?>
+
+                        <?php if($user['rol'] == 'ADMIN' || $user['rol'] == 'PROFESOR') {
+                            echo $this->Form->postLink(
+                                $this->Html->image(
+                                    "borrar.png",
+                                    ["alt" => __('Delete')]
+                                ),
+                                ['action' => 'delete', $clasesGrupale->id_claseGrupal],
+                                ['escape' => false, 'confirm' => __('Esta seguro de que desea borrar la clase # {0}?', $clasesGrupale->id_claseGrupal)]
+                            );
+                        }?>
                     </td>
                 </tr>
             <?php endforeach; ?>
