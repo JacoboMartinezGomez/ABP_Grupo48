@@ -34,6 +34,14 @@ $this->Html->css(['css'])?>
                     </ul>
                 <?php }; ?>
             </li>
+            <li><?= $this->Html->link(__('Clases Grupales'), ['controller' => 'ClasesGrupales', 'action' => 'index']) ?>
+                <ul>
+                <?php if ($user['rol'] == 'ADMIN'){?>
+                    <li><?= $this->Html->link(__('Nueva clase grupal'), ['controller' => 'ClasesGrupales', 'action' => 'add']) ?></li>
+                <?php }; ?>
+                    <li><?= $this->Html->link(__('Mis clases'), ['controller' => 'ClasesGrupales', 'action' => 'misClases']) ?></li>
+                </ul>
+            </li>
             <li><?= $this->Html->link(__('Enfrentamientos'), ['controller' => 'Enfrentamientos', 'action' => 'index']) ?></li>
             <li><?= $this->Html->link(__('Pistas'), ['controller' => 'Pistas', 'action' => 'index']) ?>
                 <?php if ($user['rol'] == 'ADMIN'){?>

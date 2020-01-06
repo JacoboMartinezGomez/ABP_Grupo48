@@ -10,7 +10,6 @@ $this->extend('/Pages/navbar');
     <fieldset>
         <legend><?= __('Editar horario') ?></legend>
         <?php
-            echo $this->Form->control('pista_id', ['options' => $pistas]);
             echo $this->Form->control('hora_inicio');
         ?>
     </fieldset>
