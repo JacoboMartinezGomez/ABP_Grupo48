@@ -336,4 +336,70 @@ class ClasesGrupalesController extends AppController
 
         return parent::isAuthorized($user);
     }
+
+    public function inscribirse($idClase){
+        $this->loadModel('Usuarios_Inscritos_Clase');
+
+        $claseQuery = $this->ClasesGrupales->find('all')->where(['id_claseGrupal = '=>$idClase]);
+        $clase = $claseQuery->first()->toArray();
+        if($clase['num_actual_apuntados'] >= $clase['num_max_apuntados'] ){
+            $this->Flash->error(__('Esta clase ya está llena'));
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
+        }
+
+        $query = $this->Usuarios_Inscritos_Clase->find('all')->where(['usuario_id = '=>$this->Auth->user('dni'), 'claseGrupal_id = ' => $idClase]);
+        if($query->first() != null){
+            $this->Flash->error(__('Ya estas apuntado a esta clase'));
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
+        }
+
+        //inscribir usuario
+        $inscripcion = $this->Usuarios_Inscritos_Clase->newEntity();
+        $inscripcion->claseGrupal_id = $idClase;
+        $inscripcion->usuario_id = $this->Auth->user('dni');
+
+
+        //aumentar numero_apuntados
+        $clase = $this->ClasesGrupales->get($idClase);
+        $clase->num_actual_apuntados++;
+
+
+        $this->Usuarios_Inscritos_Clase->save($inscripcion);
+        if($this->ClasesGrupales->save($clase)){
+            $this->Flash->success(__('Te has inscrito correctamente.'));
+            return $this->redirect(['action' => 'index']);
+        }else{
+            $this->Flash->error(__('Hubo un problema con la inscripcion. Vuelve a intentarlo.'));
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
+        }
+
+    }
+
+    public function desinscribirse($idClase){
+        $this->loadModel('Usuarios_Inscritos_Clase');
+
+
+        $query = $this->Usuarios_Inscritos_Clase->find('all')->where(['usuario_id = '=>$this->Auth->user('dni'), 'claseGrupal_id = ' => $idClase]);
+        if($query->first() == null){
+            $this->Flash->error(__('No estas apuntado a esta clase'));
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
+        }
+
+        //disminuir numero_apuntados
+        $clase = $this->ClasesGrupales->get($idClase);
+        $clase->num_actual_apuntados--;
+
+        //desapuntar usuario
+        $inscripcion = $this->Usuarios_Inscritos_Clase->get([$idClase, $this->Auth->user('dni')]);
+        if($this->Usuarios_Inscritos_Clase->delete($inscripcion)){
+            $this->Flash->success(__('Te has desapuntado correctamente.'));
+            return $this->redirect(['action' => 'index']);
+        }
+        else{
+            $this->Flash->error(__('Se produjo un error'));
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
+        }
+
+    }
+
 }
