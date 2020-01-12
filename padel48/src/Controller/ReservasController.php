@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\ClasesGrupale;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Time;
 /**
@@ -40,6 +41,7 @@ class ReservasController extends AppController
     public function view($id = null)
     {
         $this->borrarReservasPasadas();
+        $this->reservarPistaClases();
 
         $reserva = $this->Reservas->get($id, [
             'contain' => []
@@ -58,6 +60,8 @@ class ReservasController extends AppController
     public function add()
     {
         $this->borrarReservasPasadas();
+        $this->reservarPistaClases();
+
         $this->loadModel('Usuarios');
         $this->loadModel('Pistas');
         $this->set('hora_inicio', $this->getHorasPistaEntero());
@@ -103,6 +107,46 @@ class ReservasController extends AppController
         $this->set('user', $this->Auth->user());
     }
 
+    /**
+     * @return \Cake\Http\Response|null
+     * @return \App\Model\Table\ReservasTable
+     * */
+    public function reservarPista($dniUser, $hora, $fecha){
+        $this->borrarReservasPasadas();
+
+        $this->loadModel('Usuarios');
+        $this->loadModel('Pistas');
+
+        $reserva = $this->Reservas->newEntity();
+
+        $reserva->id_usuario = $dniUser;
+        $reserva->fecha = $fecha;
+        $reserva->hora = $hora;
+
+//        $usuario = $this->Usuarios->find('all')->where(['dni' => $reserva->id_usuario])->first();
+        $numReservas = $this->Reservas->find('all')->where(['fecha' => $reserva->fecha, 'hora' => $reserva->hora])->all()->count();
+
+
+
+        if(!$this->hayPistaDisponible($reserva->fecha, $reserva->hora)){
+            $this->Flash->error(__('No hay pistas disponibles'));
+            return null;
+        }else{
+            $reserva->pista_id = $numReservas+1;
+
+            if($this->Reservas->save($reserva)){
+                return $reserva;
+            }else{
+                return null;
+            }
+        }
+    }
+
+    /**
+     * @return \Cake\Http\Response|null
+     * @return \App\Model\Table\ReservasTable
+     * */
+
     public function hayPistaDisponible($fecha, $hora){
         $this->loadModel('Pistas');
         $numReservas = $this->Reservas->find('all')->where(['fecha' => $fecha, 'hora' => $hora])->all()->count();
@@ -114,7 +158,6 @@ class ReservasController extends AppController
             return true;
         }
     }
-
 
     /**
      * Delete method
@@ -175,6 +218,33 @@ class ReservasController extends AppController
             $usuarioAdmin->numero_pistas = $usuarioAdmin->numero_pistas - $numeroReservas;
             $reservasAdmin->delete()->execute();
             $this->Usuarios->save($usuarioAdmin);
+        }
+    }
+
+    public function reservarPistaClases(){
+        $this->loadModel('ClasesGrupales');
+
+        $clases = $this->ClasesGrupales->find('all')->toArray();
+
+        foreach($clases as $clase){
+            $fecha = $clase->fecha_inicio;
+
+            if($fecha < Time::now()){
+                while($fecha < Time::now()){
+                    $fecha = $fecha->modify('+7 days');
+                }
+
+                $reserva = $this->reservarPista($clase->usuario_id,
+                                                $this->getHorasPistaInverso()[$clase->hora->format('H:i:s')],
+                                                $fecha);
+
+                if($reserva != null){
+                    $clase->hora_reserva = $reserva->hora;
+                    $clase->fecha_reserva = $reserva->fecha;
+
+                    $this->ClasesGrupales->save($clase);
+                }
+            }
         }
     }
 }
