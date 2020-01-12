@@ -41,7 +41,18 @@ $this->extend('/Pages/navbar');
                         "alt" => "ver",
                         'url' => array('action' => 'view', $clasesGrupale->id_claseGrupal),
                         "class" => "icono"
-                    )); ?>
+                    ));
+
+                    if($clasesGrupale->num_actual_apuntados < $clasesGrupale->num_max_apuntados && !in_array($clasesGrupale->id_claseGrupal, $clases_apuntado)){
+                        echo $this->Html->image("inscribir.png", array(
+                            "src" => "Inscribirse",
+                            "alt" => "inscribirse",
+                            'url' => array('action' => 'inscribirse', $clasesGrupale->id_claseGrupal),
+                            "class" => "icono"
+                        ));
+                    }
+
+                     ?>
                 </td>
             </tr>
             <?php endforeach; ?>

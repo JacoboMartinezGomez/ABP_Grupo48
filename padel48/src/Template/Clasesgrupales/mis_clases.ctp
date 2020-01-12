@@ -42,7 +42,15 @@ $this->extend('/Pages/navbar');
                             "alt" => "ver",
                             'url' => array('action' => 'view', $clasesGrupale->id_claseGrupal),
                             "class" => "icono"
-                        )); ?>
+                        ));
+
+                        echo $this->Html->image("inscribir.png", array(
+                            "src" => "Desinscribirse",
+                            "alt" => "desinscribirse",
+                            'url' => array('action' => 'desinscribirse', $clasesGrupale->id_claseGrupal),
+                            "class" => "icono"
+                        ));
+                        ?>
 
                         <?php if($user['rol'] == 'ADMIN' || $user['rol'] == 'PROFESOR'){
                             echo $this->Html->image("calendario.png", array(
