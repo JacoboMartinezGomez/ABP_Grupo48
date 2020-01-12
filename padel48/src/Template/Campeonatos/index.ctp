@@ -51,6 +51,28 @@ $this->extend('/Pages/navbar');
                                 ));} ?>
                         <?php }; ?>
 
+
+                            <?php 
+                            switch($campeonato['comprobarFase']) {
+                                case 2: 
+                                    echo $this->Html->image("buscarimagen", array(
+                                    "src" => "GenerarSemis",
+                                    "alt" => "generarSemis",
+                                    'url' => array('action' => 'generarPartidosPlayOffPorFase',  2, $campeonato->id_campeonato),
+                                    "class" => "icono"
+                                ));
+                                break;
+                                case 3:
+                                    echo $this->Html->image("buscarimagen", array(
+                                    "src" => "GenerarFinal",
+                                    "alt" => "generarFinal",
+                                    'url' => array('action' => 'generarPartidosPlayOffPorFase',  3, $campeonato->id_campeonato),
+                                    "class" => "icono"
+                                ));
+                                break;
+                            }; ?>
+                                
+
                         <?php if($campeonato->fecha_inicio > TIME::now()){?>
                             <?php echo $this->Html->image("inscribir.png", array(
                                 "src" => "Inscribirse",
