@@ -46,6 +46,15 @@ class ClasesGrupalesController extends AppController
         $this->set('horas', $this->getHorasPistaEntero());
         $this->set('clasesGrupales',$this->paginate($query));
         $this->set('user', $this->Auth->user());
+        $this->loadModel('Usuarios_Inscritos_Clase');
+        $query = $this->Usuarios_Inscritos_Clase->find('all')->select('claseGrupal_id')->where(['usuario_id' => $this->Auth->user('dni')]);
+        $query->enableHydration(false);
+        $toret = [];
+        foreach ($query->toArray() as $elem){
+            $toret[] = $elem['claseGrupal_id'];
+        }
+
+        $this->set('clases_apuntado', $toret);
     }
 
     /**
@@ -367,7 +376,7 @@ class ClasesGrupalesController extends AppController
         $this->Usuarios_Inscritos_Clase->save($inscripcion);
         if($this->ClasesGrupales->save($clase)){
             $this->Flash->success(__('Te has inscrito correctamente.'));
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'mis_clases']);
         }else{
             $this->Flash->error(__('Hubo un problema con la inscripcion. Vuelve a intentarlo.'));
             return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
@@ -393,11 +402,11 @@ class ClasesGrupalesController extends AppController
         $inscripcion = $this->Usuarios_Inscritos_Clase->get([$idClase, $this->Auth->user('dni')]);
         if($this->Usuarios_Inscritos_Clase->delete($inscripcion)){
             $this->Flash->success(__('Te has desapuntado correctamente.'));
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'mis_clases']);
         }
         else{
             $this->Flash->error(__('Se produjo un error'));
-            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'mis_clases']);
         }
 
     }

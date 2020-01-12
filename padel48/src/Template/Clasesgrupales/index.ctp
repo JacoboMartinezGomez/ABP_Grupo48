@@ -43,7 +43,7 @@ $this->extend('/Pages/navbar');
                         "class" => "icono"
                     ));
 
-                    if($clasesGrupale->num_actual_apuntados < $clasesGrupale->num_max_apuntados){
+                    if($clasesGrupale->num_actual_apuntados < $clasesGrupale->num_max_apuntados && !in_array($clasesGrupale->id_claseGrupal, $clases_apuntado)){
                         echo $this->Html->image("inscribir.png", array(
                             "src" => "Inscribirse",
                             "alt" => "inscribirse",
@@ -52,12 +52,6 @@ $this->extend('/Pages/navbar');
                         ));
                     }
 
-                    echo $this->Html->image("inscribir.png", array(
-                        "src" => "Desinscribirse",
-                        "alt" => "desinscribirse",
-                        'url' => array('action' => 'desinscribirse', $clasesGrupale->id_claseGrupal),
-                        "class" => "icono"
-                    ));
                      ?>
                 </td>
             </tr>
