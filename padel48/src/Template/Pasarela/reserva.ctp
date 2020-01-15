@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Reserva $reserva
  */
 $this->Html->css(['css'])?>
 <head>
@@ -70,13 +71,28 @@ $this->Html->css(['css'])?>
         </ul>
     </nav>
     <div class="showVista" id="anhadirReserva">
-    <?= $this->Form->create() ?>
+    <?= $this->Form->create(null, [
+    'url' => [
+        'controller' => 'Pasarela',
+        'action' => 'addReserva'
+    ]
+]) ?>
     <fieldset>
-        <legend><?= __('Resumen') ?></legend>
-        <?php
-            //echo $this->Form->control('fecha',['type'=>'text', 'class'=>'datepicker']);
-           // echo $this->Form->control('hora', ['type'=>'select', 'options' => $hora_inicio]);
-        ?>
+        <legend><?= __('Revisión de datos: ') ?></legend>
+        <table>
+            <tr>
+                <td>Usuario: <?= h($reserva->id_usuario) ?></td>
+            </tr>
+            <tr>
+                <td>Pista: <?= $this->Number->format($reserva->pista_id) ?></td>
+            </tr>
+            <tr>
+                <td>Hora: <?= date('H:i', strtotime($horas[$reserva->hora])) ?></td>
+            </tr>
+            <tr>
+                <td>Fecha: <?= h($reserva->fecha) ?></td>
+            </tr>
+        </table>
     </fieldset>
     <?= $this->Form->button(__('Confirmar pago')) ?>
     <?= $this->Form->end()?>

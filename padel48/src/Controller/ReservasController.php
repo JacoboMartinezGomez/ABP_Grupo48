@@ -61,12 +61,9 @@ class ReservasController extends AppController
         $this->loadModel('Usuarios');
         $this->loadModel('Pistas');
         $this->set('hora_inicio', $this->getHorasPistaEntero());
-
-
         $reserva = $this->Reservas->newEntity();
         if ($this->request->is('post') || $this->getRequest()->getSession()->check('Reservas.dni')) {
             $reserva = $this->Reservas->patchEntity($reserva, $this->request->getData());
-
             if($this->getRequest()->getSession()->check('Reservas.dni')){
                 $reserva->id_usuario = $this->getRequest()->getSession()->consume('Reservas.dni');
                 $reserva->hora = $this->getRequest()->getSession()->consume('Reservas.hora');
@@ -76,29 +73,29 @@ class ReservasController extends AppController
                 $reserva->hora = $this->request->getData()['hora'];
                 $reserva->id_usuario = $this->Auth->user('dni');
             }
-
             $usuario = $this->Usuarios->find('all')->where(['dni' => $reserva->id_usuario])->first();
             $numReservas = $this->Reservas->find('all')->where(['fecha' => $reserva->fecha, 'hora' => $reserva->hora])->all()->count();
-
             if($usuario->numero_pistas == 5 && $usuario->dni != 'admin'){
                 $this->Flash->error(__('No puedes reservar más de 5 pistas'));
                 return $this->redirect(['action' => 'index']);
             }
-
             if(!$this->hayPistaDisponible($reserva->fecha, $reserva->hora)){
                 $this->Flash->error(__('Las reservas están llenas para ese día y hora'));
             }
             else{
                 $reserva->pista_id = $numReservas+1;
-                if($this->Reservas->save($reserva)){
-
-                    $usuario->numero_pistas = $usuario->numero_pistas+1;
-                    $this->Usuarios->save($usuario);
-                    $this->Flash->success(__('Procediendo al pago '));
+                //if($this->Reservas->save($reserva)){
+                    //mover esto a un controller nuevo y coger los datos de las cookies
+                    //$usuario->numero_pistas = $usuario->numero_pistas+1;
+                    //$this->Usuarios->save($usuario);
                     //$this->Flash->success(__('Reserva guardada correctamente para la pista '. ($numReservas+1) ));
-                    //Redireccion a pasarela
-                    return $this->redirect(['action' => 'pasarela']);
-                }
+                    //return $this->redirect(['action' => 'index']);
+                    $_SESSION['usuario'] = $usuario;
+                    $_SESSION['numReservas'] = $numReservas;
+                    $_SESSION["reserva"] = $reserva;
+                    $this->set('user', $this->Auth->user());
+                    return $this->redirect(['controller' => 'Pasarela','action' => 'reserva']);
+                
             }
         }
         $this->set(compact('reserva'));
@@ -179,21 +176,5 @@ class ReservasController extends AppController
             $this->Usuarios->save($usuarioAdmin);
         }
     }
-
-    //Pasarela
-    public function pasarela(){
-       // header("Location: ../Reservas/pasarela.ctp");
-
-        //$pasarelas = $this->paginate($this->Pasarela);
-       
-
-
-        $this->set(compact('pasarela'));
-        $this->set('user', $this->Auth->user());
-
-        
-        return $this->redirect(['action' => 'index']);
-    }
-
 
 }
