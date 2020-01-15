@@ -39,8 +39,8 @@ $this->extend('/Pages/navbar');
                             "borrar.png",
                             ["alt" => __('Delete')]
                         ),
-                        ['action' => 'delete',  $partido->usuario_id],
-                        ['escape' => false, 'confirm' => __('¿Quieres eliminar el campeonato número {0}?', $partido->usuario_id)]
+                        ['action' => 'delete',  $partido->id_partido],
+                        ['escape' => false, 'confirm' => __('¿Quieres eliminar el partido número {0}?', $partido->id_partido)]
                     )?>
                 <?php }; ?>
                 </td>

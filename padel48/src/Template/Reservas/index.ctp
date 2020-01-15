@@ -20,7 +20,8 @@ $this->extend('/Pages/navbar')
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($reservas as $reserva): ?>
+            <?php 
+            foreach ($reservas as $reserva): ?>
             <tr>
                 <td><?= h($reserva->id_usuario) ?></td>
                 <td><?= $this->Number->format($reserva->pista_id) ?></td>
