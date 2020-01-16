@@ -220,7 +220,7 @@ class ReservasController extends AppController
         }
     }
     public function reservarPistaClases(){
-        $this->loadModel('ClasesGrupales');
+        /*$this->loadModel('ClasesGrupales');
 
         $clases = $this->ClasesGrupales->find('all')->toArray();
 
@@ -243,6 +243,6 @@ class ReservasController extends AppController
                     $this->ClasesGrupales->save($clase);
                 }
             }
-        }
+        }*/
     }
 }
