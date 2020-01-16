@@ -25,7 +25,7 @@ $this->extend('/Pages/navbar');
                 <td><?= h($partido->usuario_id2) ?></td>
                 <td><?= h($partido->usuario_id3) ?></td>
                 <td><?= h($partido->usuario_id4) ?></td>
-                <td><?= h($partido->hora) ?></td>
+                <td><?= h($partido->hora); echo " - ".$partido['fecha'] ?></td>
                 <td class="actions">
                 <?php echo $this->Html->image("inscribir.png", array(
                     "src" => "Inscribirse",

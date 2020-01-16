@@ -55,7 +55,7 @@ $this->extend('/Pages/navbar');
                             <?php 
                             switch($campeonato['comprobarFase']) {
                                 case 2: 
-                                    echo $this->Html->image("buscarimagen", array(
+                                    echo $this->Html->image("dado.png", array(
                                     "src" => "GenerarSemis",
                                     "alt" => "generarSemis",
                                     'url' => array('action' => 'generarPartidosPlayOffPorFase',  2, $campeonato->id_campeonato),
@@ -63,7 +63,7 @@ $this->extend('/Pages/navbar');
                                 ));
                                 break;
                                 case 3:
-                                    echo $this->Html->image("buscarimagen", array(
+                                    echo $this->Html->image("dado.png", array(
                                     "src" => "GenerarFinal",
                                     "alt" => "generarFinal",
                                     'url' => array('action' => 'generarPartidosPlayOffPorFase',  3, $campeonato->id_campeonato),
