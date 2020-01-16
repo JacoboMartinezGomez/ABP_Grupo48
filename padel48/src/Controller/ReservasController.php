@@ -219,7 +219,6 @@ class ReservasController extends AppController
             $this->Usuarios->save($usuarioAdmin);
         }
     }
-  
     public function reservarPistaClases(){
         $this->loadModel('ClasesGrupales');
 
@@ -246,5 +245,4 @@ class ReservasController extends AppController
             }
         }
     }
-
 }
