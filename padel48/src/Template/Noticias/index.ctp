@@ -33,12 +33,6 @@ $this->extend('/Pages/navbar');
                     )); ?>
 
                 <?php if ($user['rol'] == 'ADMIN'){?>
-                    <?php echo $this->Html->image("editar.png", array(
-                        "src" => "editar",
-                        "alt" => "editar",
-                        'url' => array('action' => 'edit', $noticia->id_noticia),
-                        "class" => "icono"
-                    )); ?>
                     <?php echo $this->Form->postLink(
                         $this->Html->image(
                             "borrar.png",
