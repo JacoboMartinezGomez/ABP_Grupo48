@@ -68,6 +68,7 @@ class ClasesGrupalesController extends AppController
             'contain' => ['Usuarios']
         ];
 
+
         if($this->Auth->user('rol') != 'PROFESOR'){
             //Filtra las clases, mostrando solo en las que el usuario esta inscrito
             $query = $this->ClasesGrupales->find('all')
@@ -79,7 +80,18 @@ class ClasesGrupalesController extends AppController
                                                         ['ClasesGrupales.id_claseGrupal = u.claseGrupal_id'],
                                                         ['u.usuario_id' => $this->Auth->user('dni')]
                                                         ]
-                                                ]]);
+                                                ]])
+                                            ->select(['ClasesGrupales.id_claseGrupal',
+                                                'ClasesGrupales.fecha_inicio',
+                                                'ClasesGrupales.hora',
+                                                'ClasesGrupales.usuario_id',
+                                                'ClasesGrupales.num_max_apuntados',
+                                                'ClasesGrupales.num_actual_apuntados',
+                                                'ClasesGrupales.precio',
+                                                'ClasesGrupales.pista_reserva',
+                                                'ClasesGrupales.hora_reserva',
+                                                'ClasesGrupales.fecha_reserva']);
+
         }else{
             $query = $this->ClasesGrupales->find('all')
                                             ->where(['usuario_id' => $this->Auth->user('dni')]);
