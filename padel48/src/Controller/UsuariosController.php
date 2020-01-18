@@ -92,11 +92,11 @@ class UsuariosController extends AppController
             $usuario = $this->Usuarios->patchEntity($usuario, $this->request->getData());
             $usuario->rol = 'DEPORTISTA';
             if ($this->Usuarios->save($usuario)) {
-                $this->Flash->success(__('The usuario has been saved.'));
+                $this->Flash->success(__('El usuario ha sido añadido correctamente.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
+            $this->Flash->error(__('No se ha podido añadir el usuario. Pruebe más adelante.'));
         }
         $this->set(compact('usuario'));
         $this->set('user', $this->Auth->user());
@@ -121,11 +121,11 @@ class UsuariosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $usuario = $this->Usuarios->patchEntity($usuario, $this->request->getData());
             if ($this->Usuarios->save($usuario)) {
-                $this->Flash->success(__('The usuario has been saved.'));
+                $this->Flash->success(__('Se ha modificado el usuario.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
+            $this->Flash->error(__('No se ha podido modificar el usuario.'));
         }
         $this->set(compact('usuario'));
         $this->set('user', $this->Auth->user());
@@ -147,9 +147,9 @@ class UsuariosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $usuario = $this->Usuarios->get($id);
         if ($this->Usuarios->delete($usuario)) {
-            $this->Flash->success(__('The usuario has been deleted.'));
+            $this->Flash->success(__('Se ha eliminado el usuario.'));
         } else {
-            $this->Flash->error(__('The usuario could not be deleted. Please, try again.'));
+            $this->Flash->error(__('No se ha podido eliminar el usuario.'));
         }
 
         $this->set('user', $this->Auth->user());
