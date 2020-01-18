@@ -25,8 +25,8 @@ $this->extend('/Pages/navbar');
             <tr>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['id_enfrentamiento']) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['grupo_id']) ?></td>
-                <td><?= h(h(date('H:i', strtotime($enfrentamiento->enfrentamientos['hora'])))) ?></td>
-                <td><?= h($enfrentamiento->enfrentamientos['fecha']) ?></td>
+                <td><?= $enfrentamiento->enfrentamientos['hora'] != null ? h(date('H:i', strtotime($enfrentamiento->enfrentamientos['hora']))) : 'Sin hora acordada' ?></td>
+                <td><?= $enfrentamiento->enfrentamientos['fecha'] != null ? h($enfrentamiento->enfrentamientos['fecha']) : 'Sin fecha acordada'  ?></td>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['fase']) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->d['resultado']) ?></td>
                 <td class="actions">
