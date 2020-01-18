@@ -16,7 +16,7 @@ $this->extend('/Pages/navbar');
             echo $this->Form->control('email');
             echo $this->Form->control('sexo');
             echo $this->Form->control('telefono');
-            echo $this->Form->control('rol');
+            echo $this->Form->select('rol', ['ADMIN' => 'ADMIN', 'DEPORTISTA' => 'DEPORTISTA', 'PROFESOR' => 'PROFESOR']);
             echo $this->Form->control('numero_pistas');
         ?>
     </fieldset>
