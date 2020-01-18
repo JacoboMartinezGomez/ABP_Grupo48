@@ -30,12 +30,14 @@ $this->extend('/Pages/navbar');
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['fase']) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->d['resultado']) ?></td>
                 <td class="actions">
+                    <?php if ($enfrentamiento->enfrentamientos['fecha'] == null){?>
                     <?php echo $this->Html->image("calendario.png", array(
                         "src" => "Proponer fecha",
                         "alt" => "proponerFecha",
                         'url' => array('controller' => 'FechasPropuestas', 'action' => 'index', $enfrentamiento->enfrentamientos['id_enfrentamiento']),
                         "class" => "icono"
                     )); ?>
+                    <?php }; ?>
 
                     <?php if ($user['rol'] == 'ADMIN'){?>
                         <?php echo $this->Html->image("marcador.png", array(
