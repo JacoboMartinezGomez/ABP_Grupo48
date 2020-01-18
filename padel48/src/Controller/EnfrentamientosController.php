@@ -44,13 +44,34 @@ class EnfrentamientosController extends AppController
                                                         'enfrentamientos.hora',
                                                         'enfrentamientos.fecha',
                                                         'enfrentamientos.fase',
-                                                        'd.resultado']);
+                                                        'd.resultado',
+                                                        'd.id_pareja1',
+                                                        'd.id_pareja2']);
 
 //        ['OR' => [['p.id_capitan1' => $this->Auth->user('dni')],
 //            ['p.id_capitan2' => $this->Auth->user('dni')]] ]
 
-        $this->set('enfrentamientos', $this->paginate($query));
+        $query = $this->getRival($query->toArray());
+
+        $this->set('enfrentamientos', $query);
         $this->set('user', $this->Auth->user());
+    }
+
+    private function getRival($enfrentamientos){
+        $this->loadModel('Parejas');
+
+        foreach($enfrentamientos as $enfrentamiento){
+            $pareja1 = $this->Parejas->get($enfrentamiento->d['id_pareja1']);
+            //La pareja 1 no es la pareja del usuario logueado
+            if($pareja1->id_capitan != $this->Auth->user('dni') && $pareja1->id_pareja != $this->Auth->user('dni')){
+                $enfrentamiento['rival'] = $pareja1->id_capitan;
+            }else{
+                $pareja2 = $this->Parejas->get($enfrentamiento->d['id_pareja2']);
+                $enfrentamiento['rival'] = $pareja2->id_capitan;
+            }
+        }
+
+        return $enfrentamientos;
     }
 
     /**
