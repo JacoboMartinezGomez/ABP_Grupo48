@@ -8,7 +8,7 @@ $this->extend('/Pages/navbar');
 <div class="showVista" id="clasesGrupales">
     <?= $this->Form->create($clasesGrupale) ?>
     <fieldset>
-        <legend><?= __('Add Clases Grupale') ?></legend>
+        <legend><?= __('Añadir clase grupal') ?></legend>
         <?php
             echo $this->Form->control('fecha_inicio', ['minYear' => date('Y'), 'maxYear' => date('Y')]);
             echo $this->Form->control('hora', ['type'=>'select', 'options' => $hora]);
@@ -17,7 +17,7 @@ $this->extend('/Pages/navbar');
             echo $this->Form->control('precio', ['label' => 'Precio de inscripcion', 'min' => 0]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Añadir')) ?>
     <?= $this->Form->end() ?>
 </div>
 
