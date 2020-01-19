@@ -38,7 +38,13 @@ $this->extend('/Pages/navbar')?>
                 <td>Fecha: <?= h($reserva->fecha) ?></td>
             </tr>
             <tr>
-                <td>Precio: 24€ (6€ pp)</td>
+                <td>Precio: 
+                <?php if($user['socio'] == true) {
+                    echo '21€ (6€ pp no socia, 3€ socio)';
+                }else{
+                    echo '24€ (6€ pp)';
+                } ?>
+                </td>
             </tr>
         </table>
     </fieldset>

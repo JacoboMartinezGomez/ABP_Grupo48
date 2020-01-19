@@ -115,4 +115,37 @@ class PasarelaController extends AppController
         $this->set(compact('pareja', 'campeonatos'));
         $this->set('user', $this->Auth->user());
     }
+
+    public function socio()
+    {
+        $this->loadModel('Usuarios');
+        $id = $_SESSION['user'];
+        $usuario = $this->Usuarios->get($id['dni'], [
+            'contain' => []
+        ]);
+
+        $this->set('usuario', $usuario);
+        $this->set('user', $this->Auth->user());
+    }
+
+    public function confirmarSocio()
+    {
+        $this->loadModel('Usuarios');
+        $usuario = $_SESSION['user'];
+        $usuario = $this->Usuarios->get($usuario['dni'], [
+            'contain' => []
+        ]);
+        $usuarioSocio = $this->Usuarios->newEntity();
+        $usuarioSocio = $this->Usuarios->patchEntity($usuario, [
+                                                                'socio' => 1,
+                                                                ]);
+        
+        if($this->Usuarios->save($usuarioSocio)){
+            $this->Flash->success(__('Ahora es socio del club.'));
+        }else{
+            $this->Flash->error(__('No se ha podido hacer socio.'));
+        };
+        $this->set('user', $this->Auth->user());
+        return $this->redirect(['controller' => 'Usuarios' ,'action' => 'viewPerfil']);
+    }
 }

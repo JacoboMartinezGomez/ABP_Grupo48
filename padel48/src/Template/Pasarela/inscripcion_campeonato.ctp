@@ -35,7 +35,14 @@ $this->extend('/Pages/navbar')?>
                 <td>Campeonato seleccionado: <?= h($pareja->campeonato_id) ?></td>
             </tr>
             <tr>
-                <td>Precio: 50€ (25€ pp) <a style="color:#FF0000";>*</a> </td>
+                <td>Precio: 
+                <?php if($user['socio'] == true) {
+                    echo '42€ (21€ pp)';
+                }else{
+                    echo '50€ (25€ pp)';
+                } ?>
+                <a style="color:#FF0000";>*</a> 
+                </td>
             </tr>
         </table>
         <p style="color:#FF0000";>* La inscrición incluye bebida durante los partidos y una camiseta conmemorativa.</p>

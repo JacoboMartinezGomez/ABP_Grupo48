@@ -42,7 +42,8 @@ class Usuario extends Entity
         'rol' => true,
         'numero_pistas' => true,
         'noticias' => true,
-        'partidos' => true
+        'partidos' => true,
+        'socio' => true
     ];
 
     /**

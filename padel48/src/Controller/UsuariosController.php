@@ -166,4 +166,15 @@ class UsuariosController extends AppController
         // By default deny access.
         return false;
     }
+    public function viewPerfil($id = null)
+    {
+        $id = $_SESSION['user'];
+        $usuario = $this->Usuarios->get($id['dni'], [
+            'contain' => ['Partidos']
+        ]);
+
+        $this->set('usuario', $usuario);
+        $this->set('user', $this->Auth->user());
+    }
+
 }
