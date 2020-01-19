@@ -40,6 +40,8 @@ class PasarelaController extends AppController
             $this->Flash->error(__('No se ha guardado correctamente.'));
         }
         return $this->redirect(['controller' => 'reservas','action' => 'index']);
+        $this->set(compact('reserva'));
+        $this->set('user', $this->Auth->user());
     }
 
     public function partidoPromocionado()
@@ -83,6 +85,34 @@ class PasarelaController extends AppController
             else{
                 $this->Flash->error(__('No se ha podido inscribir en el partido. El partido esta completo.'));
             }
+            $usuarios = $this->Partidos->Usuarios->find('list', ['limit' => 200]);
+            $this->set(compact('partido', 'usuarios'));
+            $this->set('user', $this->Auth->user());
             return $this->redirect(['controller' => 'partidos', 'action' => 'index']);
+    }
+
+    public function inscripcionCampeonato()
+    {
+        $this->loadModel('Parejas');
+        $pareja = $_SESSION['pareja'];
+        $this->set('pareja', $pareja);
+        $this->set('user', $this->Auth->user());
+    }
+
+    public function addInscripcion()
+    {
+        $this->loadModel('Parejas');
+        $this->loadModel('Capeonatos');
+        $pareja = $_SESSION['pareja'];
+
+        if ($this->Parejas->save($pareja)) {
+            $this->Flash->success(__("Correcto"));
+            return $this->redirect(['controller' => 'Campeonatos' ,'action' => 'index']);
+        }else{
+            $this->Flash->error(__('The pareja could not be saved. Please, try again.'));
+        }
+        $campeonatos = $this->Parejas->Campeonatos->find('list', ['limit' => 200]);
+        $this->set(compact('pareja', 'campeonatos'));
+        $this->set('user', $this->Auth->user());
     }
 }

@@ -15,32 +15,30 @@ $this->extend('/Pages/navbar')?>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
     </nav>
-    <div class="showVista" id="anhadirReserva">
+    <div class="showVista" id="anhadirInscripcion">
     <?= $this->Form->create(null, [
     'url' => [
         'controller' => 'Pasarela',
-        'action' => 'addReserva'
+        'action' => 'addInscripcion'
     ]
 ]) ?>
     <fieldset>
         <legend><?= __('Revisión de datos: ') ?></legend>
         <table>
             <tr>
-                <td>Usuario: <?= h($reserva->id_usuario) ?></td>
+                <td>DNI capitán: <?= h($pareja->id_capitan) ?></td>
             </tr>
             <tr>
-                <td>Pista: <?= $this->Number->format($reserva->pista_id) ?></td>
+                <td>DNI pareja: <?= h($pareja->id_pareja) ?></td>
             </tr>
             <tr>
-                <td>Hora: <?= date('H:i', strtotime($horas[$reserva->hora])) ?></td>
+                <td>Campeonato seleccionado: <?= h($pareja->campeonato_id) ?></td>
             </tr>
             <tr>
-                <td>Fecha: <?= h($reserva->fecha) ?></td>
-            </tr>
-            <tr>
-                <td>Precio: 24€ (6€ pp)</td>
+                <td>Precio: 50€ (25€ pp) <a style="color:#FF0000";>*</a> </td>
             </tr>
         </table>
+        <p style="color:#FF0000";>* La inscrición incluye bebida durante los partidos y una camiseta conmemorativa.</p>
     </fieldset>
     <?= $this->Form->button(__('Confirmar pago')) ?>
     <?= $this->Form->end()?>

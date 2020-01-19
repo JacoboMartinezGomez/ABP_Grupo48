@@ -145,15 +145,9 @@ class ParejasController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
 
-
-            if ($this->Parejas->save($pareja)) {
-                $this->Flash->success(__("Correcto"));
-                return $this->redirect(['controller' => 'Campeonatos' ,'action' => 'index']);
-                //return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The pareja could not be saved. Please, try again.'));
-
-
+            /*********************************************************/
+            $_SESSION['pareja'] = $pareja;
+            return $this->redirect(['controller' => 'Pasarela','action' => 'inscripcionCampeonato']);
         }
         $campeonatos = $this->Parejas->Campeonatos->find('list', ['limit' => 200]);
         $this->set(compact('pareja', 'campeonatos'));
