@@ -71,7 +71,13 @@ $this->extend('/Pages/navbar')?>
                 <td>Fecha: <?= h($partido->fecha) ?></td>
             </tr>
             <tr>
-                <td>Precio: 6€</td>
+                <td>Precio: 
+                <?php if($user['socio'] == true) {
+                    echo '3€';
+                }else{
+                    echo '6€';
+                } ?>
+                </td>
             </tr>
         </table>
     </fieldset>
