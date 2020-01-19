@@ -181,7 +181,8 @@ class FechasPropuestasController extends AppController
         };
 
         $aux = $this->getHorasPistaInverso();
-        if($this->Reservas->hayPistaDisponible($fecha, $aux[$hora])){
+        $reservasController = new ReservasController();
+        if($reservasController->hayPistaDisponible($fecha, $aux[$hora])){
             $this->getRequest()->getSession()->write(['Reservas.fecha' => $fecha]);
             $this->getRequest()->getSession()->write(['Reservas.hora' => $aux[$hora]]);
             $this->getRequest()->getSession()->write(['Reservas.dni' => 'admin']);

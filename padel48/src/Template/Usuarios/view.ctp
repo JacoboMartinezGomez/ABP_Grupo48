@@ -42,8 +42,8 @@ $this->extend('/Pages/navbar');
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Noticias de este Usuario') ?></h4>
         <?php if (!empty($usuario->noticias)): ?>
+        <h4><?= __('Noticias de este Usuario') ?></h4>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id Noticia') ?></th>

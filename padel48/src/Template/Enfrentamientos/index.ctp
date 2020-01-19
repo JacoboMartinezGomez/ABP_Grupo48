@@ -11,8 +11,9 @@ $this->extend('/Pages/navbar');
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col" width = "140px"><?= $this->Paginator->sort('id_enfrentamiento') ?> </th>
-                <th scope="col"><?= $this->Paginator->sort('id_grupo') ?></th>
+                <th scope="col" width = "140px"><?= $this->Paginator->sort('id_enfrentamiento', 'Nº Enfrentamiento') ?> </th>
+                <th scope="col"><?= $this->Paginator->sort('id_grupo', 'Grupo') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('rival', 'Capitan Rival') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fase') ?></th>
@@ -25,17 +26,20 @@ $this->extend('/Pages/navbar');
             <tr>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['id_enfrentamiento']) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['grupo_id']) ?></td>
-                <td><?= h(h(date('H:i', strtotime($enfrentamiento->enfrentamientos['hora'])))) ?></td>
-                <td><?= h($enfrentamiento->enfrentamientos['fecha']) ?></td>
+                <td><?= $this->Html->link($enfrentamiento['rival'], ['controller' => 'Usuarios', 'action' => 'view', $enfrentamiento['rival']]) ?></td>
+                <td><?= $enfrentamiento->enfrentamientos['hora'] != null ? h(date('H:i', strtotime($enfrentamiento->enfrentamientos['hora']))) : 'Sin hora acordada' ?></td>
+                <td><?= $enfrentamiento->enfrentamientos['fecha'] != null ? h($enfrentamiento->enfrentamientos['fecha']) : 'Sin fecha acordada'  ?></td>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['fase']) ?></td>
                 <td><?= $this->Number->format($enfrentamiento->d['resultado']) ?></td>
                 <td class="actions">
+                    <?php if ($enfrentamiento->enfrentamientos['fecha'] == null){?>
                     <?php echo $this->Html->image("calendario.png", array(
                         "src" => "Proponer fecha",
                         "alt" => "proponerFecha",
                         'url' => array('controller' => 'FechasPropuestas', 'action' => 'index', $enfrentamiento->enfrentamientos['id_enfrentamiento']),
                         "class" => "icono"
                     )); ?>
+                    <?php }; ?>
 
                     <?php if ($user['rol'] == 'ADMIN'){?>
                         <?php echo $this->Html->image("marcador.png", array(
@@ -58,15 +62,5 @@ $this->extend('/Pages/navbar');
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('primero')) ?>
-            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('siguiente') . ' >') ?>
-            <?= $this->Paginator->last(__('ultimo') . ' >>') ?>
-        </ul>
-            <p><?= $this->Paginator->counter(['format' => __('Pagina {{page}} de {{pages}}, mostrando {{current}} entrada(s) de un total de {{count}} ')]) ?></p>
-    </div>
 </div>
 </div>
