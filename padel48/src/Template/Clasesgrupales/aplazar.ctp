@@ -14,6 +14,6 @@ $this->extend('/Pages/navbar');
             echo $this->Form->control('fecha_reserva', ['minYear' => date('Y'), 'maxYear' => date('Y')]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Aplazar')) ?>
     <?= $this->Form->end() ?>
 </div>
