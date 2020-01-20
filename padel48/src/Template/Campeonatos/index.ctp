@@ -32,6 +32,8 @@ $this->extend('/Pages/navbar');
                             'url' => array('controller' => 'Grupos','action' => 'index', $campeonato->id_campeonato),
                             "class" => "icono"
                         )); ?>
+
+                        <?php if ($user['rol'] == 'ADMIN'){?>
                             <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
                             <?php if(!$campeonato['gruposGenerados'] && !$campeonato['playoffsGenerados']){ ?>
                                 <?php echo $this->Html->image("generar.png", array(
@@ -41,6 +43,7 @@ $this->extend('/Pages/navbar');
                                     "class" => "icono"
                                 )); ?>
 
+
                             <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
                             <?php if(!$campeonato['playoffsGenerados'] && $campeonato['gruposGenerados']){ ?>
                                 <?php echo $this->Html->image("dado.png", array(
@@ -49,12 +52,12 @@ $this->extend('/Pages/navbar');
                                     'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
                                     "class" => "icono"
                                 ));} ?>
-                        <?php }; ?>
+                            <?php }; ?>
 
 
-                            <?php 
+                            <?php
                             switch($campeonato['comprobarFase']) {
-                                case 2: 
+                                case 2:
                                     echo $this->Html->image("dado.png", array(
                                     "src" => "GenerarSemis",
                                     "alt" => "generarSemis",
@@ -71,16 +74,19 @@ $this->extend('/Pages/navbar');
                                 ));
                                 break;
                             }; ?>
-                                
 
-                        <?php if($campeonato->fecha_inicio > TIME::now()){?>
-                            <?php echo $this->Html->image("inscribir.png", array(
-                                "src" => "Inscribirse",
-                                "alt" => "inscribirse",
-                                'url' => array('action' => '../parejas/add', $campeonato->id_campeonato),
-                                "class" => "icono"
-                            )); ?>
                         <?php
+                        }else{;
+                        ?>
+                            <?php if($campeonato->fecha_inicio > TIME::now()){?>
+                                <?php echo $this->Html->image("inscribir.png", array(
+                                    "src" => "Inscribirse",
+                                    "alt" => "inscribirse",
+                                    'url' => array('action' => '../parejas/add', $campeonato->id_campeonato),
+                                    "class" => "icono"
+                                )); ?>
+                            <?php
+                            }
                         };
                         ?>
                     </td>
