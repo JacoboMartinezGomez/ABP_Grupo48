@@ -23,35 +23,63 @@ class EnfrentamientosController extends AppController
 //
         $this->set(compact('enfrentamientos'));
 
-        $query = $this->Enfrentamientos->find('all')
-                                            ->join([
-                                                'd' =>[
-                                                    'table' => 'parejas_disputan_enfrentamiento',
-                                                    'type' => 'INNER',
-                                                    'conditions' => 'enfrentamientos.id_enfrentamiento = d.enfrentamiento_id'
-                                                    ],
-                                                'p' =>[
-                                                    'table' => 'parejas',
-                                                    'type' => 'INNER',
-                                                    'conditions' => [
-                                                        ['OR' => [['d.id_pareja1 = p.id'], ['d.id_pareja2 = p.id']]],
-                                                        ['OR' => [['p.id_capitan' => $this->Auth->user('dni')],
-                                                            ['p.id_pareja' => $this->Auth->user('dni')]] ]
-                                                        ]
-                                                ]])
-                                            ->select(['enfrentamientos.id_enfrentamiento',
-                                                        'enfrentamientos.grupo_id',
-                                                        'enfrentamientos.hora',
-                                                        'enfrentamientos.fecha',
-                                                        'enfrentamientos.fase',
-                                                        'd.resultado',
-                                                        'd.id_pareja1',
-                                                        'd.id_pareja2']);
+        if($this->Auth->user('rol') == 'ADMIN'){
+            $query = $this->Enfrentamientos->find('all')
+                ->join([
+                    'd' =>[
+                        'table' => 'parejas_disputan_enfrentamiento',
+                        'type' => 'INNER',
+                        'conditions' => 'enfrentamientos.id_enfrentamiento = d.enfrentamiento_id'
+                    ],
+                    'p' =>[
+                        'table' => 'parejas',
+                        'type' => 'INNER',
+                        'conditions' => [
+                            ['OR' => [['d.id_pareja1 = p.id'], ['d.id_pareja2 = p.id']]]
+                        ]
+                    ]])
+                ->select(['enfrentamientos.id_enfrentamiento',
+                    'enfrentamientos.grupo_id',
+                    'enfrentamientos.hora',
+                    'enfrentamientos.fecha',
+                    'enfrentamientos.fase',
+                    'd.resultado',
+                    'd.id_pareja1',
+                    'd.id_pareja2'])
+                ->distinct();
+        }else{
+            $query = $this->Enfrentamientos->find('all')
+                ->join([
+                    'd' =>[
+                        'table' => 'parejas_disputan_enfrentamiento',
+                        'type' => 'INNER',
+                        'conditions' => 'enfrentamientos.id_enfrentamiento = d.enfrentamiento_id'
+                    ],
+                    'p' =>[
+                        'table' => 'parejas',
+                        'type' => 'INNER',
+                        'conditions' => [
+                            ['OR' => [['d.id_pareja1 = p.id'], ['d.id_pareja2 = p.id']]],
+                            ['OR' => [['p.id_capitan' => $this->Auth->user('dni')],
+                                ['p.id_pareja' => $this->Auth->user('dni')]] ]
+                        ]
+                    ]])
+                ->select(['enfrentamientos.id_enfrentamiento',
+                    'enfrentamientos.grupo_id',
+                    'enfrentamientos.hora',
+                    'enfrentamientos.fecha',
+                    'enfrentamientos.fase',
+                    'd.resultado',
+                    'd.id_pareja1',
+                    'd.id_pareja2']);
+
+            $query = $this->getRival($query->toArray());
+
+        }
 
 //        ['OR' => [['p.id_capitan1' => $this->Auth->user('dni')],
 //            ['p.id_capitan2' => $this->Auth->user('dni')]] ]
 
-        $query = $this->getRival($query->toArray());
 
         $this->set('enfrentamientos', $query);
         $this->set('user', $this->Auth->user());
