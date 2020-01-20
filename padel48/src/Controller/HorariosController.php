@@ -88,12 +88,12 @@ class HorariosController extends AppController
             $horario = $this->Horarios->patchEntity($horario, $this->request->getData());
 
             if($this->Horarios->editHorarios($this->request->getData()['hora_inicio'])){
-                $this->Flash->success(__('The horario has been saved. New begining hour: '.$this->request->getData()['hora_inicio']['hour'].":".$this->request->getData()['hora_inicio']['minute']));
+                $this->Flash->success(__('Se ha cambiado el horario. Nueva hora de inicio: '.$this->request->getData()['hora_inicio']['hour'].":".$this->request->getData()['hora_inicio']['minute']));
 
                 return $this->redirect(['action' => 'index']);
             }
 
-            $this->Flash->error(__('The horario could not be saved. Please, try again.'));
+            $this->Flash->error(__('El horario no pudo ser cambiado.'));
         }
         $pistas = $this->Horarios->Pistas->find('list', ['limit' => 200]);
         $this->set(compact('horario', 'pistas'));
