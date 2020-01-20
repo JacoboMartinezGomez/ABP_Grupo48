@@ -27,7 +27,7 @@ $this->extend('/Pages/navbar')?>
         <legend><?= __('Revisión de datos: ') ?></legend>
         <table>
             <tr>
-                <td>Usuario 1: 
+                <td>Usuario 1:
                 <?php
                 if ($partido['usuario_id']!=null) {
                 echo $partido['usuario_id'];
@@ -48,7 +48,7 @@ $this->extend('/Pages/navbar')?>
                 </td>
             </tr>
             <tr>
-                <td>Usuario 3: 
+                <td>Usuario 3:
                 <?php
                 if ($partido['usuario_id3']!=null) {
                 echo $partido['usuario_id3'];
@@ -57,7 +57,7 @@ $this->extend('/Pages/navbar')?>
                 </td>
             </tr>
             <tr>
-                <td>Usuario 4: 
+                <td>Usuario 4:
                 <?php
                 if ($partido['usuario_id4']!=null) {
                 echo $partido['usuario_id4'];
@@ -71,7 +71,7 @@ $this->extend('/Pages/navbar')?>
                 <td>Fecha: <?= h($partido->fecha) ?></td>
             </tr>
             <tr>
-                <td>Precio: 
+                <td>Precio:
                 <?php if($user['socio'] == true) {
                     echo '3€';
                 }else{
@@ -79,11 +79,20 @@ $this->extend('/Pages/navbar')?>
                 } ?>
                 </td>
             </tr>
+            <tr>
+                <td><?php echo $this->Form->control('Numero de tarjeta');?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('Fecha de caducidad');?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('CVV');?></td>
+            </tr>
         </table>
     </fieldset>
     <?= $this->Form->button(__('Confirmar pago')) ?>
     <?= $this->Form->end()?>
 </div>
 
- 
+
 

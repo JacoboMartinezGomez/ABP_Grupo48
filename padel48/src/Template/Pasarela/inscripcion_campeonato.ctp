@@ -35,14 +35,23 @@ $this->extend('/Pages/navbar')?>
                 <td>Campeonato seleccionado: <?= h($pareja->campeonato_id) ?></td>
             </tr>
             <tr>
-                <td>Precio: 
+                <td>Precio:
                 <?php if($user['socio'] == true) {
                     echo '42€ (21€ pp)';
                 }else{
                     echo '50€ (25€ pp)';
                 } ?>
-                <a style="color:#FF0000";>*</a> 
+                <a style="color:#FF0000";>*</a>
                 </td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('Numero de tarjeta');?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('Fecha de caducidad');?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('CVV');?></td>
             </tr>
         </table>
         <p style="color:#FF0000";>* La inscrición incluye bebida durante los partidos y una camiseta conmemorativa.</p>
@@ -51,5 +60,5 @@ $this->extend('/Pages/navbar')?>
     <?= $this->Form->end()?>
 </div>
 
- 
+
 

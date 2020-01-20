@@ -38,7 +38,7 @@ $this->extend('/Pages/navbar')?>
                 <td>Fecha: <?= h($reserva->fecha) ?></td>
             </tr>
             <tr>
-                <td>Precio: 
+                <td>Precio:
                 <?php if($user['socio'] == true) {
                     echo '21€ (6€ pp no socia, 3€ socio)';
                 }else{
@@ -46,11 +46,20 @@ $this->extend('/Pages/navbar')?>
                 } ?>
                 </td>
             </tr>
+            <tr>
+                <td><?php echo $this->Form->control('Numero de tarjeta');?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('Fecha de caducidad');?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('CVV');?></td>
+            </tr>
         </table>
     </fieldset>
     <?= $this->Form->button(__('Confirmar pago')) ?>
     <?= $this->Form->end()?>
 </div>
 
- 
+
 

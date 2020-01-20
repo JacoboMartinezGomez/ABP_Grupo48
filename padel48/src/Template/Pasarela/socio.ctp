@@ -41,10 +41,19 @@ $this->extend('/Pages/navbar')?>
         <p>¿Esta seguro de que desea cambiar su cuenta a socio del club?</p>
         <p>Obtendrá diversos descuentos (reserva de pistas, inscripciones, etc)</p>
         <p>Precio: 20€/mes</p>
+        <tr>
+            <td><?php echo $this->Form->control('Numero de tarjeta');?></td>
+        </tr>
+        <tr>
+            <td><?php echo $this->Form->control('Fecha de caducidad');?></td>
+        </tr>
+        <tr>
+            <td><?php echo $this->Form->control('CVV');?></td>
+        </tr>
     </fieldset>
     <?= $this->Form->button(__('Confirmar pago')) ?>
     <?= $this->Form->end()?>
 </div>
 
- 
+
 
