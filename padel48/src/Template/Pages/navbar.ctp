@@ -27,7 +27,7 @@ $this->Html->css(['css'])?>
 <div class = "container">
     <nav class="menu"><ul class = "nav">
             <li class="heading"></li>
-            <?php if ($user['rol'] == 'ADMIN'){
+            <?php if ($user['rol'] != 'ADMIN'){
                 $_SESSION['user'] = $user;
             ?>
                 <li><?= $this->Html->link(__('Mi perfil'), ['controller' => 'Usuarios', 'action' => 'viewPerfil']) ?></li>

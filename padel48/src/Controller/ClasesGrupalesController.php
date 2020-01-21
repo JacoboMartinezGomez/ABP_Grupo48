@@ -385,14 +385,20 @@ class ClasesGrupalesController extends AppController
         $clase->num_actual_apuntados++;
 
 
-        $this->Usuarios_Inscritos_Clase->save($inscripcion);
+   /*      $this->Usuarios_Inscritos_Clase->save($inscripcion);
         if($this->ClasesGrupales->save($clase)){
             $this->Flash->success(__('Te has inscrito correctamente.'));
             return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'mis_clases']);
         }else{
             $this->Flash->error(__('Hubo un problema con la inscripcion. Vuelve a intentarlo.'));
             return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
-        }
+        } */
+
+        $_SESSION['inscripcion'] = $inscripcion;
+        $_SESSION['clase'] = $clase;
+        $this->set('user', $this->Auth->user());
+        return $this->redirect(['controller' => 'Pasarela','action' => 'claseGrupal']);
+
 
     }
 
