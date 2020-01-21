@@ -148,4 +148,33 @@ class PasarelaController extends AppController
         $this->set('user', $this->Auth->user());
         return $this->redirect(['controller' => 'Usuarios' ,'action' => 'viewPerfil']);
     }
+
+    public function claseGrupal()
+    {
+        $inscripcion = $_SESSION['inscripcion'];
+        $clase = $_SESSION['clase'];
+
+        $this->set('inscripcion', $inscripcion);
+        $this->set('clase', $clase);
+        $this->set('horas', $this->getHorasPistaEntero());
+        $this->set('user', $this->Auth->user());
+    }
+
+    public function addClaseGrupal()
+    {
+        $this->loadModel('Usuarios_Inscritos_Clase');
+        $this->loadModel('ClasesGrupales');
+
+        $inscripcion = $_SESSION['inscripcion'];
+        $clase = $_SESSION['clase'];
+
+        $this->Usuarios_Inscritos_Clase->save($inscripcion);
+        if($this->ClasesGrupales->save($clase)){
+            $this->Flash->success(__('Te has inscrito correctamente.'));
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'mis_clases']);
+        }else{
+            $this->Flash->error(__('Hubo un problema con la inscripcion. Vuelve a intentarlo.'));
+            return $this->redirect(['controller' => 'ClasesGrupales' ,'action' => 'index']);
+        }
+    }
 }
