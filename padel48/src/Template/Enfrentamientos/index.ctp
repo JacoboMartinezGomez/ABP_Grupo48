@@ -46,7 +46,7 @@ $this->extend('/Pages/navbar');
                     }
 
                     ?></td>
-                <td><?= $this->Number->format($enfrentamiento->d['resultado']) ?></td>
+                <td><?= $enfrentamiento->d['resultado'] ? $this->Html->link($enfrentamiento->d['resultado'], ['controller' => 'Usuarios', 'action' => 'view', $enfrentamiento->d['resultado']]) : '--'?></td>
                 <td class="actions">
                     <?php if ($enfrentamiento->enfrentamientos['fecha'] == null){?>
                     <?php if ($user['rol'] != 'ADMIN'){?>

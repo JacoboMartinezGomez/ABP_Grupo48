@@ -47,6 +47,8 @@ class EnfrentamientosController extends AppController
                     'd.id_pareja1',
                     'd.id_pareja2'])
                 ->distinct();
+
+            $query = $this->getGanador($query->toArray());
         }else{
             $query = $this->Enfrentamientos->find('all')
                 ->join([
@@ -96,6 +98,19 @@ class EnfrentamientosController extends AppController
             }else{
                 $pareja2 = $this->Parejas->get($enfrentamiento->d['id_pareja2']);
                 $enfrentamiento['rival'] = $pareja2->id_capitan;
+            }
+        }
+
+        return $enfrentamientos;
+    }
+
+    private function getGanador($enfrentamientos){
+        $this->loadModel('Parejas');
+
+        foreach($enfrentamientos as $enfrentamiento){
+            if($enfrentamiento->d['resultado']){
+                $ganador = $this->Parejas->get($enfrentamiento->d['resultado']);
+                $enfrentamiento->d['resultado'] = $ganador->id_capitan;
             }
         }
 
