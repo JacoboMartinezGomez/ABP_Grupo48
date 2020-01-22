@@ -349,7 +349,8 @@ class CampeonatosController extends AppController
         foreach ($listaEnfrentamientos as $enfrentamiento) {
             $query = $this->ParejasDisputanEnfrentamiento->find('all')->where(['enfrentamiento_id =' => $enfrentamiento['id_enfrentamiento']]);
             $enfrentamientoSeleccionado = $query->all()->toArray();
-            if ($enfrentamientoSeleccionado['resultado'] == NULL){
+            //debug($enfrentamientoSeleccionado);
+            if ($enfrentamientoSeleccionado[0]['resultado'] == NULL){
                 $result = false;
             }
         }
@@ -362,7 +363,7 @@ class CampeonatosController extends AppController
         $fase = 0;
         $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
         $grupos = $query->all()->toArray();
-        
+
         foreach($grupos as $grupo){
             $query = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupo['id_grupo']]);
             $EnfrentamientosGrupo = $query->all()->toArray();
@@ -383,10 +384,10 @@ class CampeonatosController extends AppController
         $this->loadModel('Enfrentamientos');
         $this->loadModel('Grupos');
         $this->loadModel('Parejas');
-        
+
         $query = $this->Grupos->find('all')->where(['campeonato_id =' => $idCampeonato]);
         $grupos = $query->all()->toArray();
-        
+
         foreach($grupos as $grupo){
             $query = $this->Enfrentamientos->find('all')->where(['grupo_id =' => $grupo['id_grupo'],
                                                                  'fase =' => $fase]);
@@ -398,7 +399,7 @@ class CampeonatosController extends AppController
                                                              'categoria_id =' => $grupo['categoria_id'],
                                                              'clasificado =' => 1])->order(['puntuacion' => 'DESC']);
                 $parejasClasificadas = $query2->all()->toArray();
-                debug($parejasClasificadas);
+                //debug($parejasClasificadas);
                 switch ($fase) {
                     case 2:
                         for ($i = 0; $i < 8; $i++){
