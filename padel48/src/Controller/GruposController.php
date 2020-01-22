@@ -46,7 +46,7 @@ class GruposController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id = null, $campeonatoID)
     {
 //        $grupo = $this->Grupos->get($id, [
 //            'contain' => ['Campeonatos']
@@ -54,7 +54,7 @@ class GruposController extends AppController
 
         $this->loadModel('Parejas');
         $parejas = $this->Parejas->find('all')
-                                ->where(['grupo_id' => $id])
+                                ->where(['grupo_id' => $id, 'campeonato_id =' => $campeonatoID])
                                 ->order(['puntuacion' => 'DESC']);
 
         $this->set('parejas', $parejas);

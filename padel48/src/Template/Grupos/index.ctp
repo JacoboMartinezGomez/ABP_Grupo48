@@ -27,7 +27,7 @@ $this->extend('/Pages/navbar');
                     <?php echo $this->Html->image("ver.png", array(
                         "src" => "Ver",
                         "alt" => "ver",
-                        'url' => array('action' => 'view', $grupo->id_grupo),
+                        'url' => array('action' => 'view', $grupo->id_grupo, $grupo->campeonato_id),
                         "class" => "icono"
                     )); ?>
                 </td>
