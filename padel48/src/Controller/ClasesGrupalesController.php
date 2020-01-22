@@ -334,7 +334,7 @@ class ClasesGrupalesController extends AppController
             $email = new Email('default');
             $email->setFrom(['abppadel48@gmail.com'])
                 ->setTo(['ferodrigueza1998@gmail.com', 'dvfernandez@esei.uvigo.es', 'iffernandez@esei.uvigo.es', 'jmgomez2@esei.uvigo.es'])
-                ->setSubject('Clase grupal aplazada')
+                ->setSubject('Clase grupal borrada')
                 ->setTransport('gmail')
                 ->send('La clase grupal del profesor '.$profesor->apellido.', '.
                     $profesor->nombre.' ha sido borrada. Para mas informacion pongase en contacto con el ' .
