@@ -6,7 +6,7 @@
 $this->extend('/Pages/navbar');
 ?>
     <div class="showVista" id="verGrupo">
-    <h2><?= __('Parejas') ?></h2>
+    <h2><?= __('Clasificacion') ?></h2>
     <table cellpadding="0" cellspacing="0">
         <thead>
         <tr>
