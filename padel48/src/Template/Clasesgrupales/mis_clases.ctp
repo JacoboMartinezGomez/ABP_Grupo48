@@ -44,7 +44,7 @@ $this->extend('/Pages/navbar');
                             "class" => "icono"
                         ));
 
-                        echo $this->Html->image("inscribir.png", array(
+                        echo $this->Html->image("desinscribir.png", array(
                             "src" => "Desinscribirse",
                             "alt" => "desinscribirse",
                             'url' => array('action' => 'desinscribirse', $clasesGrupale->id_claseGrupal),
