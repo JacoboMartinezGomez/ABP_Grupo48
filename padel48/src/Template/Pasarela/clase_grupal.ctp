@@ -45,6 +45,15 @@ $this->extend('/Pages/navbar')?>
                 } ?>
                 </td>
             </tr>
+            <tr>
+                <td><?php echo $this->Form->control('Numero de tarjeta');?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('Fecha de caducidad');?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->Form->control('CVV');?></td>
+            </tr>
         </table>
     </fieldset>
     <?= $this->Form->button(__('Confirmar pago')) ?>

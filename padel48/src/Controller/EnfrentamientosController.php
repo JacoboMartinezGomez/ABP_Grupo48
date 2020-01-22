@@ -187,6 +187,7 @@ class EnfrentamientosController extends AppController
     }
 
     public function introducirResultado($id = null){
+        $this->set('user', $this->Auth->user());
         $this->loadModel('ParejasDisputanEnfrentamiento');
         $this->loadModel('Parejas');
 
@@ -197,14 +198,19 @@ class EnfrentamientosController extends AppController
                                                     ]);*/
 
         $pareja = $this->ParejasDisputanEnfrentamiento->find('all')->where(['enfrentamiento_id' => $id])->first()->toArray();
-        $parejas = [$pareja['id_pareja1'] => $pareja['id_pareja1'], $pareja['id_pareja2'] => $pareja['id_pareja2']];
+        $participantes1Query = $this->Parejas->find('all')->select(['id_capitan','id_pareja'])->where(['id =' => $pareja['id_pareja1']])->toArray();
+        $participantes1 = $participantes1Query[0]['id_capitan'] . ', ' . $participantes1Query[0]['id_pareja'];
+        $participantes2Query = $this->Parejas->find('all')->select(['id_capitan','id_pareja'])->where(['id =' => $pareja['id_pareja2']])->toArray();
+        $participantes2 = $participantes2Query[0]['id_capitan'] . ', ' . $participantes2Query[0]['id_pareja'];
+
+        $parejas = [$pareja['id_pareja1'] => $participantes1, $pareja['id_pareja2'] => $participantes2];
         $this->set('parejas',$parejas);
 
         $enfrentamiento = $this->ParejasDisputanEnfrentamiento->newEntity();
         if ($this->request->is('post')) {
 
             $enfrentamiento = $this->ParejasDisputanEnfrentamiento->patchEntity($enfrentamiento, $this->ParejasDisputanEnfrentamiento->find('all')->where(['enfrentamiento_id =' => $id])->first()->toArray());
-            $enfrentamiento->resultado = $this->request->getData()['resultado'];
+            $enfrentamiento->resultado = $this->request->getData()['ganador'];
 
             //debug($enfrentamiento);
             //debug($this->Parejas->find('all')->where(['id =' => $enfrentamiento['id_pareja1']])->all()->toArray());
@@ -217,7 +223,7 @@ class EnfrentamientosController extends AppController
             $pareja2 = $this->Parejas->newEntity();
             $pareja2 = $this->Parejas->patchEntity($pareja2, $this->Parejas->find('all')->where(['id =' => $enfrentamiento['id_pareja2']])->first()->toArray());
 
-            if ($enfrentamiento['resultado'] == $enfrentamiento['id_pareja1']) {
+            if ($enfrentamiento['ganador'] == $enfrentamiento['id_pareja1']) {
                 $pareja1->puntuacion += 3;
                 $pareja2->puntuacion += 1;
             } else {
