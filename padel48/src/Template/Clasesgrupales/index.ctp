@@ -51,8 +51,24 @@ $this->extend('/Pages/navbar');
                             "class" => "icono"
                         ));
                     }
+                    if($user['rol'] == 'ADMIN' || $user['rol'] == 'PROFESOR') {
+                        echo $this->Html->image("calendario.png", array(
+                            "src" => "Aplazar",
+                            "alt" => "Aplazar",
+                            'url' => array('action' => 'aplazar', $clasesGrupale->id_claseGrupal),
+                            "class" => "icono"
+                        ));
 
-                     ?>
+                        echo $this->Form->postLink(
+                            $this->Html->image(
+                                "borrar.png",
+                                ["alt" => __('Delete')]
+                            ),
+                            ['action' => 'delete', $clasesGrupale->id_claseGrupal],
+                            ['escape' => false, 'confirm' => __('Esta seguro de que desea borrar la clase # {0}?', $clasesGrupale->id_claseGrupal)]
+                        );
+                    }
+                    ?>
                 </td>
             </tr>
             <?php endforeach; ?>
