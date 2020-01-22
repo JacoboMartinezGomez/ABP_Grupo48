@@ -17,7 +17,7 @@ $this->extend('/Pages/navbar');
                 <th scope="col"><?= $this->Paginator->sort('hora') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fecha') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('fase') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('resultado') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('resultado', 'Ganador') ?></th>
                 <th scope="col" class="actions"><?= __('Acciones') ?></th>
             </tr>
         </thead>
