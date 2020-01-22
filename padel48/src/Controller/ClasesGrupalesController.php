@@ -80,17 +80,7 @@ class ClasesGrupalesController extends AppController
                                                         ['ClasesGrupales.id_claseGrupal = u.claseGrupal_id'],
                                                         ['u.usuario_id' => $this->Auth->user('dni')]
                                                         ]
-                                                ]])
-                                            ->select(['ClasesGrupales.id_claseGrupal',
-                                                'ClasesGrupales.fecha_inicio',
-                                                'ClasesGrupales.hora',
-                                                'ClasesGrupales.usuario_id',
-                                                'ClasesGrupales.num_max_apuntados',
-                                                'ClasesGrupales.num_actual_apuntados',
-                                                'ClasesGrupales.precio',
-                                                'ClasesGrupales.pista_reserva',
-                                                'ClasesGrupales.hora_reserva',
-                                                'ClasesGrupales.fecha_reserva']);
+                                                ]]);
 
         }else{
             $query = $this->ClasesGrupales->find('all')
@@ -323,7 +313,7 @@ class ClasesGrupalesController extends AppController
                 'className' => 'Smtp'
             ]);
 
-            
+
 
             /*$correos = $this->Usuarios->find()->extract('email');
             $array = [];
