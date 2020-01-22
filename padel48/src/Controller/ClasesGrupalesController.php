@@ -323,6 +323,8 @@ class ClasesGrupalesController extends AppController
                 'className' => 'Smtp'
             ]);
 
+            
+
             /*$correos = $this->Usuarios->find()->extract('email');
             $array = [];
             foreach($correos as $correo){
