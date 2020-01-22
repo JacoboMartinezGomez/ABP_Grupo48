@@ -41,7 +41,7 @@ $this->extend('/Pages/navbar');
                                     "alt" => "generar",
                                     'url' => array('action' => 'generarGrupos', $campeonato->id_campeonato),
                                     "class" => "icono"
-                                )); ?>
+                                ));} ?>
 
 
                             <!--Comprobacion para que no se generen los playoffs mas de una vez  -->
@@ -52,7 +52,7 @@ $this->extend('/Pages/navbar');
                                     'url' => array('action' => 'generarPartidosPlayOff', $campeonato->id_campeonato),
                                     "class" => "icono"
                                 ));} ?>
-                            <?php }; ?>
+                            <?php  ?>
 
 
                             <?php
