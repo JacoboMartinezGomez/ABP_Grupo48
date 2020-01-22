@@ -30,7 +30,7 @@ $this->extend('/Pages/navbar');
                 <td><?= $enfrentamiento->enfrentamientos['hora'] != null ? h(date('H:i', strtotime($enfrentamiento->enfrentamientos['hora']))) : 'Sin hora acordada' ?></td>
                 <td><?= $enfrentamiento->enfrentamientos['fecha'] != null ? h($enfrentamiento->enfrentamientos['fecha']) : 'Sin fecha acordada'  ?></td>
                 <td><?= $this->Number->format($enfrentamiento->enfrentamientos['fase']) ?></td>
-                <td><?= $this->Number->format($enfrentamiento->d['resultado']) ?></td>
+                <td><?= $enfrentamiento->d['resultado'] ? $this->Html->link($enfrentamiento->d['resultado'], ['controller' => 'Usuarios', 'action' => 'view', $enfrentamiento->d['resultado']]) : '--'?></td>
                 <td class="actions">
                     <?php if ($enfrentamiento->enfrentamientos['fecha'] == null){?>
                     <?php if ($user['rol'] != 'ADMIN'){?>
