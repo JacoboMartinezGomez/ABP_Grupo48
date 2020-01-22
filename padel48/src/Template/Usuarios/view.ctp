@@ -34,7 +34,7 @@ $this->extend('/Pages/navbar');
         </tr>
         <tr>
             <th scope="row"><?= __('Telefono') ?></th>
-            <td><?= $this->Number->format($usuario->telefono) ?></td>
+            <td><?= h($usuario->telefono) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Numero Pistas') ?></th>
