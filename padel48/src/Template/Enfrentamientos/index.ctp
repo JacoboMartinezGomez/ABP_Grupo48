@@ -50,14 +50,6 @@ $this->extend('/Pages/navbar');
                             'url' => array('controller' => 'Enfrentamientos', 'action' => 'introducirResultado', $enfrentamiento->enfrentamientos['id_enfrentamiento']),
                             "class" => "icono"
                         )); ?>
-                        <?php echo $this->Form->postLink(
-                                $this->Html->image(
-                                    "borrar.png",
-                                    ["alt" => __('Delete')]
-                                ),
-                                ['action' => 'delete',   $enfrentamiento->id_enfrentamiento],
-                                ['escape' => false, 'confirm' => __('¿Quieres eliminar el enfrentamiento {0}?',  $enfrentamiento->enfrentamientos['id_enfrentamiento'])]
-                        )?>
                     <?php }; ?>
                 </td>
             </tr>
