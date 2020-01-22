@@ -29,7 +29,23 @@ $this->extend('/Pages/navbar');
                 <td><?= $this->Html->link($enfrentamiento['rival'], ['controller' => 'Usuarios', 'action' => 'view', $enfrentamiento['rival']]) ?></td>
                 <td><?= $enfrentamiento->enfrentamientos['hora'] != null ? h(date('H:i', strtotime($enfrentamiento->enfrentamientos['hora']))) : 'Sin hora acordada' ?></td>
                 <td><?= $enfrentamiento->enfrentamientos['fecha'] != null ? h($enfrentamiento->enfrentamientos['fecha']) : 'Sin fecha acordada'  ?></td>
-                <td><?= $this->Number->format($enfrentamiento->enfrentamientos['fase']) ?></td>
+                <td><?php
+                    switch($enfrentamiento->enfrentamientos['fase']){
+                        case 1:
+                            echo 'Liga regular';
+                            break;
+                        case 2:
+                            echo 'Cuartos de final';
+                            break;
+                        case 3:
+                            echo 'Semifinal';
+                            break;
+                        case 4:
+                            echo 'Final';
+                            break;
+                    }
+
+                    ?></td>
                 <td><?= $this->Number->format($enfrentamiento->d['resultado']) ?></td>
                 <td class="actions">
                     <?php if ($enfrentamiento->enfrentamientos['fecha'] == null){?>
