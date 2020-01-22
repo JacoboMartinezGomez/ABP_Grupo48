@@ -106,10 +106,10 @@ class PasarelaController extends AppController
         $pareja = $_SESSION['pareja'];
 
         if ($this->Parejas->save($pareja)) {
-            $this->Flash->success(__("Correcto"));
+            $this->Flash->success(__("La pareja se ha inscrito correctamente"));
             return $this->redirect(['controller' => 'Campeonatos' ,'action' => 'index']);
         }else{
-            $this->Flash->error(__('The pareja could not be saved. Please, try again.'));
+            $this->Flash->error(__('La pareja no ha podido guardarse.'));
         }
         $campeonatos = $this->Parejas->Campeonatos->find('list', ['limit' => 200]);
         $this->set(compact('pareja', 'campeonatos'));
