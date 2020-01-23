@@ -142,7 +142,7 @@ class ParejasController extends AppController
 
             if($query->all()->count()!=0){
                 $this->Flash->error(__('Tu pareja ya está inscrita en el campeonato'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'campeonatos', 'action' => 'index']);
             }
 
             /*********************************************************/
